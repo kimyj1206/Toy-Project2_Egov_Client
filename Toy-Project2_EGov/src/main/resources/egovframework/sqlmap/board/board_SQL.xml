@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="auth">
+
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="boardVO" type="board.service.BoardVO"/>
+
+	<insert id="board.insertBoard">
+		INSERT INTO BOARD
+						(idx, title, content, anony, userId, hits, rdate)
+					VALUES
+						(board_seq.NEXTVAL, #title#, #content#, #anony#, #userId#, #hits#, TO_CHAR(sysdate, 'YYYY-MM-DD'))
+	</insert>
+	
+	<select id="board.selectBoard" resultClass="boardVO">
+		SELECT *
+			FROM (
+    			SELECT ROWNUM AS rnum, a.*
+   					FROM (
+        				SELECT *
+        					FROM board
+        						ORDER BY board.idx DESC
+    				) a
+    				WHERE ROWNUM <![CDATA[ <= ]]> (#pageNum# * #currentPrintBoardList#)
+			)
+			WHERE rnum <![CDATA[ >= ]]> ((#pageNum# - 1) * #currentPrintBoardList#) + 1
+	</select>
+	
+	<select id="board.selectDBoard" resultClass="boardVO">
+		SELECT * FROM BOARD
+						WHERE idx = #idx#
+	</select>
+	
+	<update id="board.updateBoard">
+		UPDATE BOARD SET
+						idx = #idx#,
+						title = #title#,
+						content = #content#,
+						anony = #anony#,
+						userId = #userId#,
+						rdate = TO_CHAR(sysdate, 'YYYY-MM-DD'),
+						hits = #hits#
+					WHERE idx = #idx#
+	</update>
+	
+	<delete id="board.deleteBoard">
+		DELETE FROM BOARD
+						WHERE idx = #idx#
+	</delete>
+	
+	<update id="board.updateHits">
+		UPDATE BOARD SET hits = #hits#
+									WHERE idx = #idx#
+	</update>
+	
+	<select id="board.selectBoardCnt" resultClass="java.lang.Integer">
+		SELECT COUNT(*) FROM BOARD
+	</select>
+	
+	<select id="board.selectSearchKeyword" resultClass="boardVO">
+		SELECT * FROM BOARD
+						WHERE 1=1
+								<!-- 검색구분이 제목이면서 정렬이 최신순인 경우 -->
+								<isEqual property="searchGubun" compareValue="title">
+									<isEqual property="sortGubun" compareValue="recent">
+										AND( 1=2
+                           				or LOWER(title) LIKE <![CDATA[ '%' || LOWER(#keyword#) ]]>
+                           				or LOWER(title) LIKE <![CDATA[ '%' || LOWER(#keyword#) || '%' ]]>
+                           				or LOWER(title) LIKE <![CDATA[ LOWER(#keyword#) || '%' ]]>
+                           				) ORDER BY rdate DESC
+									</isEqual>
+								</isEqual>
+								<!-- 검색구분이 제목이면서 정렬이 과거순인 경우 -->
+								<isEqual property="searchGubun" compareValue="title">
+									<isEqual property="sortGubun" compareValue="past">
+										AND( 1=2
+                           				or LOWER(title) LIKE <![CDATA[ '%' || LOWER(#keyword#) ]]>
+                           				or LOWER(title) LIKE <![CDATA[ '%' || LOWER(#keyword#) || '%' ]]>
+                           				or LOWER(title) LIKE <![CDATA[ LOWER(#keyword#) || '%' ]]>
+                           				) ORDER BY rdate ASC
+									</isEqual>
+								</isEqual>
+								<!-- 검색구분이 내용이면서 정렬이 최신순인 경우 -->
+								<isEqual property="searchGubun" compareValue="content">
+									<isEqual property="sortGubun" compareValue="recent">
+										AND( 1=2
+                           				or LOWER(content) LIKE <![CDATA[ '%' || LOWER(#keyword#) ]]>
+                           				or LOWER(content) LIKE <![CDATA[ '%' || LOWER(#keyword#) || '%' ]]>
+                           				or LOWER(content) LIKE <![CDATA[ LOWER(#keyword#) || '%' ]]>
+                           				) ORDER BY rdate DESC
+                           			</isEqual>
+								</isEqual>
+								<!-- 검색구분이 내용이면서 정렬이 과거순인 경우 -->
+								<isEqual property="searchGubun" compareValue="content">
+									<isEqual property="sortGubun" compareValue="past">
+										AND( 1=2
+                           				or LOWER(content) LIKE <![CDATA[ '%' || LOWER(#keyword#) ]]>
+                           				or LOWER(content) LIKE <![CDATA[ '%' || LOWER(#keyword#) || '%' ]]>
+                           				or LOWER(content) LIKE <![CDATA[ LOWER(#keyword#) || '%' ]]>
+                           				) ORDER BY rdate ASC
+                           			</isEqual>
+								</isEqual>
+								<!-- 검색구분이 제목+내용이면서 정렬이 최신순인 경우 -->
+								<isEqual property="searchGubun" compareValue="all">
+									<isEqual property="sortGubun" compareValue="recent">
+										AND( 1=2
+										or LOWER(title) LIKE <![CDATA['%' || LOWER(#keyword#) ]]>
+		                           		or LOWER(title) LIKE <![CDATA[ '%' || LOWER(#keyword#) || '%' ]]>
+		                           		or LOWER(title) LIKE <![CDATA[ LOWER(#keyword#) || '%' ]]>
+		                           		or LOWER(content) LIKE <![CDATA[ '%' || LOWER(#keyword#) ]]>
+		                           		or LOWER(content) LIKE <![CDATA[ '%' || LOWER(#keyword#) || '%' ]]>
+		                           		or LOWER(content) LIKE <![CDATA[ LOWER(#keyword#) || '%' ]]>
+		                           		) ORDER BY rdate DESC
+                           			</isEqual>
+								</isEqual>
+								<!-- 검색구분이 제목+내용이면서 정렬이 과거순인 경우 -->
+								<isEqual property="searchGubun" compareValue="all">
+									<isEqual property="sortGubun" compareValue="past">
+										AND( 1=2
+		                           		or LOWER(title) LIKE <![CDATA['%' || LOWER(#keyword#) ]]>
+		                           		or LOWER(title) LIKE <![CDATA[ '%' || LOWER(#keyword#) || '%' ]]>
+		                           		or LOWER(title) LIKE <![CDATA[ LOWER(#keyword#) || '%' ]]>
+		                           		or LOWER(content) LIKE <![CDATA[ '%' || LOWER(#keyword#) ]]>
+		                           		or LOWER(content) LIKE <![CDATA[ '%' || LOWER(#keyword#) || '%' ]]>
+		                           		or LOWER(content) LIKE <![CDATA[ LOWER(#keyword#) || '%' ]]>
+		                           		) ORDER BY rdate ASC
+                           			</isEqual>
+								</isEqual>
+	</select>
+	
+	<select id="board.selectBoardPrintList" resultClass="boardVO">
+		SELECT *
+			FROM (
+    			SELECT ROWNUM AS rnum, a.*
+   					FROM (
+        				SELECT *
+        					FROM board
+        						ORDER BY board.idx DESC
+    				) a
+    				WHERE ROWNUM <![CDATA[ <= ]]> (#pageNum# * #currentPrintBoardList#)
+			)
+			WHERE rnum <![CDATA[ >= ]]> ((#pageNum# - 1) * #currentPrintBoardList#) + 1
+	</select>
+</sqlMap>
