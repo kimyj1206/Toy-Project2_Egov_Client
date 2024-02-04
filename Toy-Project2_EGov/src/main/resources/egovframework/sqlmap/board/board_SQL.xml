@@ -18,7 +18,7 @@
 			FROM (
     			SELECT ROWNUM AS rnum, a.*
    					FROM (
-        				SELECT *
+        				SELECT idx, title, content, anony, userId, rdate, hits
         					FROM board
         						ORDER BY board.idx DESC
     				) a
@@ -28,7 +28,7 @@
 	</select>
 	
 	<select id="board.selectDBoard" resultClass="boardVO">
-		SELECT * FROM BOARD
+		SELECT idx, title, content, anony, userId, rdate, hits FROM BOARD
 						WHERE idx = #idx#
 	</select>
 	
@@ -59,7 +59,8 @@
 	</select>
 	
 	<select id="board.selectSearchKeyword" resultClass="boardVO">
-		SELECT * FROM BOARD
+		SELECT idx, title, content, anony, userId, rdate, hits
+				FROM BOARD
 						WHERE 1=1
 								<!-- 검색구분이 제목이면서 정렬이 최신순인 경우 -->
 								<isEqual property="searchGubun" compareValue="title">
@@ -68,7 +69,7 @@
                            				or LOWER(title) LIKE <![CDATA[ '%' || LOWER(#keyword#) ]]>
                            				or LOWER(title) LIKE <![CDATA[ '%' || LOWER(#keyword#) || '%' ]]>
                            				or LOWER(title) LIKE <![CDATA[ LOWER(#keyword#) || '%' ]]>
-                           				) ORDER BY rdate DESC
+                           				) ORDER BY idx DESC
 									</isEqual>
 								</isEqual>
 								<!-- 검색구분이 제목이면서 정렬이 과거순인 경우 -->
@@ -78,7 +79,7 @@
                            				or LOWER(title) LIKE <![CDATA[ '%' || LOWER(#keyword#) ]]>
                            				or LOWER(title) LIKE <![CDATA[ '%' || LOWER(#keyword#) || '%' ]]>
                            				or LOWER(title) LIKE <![CDATA[ LOWER(#keyword#) || '%' ]]>
-                           				) ORDER BY rdate ASC
+                           				) ORDER BY idx ASC
 									</isEqual>
 								</isEqual>
 								<!-- 검색구분이 내용이면서 정렬이 최신순인 경우 -->
@@ -88,7 +89,7 @@
                            				or LOWER(content) LIKE <![CDATA[ '%' || LOWER(#keyword#) ]]>
                            				or LOWER(content) LIKE <![CDATA[ '%' || LOWER(#keyword#) || '%' ]]>
                            				or LOWER(content) LIKE <![CDATA[ LOWER(#keyword#) || '%' ]]>
-                           				) ORDER BY rdate DESC
+                           				) ORDER BY idx DESC
                            			</isEqual>
 								</isEqual>
 								<!-- 검색구분이 내용이면서 정렬이 과거순인 경우 -->
@@ -98,7 +99,7 @@
                            				or LOWER(content) LIKE <![CDATA[ '%' || LOWER(#keyword#) ]]>
                            				or LOWER(content) LIKE <![CDATA[ '%' || LOWER(#keyword#) || '%' ]]>
                            				or LOWER(content) LIKE <![CDATA[ LOWER(#keyword#) || '%' ]]>
-                           				) ORDER BY rdate ASC
+                           				) ORDER BY idx ASC
                            			</isEqual>
 								</isEqual>
 								<!-- 검색구분이 제목+내용이면서 정렬이 최신순인 경우 -->
@@ -111,7 +112,7 @@
 		                           		or LOWER(content) LIKE <![CDATA[ '%' || LOWER(#keyword#) ]]>
 		                           		or LOWER(content) LIKE <![CDATA[ '%' || LOWER(#keyword#) || '%' ]]>
 		                           		or LOWER(content) LIKE <![CDATA[ LOWER(#keyword#) || '%' ]]>
-		                           		) ORDER BY rdate DESC
+		                           		) ORDER BY idx DESC
                            			</isEqual>
 								</isEqual>
 								<!-- 검색구분이 제목+내용이면서 정렬이 과거순인 경우 -->
@@ -124,17 +125,17 @@
 		                           		or LOWER(content) LIKE <![CDATA[ '%' || LOWER(#keyword#) ]]>
 		                           		or LOWER(content) LIKE <![CDATA[ '%' || LOWER(#keyword#) || '%' ]]>
 		                           		or LOWER(content) LIKE <![CDATA[ LOWER(#keyword#) || '%' ]]>
-		                           		) ORDER BY rdate ASC
+		                           		) ORDER BY idx ASC
                            			</isEqual>
 								</isEqual>
 	</select>
 	
 	<select id="board.selectBoardPrintList" resultClass="boardVO">
-		SELECT *
+		SELECT idx, title, content, anony, userId, rdate, hits
 			FROM (
     			SELECT ROWNUM AS rnum, a.*
    					FROM (
-        				SELECT *
+        				SELECT idx, title, content, anony, userId, rdate, hits
         					FROM board
         						ORDER BY board.idx DESC
     				) a

@@ -126,6 +126,9 @@
 	.pageGroup {
 	  margin-top: 40px; 
 	}
+	.page-link.active {
+	  color: #CCFFFF;
+	}
 </style>
 </head>
 <%
@@ -200,26 +203,55 @@
 	$(document).ready(function() {
 		var clickedPageNum;
 		
-		/* 이전 버튼 클릭 시 data 값 가져오고 ajax 함수 호출 */
-/* 		$("#previous").click(function (e) {
-			e.preventDefault(); // 페이지 이동 방지
-			
-			clickedPageNum = $("#previous").data("value");
-			
-			fetchData();
-		}); */
-		
-		/* 일반 숫자 버튼 */
+		/* page number */
 		$(".pageBtn").click(function(e) {
+			
+			$(".page-link").removeClass("active");
+			$(this).addClass("active");
+			
 			e.preventDefault(); // 페이지 이동 방지
 			
 			clickedPageNum = $(this).text();
-			
-			fetchData();
-		});	
-			
-			
-		function fetchData() {
+
+			fetchMainData();
+		});
+		
+		/* previous */
+		$(".previous").click(function(e) {
+			var currentPageNum = $(".active").text();
+
+			if(currentPageNum != "" && currentPageNum > 1) {
+				var previousPageNum = currentPageNum - 1;
+				
+				// 이전 페이지 클릭 시 .active 클래스 설정
+	            $(".page-link").removeClass("active");
+	            $(".pageBtn:contains(" + previousPageNum + ")").addClass("active");
+				
+				fetchSideData(previousPageNum);
+			}else {
+				alert('첫 페이지입니다.');
+			}
+		});
+		
+		/* next */
+		$(".next").click(function(e) {
+			var currentPageNum = $(".active").text();
+
+			if(currentPageNum != "" && currentPageNum > 1) {
+				var nextPageNum = currentPageNum + 1;
+				
+				// 이전 페이지 클릭 시 .active 클래스 설정
+	            $(".page-link").removeClass("active");
+	            $(".pageBtn:contains(" + previousPageNum + ")").addClass("active");
+				
+				// 1 페이지에서 다음 클릭 시 4 5 6 이 보이게 하도록 설정
+				
+			}else {
+				alert('마지막 페이지입니다.');
+			}
+		});
+		
+		function fetchMainData() {
 			$.ajax({
 				type: 'get',
 				url: 'pageLocation.do?pageNum=' + clickedPageNum,
@@ -258,11 +290,52 @@
 				}
 			});
 		}
+		
+		
+		function fetchSideData(previousPageNum) {
+			$.ajax({
+				type: 'get',
+				url: 'pageLocation.do?pageNum=' + previousPageNum,
+				dataType: 'json',
+				contentType: 'application/json',
+				success: function(resultMap) {
+					// 기존 테이블의 행을 지움 -> 이걸 안하면 원래의 테이블 밑으로 검색 결과가 추가됨
+			        $("tbody").empty();
+
+			        // 검색 결과를 반복해서 테이블에 추가
+			        $.each(resultMap.listResult, function(index, listResult) {
+			            // 문자열 날짜를 JS 날짜 형태로 변환
+			            var date = new Date(listResult.rdate);
+
+			            // 표시할 날짜 형식 지정
+			            var formattedDate = date.getFullYear() + '-' + 
+			                ('0' + (date.getMonth() + 1)).slice(-2) + '-' + 
+			                ('0' + date.getDate()).slice(-2);
+
+			            // 테이블 행 구성
+			            var row = "<tr>" +
+			                "<td>" + listResult.idx + "</td>" +
+			                "<td><a href='boardModify.do?Idx=" + listResult.idx + "'>" + listResult.title + "</a></td>" +
+			                "<td>" + (listResult.anony === '1' ? listResult.userId : '익명') + "</td>" +
+			                "<td>" + formattedDate + "</td>" +
+			                "<td>" + listResult.hits + "</td>" +
+			                "</tr>";
+
+			            // 테이블에 행 추가
+			            $("tbody").append(row);
+			        });
+				},
+				error: function(xhr, status, error) {
+					console.log("code : " + xhr.status + "\n" + "message : " + xhr.responseText + "\n" + "error : " + error);
+					alert('시스템 에러 발생하였습니다. 관리자에게 연락해주세요.');
+				}
+			});
+		}
+		
 	});
 </script>
 <body>
 	<h1>게시판</h1>
-	
 	<div class="user-info">
 		<a href="/userInfo.do?ID=${sessionScope.sessionID}"><span id="user-id">${sessionScope.sessionID} 님!</span></a>
     </div>
@@ -295,7 +368,7 @@
 	<table class="table table-bordered">
 	  	<thead>
 		    <tr>
-			    <th width="13%">번호</th>
+			    <th width="13%">글 번호</th>
 				<th width="40%">제목</th>
 				<th width="17%">작성자</th>
 				<th width="17%">등록일</th>
@@ -324,35 +397,41 @@
 	    	</c:if>
 	  	</tbody>
 	</table>
-	
+
 	<nav aria-label="Page navigation example" class="pageGroup">
 		<ul class="pagination justify-content-center">
 			
 			<%-- 이전 --%>
-			<c:if test="${pageNum > 1}">
-				<li class="page-item"><a class="page-link" id="previous" href="board.do?pageNum=${pageNum - 1}">이전</a></li>
-			</c:if>
+			<li class="page-item">
+				<a class="page-link previous">&lt;</a>
+			</li>
+
 						
 			<c:choose>
 				<%-- 한 페이지에 출력되는 페이지 수(3)보다 총 페이지 수가 더 많을 경우 > 1부터 3까지만 --%>
 			    <c:when test="${totalPage >= currentPrintPage}">
 			        <c:forEach var="page" begin="1" end="${currentPrintPage}" step="1">
-			            <li class="page-item"><a class="page-link pageBtn" id="pageBtn">${page}</a></li>
+			            <li class="page-item">
+			            	<a class="page-link pageBtn">${page}</a>
+			            </li>
 			        </c:forEach>
 			    </c:when>
 			    <%-- 총 페이지 수보다 한 페이지에 출력되는 페이지 수(3)가 더 많을 경우 > 1부터 ~ --%>
 			    <c:when test="${totalPage <= currentPrintPage}">
-			        <c:forEach var="page" begin="1" end="${endPage}" step="1">
-			            <li class="page-item"><a class="page-link pageBtn" id="pageBtn">${page}</a></li>
+			        <c:forEach var="page" begin="${startPage}" end="${endPage}" step="1">
+			            <li class="page-item">
+			            	<a class="page-link">${page}</a>
+			            </li>
 			        </c:forEach>
 			    </c:when>
 			</c:choose>
 
 
 			<%-- 다음 --%>
-			<c:if test="${pageNum < totalPage}">
-				<li class="page-item"><a class="page-link" href="board.do?pageNum=${pageNum + 1}">다음</a></li>
-			</c:if>
+			<li class="page-item">
+				<a class="page-link next">&gt;</a>
+			</li>
+
 		</ul>
 	</nav>
 </body>

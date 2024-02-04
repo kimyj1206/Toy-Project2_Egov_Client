@@ -73,7 +73,7 @@ public class MainViewController {
 	 * 회원 정보 jsp 호출
 	 */
 	@RequestMapping(value = "/userInfo.do")
-	public String userInfo(@RequestParam("ID") String id, Model model) throws Exception {
+	public String userInfo(@RequestParam("ID") String id, Model model) {
 		
 		try {
 			MainVO result = mainService.selectUser(id);
@@ -91,7 +91,7 @@ public class MainViewController {
 	 * 회원 탈퇴 jsp 호출
 	 */
 	@RequestMapping(value = "/userLeave.do")
-	public String userLeave(@RequestParam("id") String id, Model model) throws Exception {
+	public String userLeave(@RequestParam("id") String id, Model model) {
 		
 		try {
 			MainVO result = mainService.selectUser(id);

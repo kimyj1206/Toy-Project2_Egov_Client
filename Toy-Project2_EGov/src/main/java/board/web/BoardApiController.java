@@ -9,11 +9,13 @@ import javax.annotation.Resource;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import board.service.BoardService;
 import board.service.BoardVO;
+import board.service.PageVO;
 
 import javax.servlet.http.HttpSession;
 
@@ -27,30 +29,35 @@ public class BoardApiController {
 	/***
 	 * 페이징
 	 */
-	@RequestMapping(value = "/pageLocation.do")
-	public Map<String, Object> pageLocation(@RequestParam(name = "pageNum", defaultValue = "1") int pageNum, BoardVO boardVO, Model model) throws Exception {
-		Map<String, Object> resultMap = new HashMap<>();
+	@RequestMapping(value = "/pageLocation.do", method = RequestMethod.GET)
+	public Map<String, Object> pageLocation(@RequestParam(name = "pageNum", defaultValue = "1") int pageNum,
+											BoardVO boardVO,
+											PageVO pageVO,
+											Model model) {
 		
+		Map<String, Object> resultMap = new HashMap<>();
+		System.out.println(pageNum);
 		try {
 			Map<String, Integer> map = new HashMap<>();
-			
-			/* 한 페이지에 출력될 게시물 수 */
-			boardVO.setCurrentPrintBoardList(10);
-			
+
 			map.put("pageNum", pageNum);
+			model.addAttribute("pageNumber", pageNum);
+			
+			/* 한 페이지에 출력될 게시물 수 10개 */
+			boardVO.setCurrentPrintBoardList(10);
+
 			map.put("currentPrintBoardList", boardVO.getCurrentPrintBoardList());
 			
 			/* 출력될 게시물 범위 계산(rownum 이용) 및 리스트 가져오기 */
 			List<BoardVO> listResult = boardService.selectBoardPrintList(map);
-			
+
 			resultMap.put("listResult", listResult);
-			
+
 		}catch(Exception e) {
-			System.out.println("pageLocation error -> " + e.getMessage());
 			resultMap.put("error", e.getMessage());
+			System.out.println("pageLocation error -> " + e.getMessage());
 		}
-		
-		model.addAttribute("pageNum", pageNum);
+
 		return resultMap;
 	}
 	
@@ -58,9 +65,11 @@ public class BoardApiController {
 	/***
 	 * 게시물 검색 
 	 */
-	@RequestMapping(value = "/search.do")
-	public Map<String, Object> search(@RequestParam("keyword") String keyword, @RequestParam("searchGubun") String searchGubun,
-										@RequestParam("sortGubun") String sortGubun, Model model) throws Exception {
+	@RequestMapping(value = "/search.do", method = RequestMethod.GET)
+	public Map<String, Object> search(@RequestParam("keyword") String keyword,
+									  @RequestParam("searchGubun") String searchGubun,
+									  @RequestParam("sortGubun") String sortGubun,
+									  Model model) {
 		
 		Map<String, Object> response = new HashMap<>();
 		
@@ -93,8 +102,8 @@ public class BoardApiController {
 	/***
 	 * 게시글 작성
 	 */
-	@RequestMapping(value = "/boardSave.do")
-	public String insertBoard(@RequestBody BoardVO boardVO, HttpSession session) throws Exception {
+	@RequestMapping(value = "/boardSave.do", method = RequestMethod.POST)
+	public String insertBoard(@RequestBody BoardVO boardVO, HttpSession session) {
 		
 		String msg = "";
 		
@@ -119,8 +128,8 @@ public class BoardApiController {
 	/***
 	 * 게시글 수정 호출
 	 */
-	@RequestMapping(value = "/updateBoard.do")
-	public String updateBoard(@RequestBody BoardVO boardVO) throws Exception {
+	@RequestMapping(value = "/updateBoard.do", method = RequestMethod.POST)
+	public String updateBoard(@RequestBody BoardVO boardVO) {
 		
 		String msg = "";
 		
@@ -141,8 +150,8 @@ public class BoardApiController {
 	/***
 	 * 게시글 삭제 호출
 	 */
-	@RequestMapping(value = "/deleteBoard.do")
-	public String deleteBoard(@RequestBody BoardVO boardVO) throws Exception {
+	@RequestMapping(value = "/deleteBoard.do", method = RequestMethod.POST)
+	public String deleteBoard(@RequestBody BoardVO boardVO) {
 		
 		String msg = "";
 		

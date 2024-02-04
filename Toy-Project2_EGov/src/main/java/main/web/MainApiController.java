@@ -33,7 +33,7 @@ public class MainApiController {
 	 * 회원가입 아이디 중복 체크
 	 */
 	@RequestMapping(value = "/duplicatedID.do")
-	public Map<String, Object> duplicatedID(@RequestBody MainVO mainVO) throws Exception {
+	public Map<String, Object> duplicatedID(@RequestBody MainVO mainVO) {
 		Map<String, Object> resultMap = new HashMap<>();
 		
 		try {
@@ -56,7 +56,7 @@ public class MainApiController {
 	 * 회원가입
 	 */
 	@RequestMapping(value = "/joinSave.do", method = RequestMethod.POST)
-	public Map<String, Object> insertJoin(@RequestBody MainVO mainVO) throws Exception {
+	public Map<String, Object> insertJoin(@RequestBody MainVO mainVO) {
 		Map<String, Object> resultMap = new HashMap<>();
 		
 		try {
@@ -108,7 +108,7 @@ public class MainApiController {
 	 * @RequestBody Annotation 인식 못 함 -> jackson 라이브러리 설정 - dispatcher와 pom 설정 추가
 	 */
 	@RequestMapping(value = "/authFindIdCheck.do", method = RequestMethod.POST)
-	public Map<String, Object> authFindIdCheck(@RequestBody MainVO mainVO, Model model) throws Exception {
+	public Map<String, Object> authFindIdCheck(@RequestBody MainVO mainVO, Model model) {
 		Map<String, Object> resultMap = new HashMap<>();
 		
 		try {
@@ -147,7 +147,7 @@ public class MainApiController {
 	 * 비밀번호 초기화 전 아이디 찾기
 	 */
 	@RequestMapping(value = "/authIdCheck.do", method = RequestMethod.POST)
-	public Map<String, Object> authIdCheck(@RequestBody MainVO mainVO) throws Exception {
+	public Map<String, Object> authIdCheck(@RequestBody MainVO mainVO) {
 		Map<String, Object> resultMap = new HashMap<>();
 		
 		try {
@@ -170,7 +170,7 @@ public class MainApiController {
 	 * 비밀번호 초기화
 	 */
 	@RequestMapping(value = "/authPwReset.do", method = RequestMethod.POST)
-	public Map<String, Object> authPwReset(@RequestBody MainVO mainVO) throws Exception {
+	public Map<String, Object> authPwReset(@RequestBody MainVO mainVO) {
 		Map<String, Object> resultMap = new HashMap<>();
 		
 		try {
@@ -193,7 +193,7 @@ public class MainApiController {
 	 * 유효 회원 검증
 	 */
 	@RequestMapping(value = "/authPwCheck.do")
-	public Map<String, Object> authPwCheck(@RequestBody MainVO mainVO) throws Exception {
+	public Map<String, Object> authPwCheck(@RequestBody MainVO mainVO) {
 		Map<String, Object> resultMap = new HashMap<>();
 		
 		try {
@@ -217,7 +217,7 @@ public class MainApiController {
 	 * 회원 정보 수정
 	 */
 	@RequestMapping(value = "/authUserInfoUpdate.do")
-	public Map<String, Object> authUserInfoUpdate(@RequestBody MainVO mainVO) throws Exception {
+	public Map<String, Object> authUserInfoUpdate(@RequestBody MainVO mainVO) {
 		Map<String, Object> resultMap = new HashMap<>();
 		
 		try {
@@ -241,7 +241,7 @@ public class MainApiController {
 	 * 회원 탈퇴
 	 */
 	@RequestMapping(value = "/leave.do")
-	public Map<String, Object> authUserleave(@RequestBody MainVO mainVO) throws Exception {
+	public Map<String, Object> authUserleave(@RequestBody MainVO mainVO) {
 		Map<String, Object> resultMap = new HashMap<>();
 		
 		try {

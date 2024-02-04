@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import board.service.BoardService;
 import board.service.BoardVO;
+import board.service.PageVO;
 
 @Controller
 public class BoardViewController {
@@ -23,7 +24,7 @@ public class BoardViewController {
 	 * 게시판 호출
 	 */
 	@RequestMapping(value = "/board.do")
-	public String selectBoard(BoardVO boardVO, Model model) throws Exception {
+	public String selectBoard(BoardVO boardVO, PageVO pageVO, Model model) {
 		
 		try{
 			/* 초기 조회 시 페이지 번호 1로 고정 */
@@ -42,22 +43,24 @@ public class BoardViewController {
 			int totalBoardList = boardService.selectBoardCnt();
 			
 			/* 전체 페이지 수(소수점 값이 있다면 올림 처리) */
-			int totalPage = (int) Math.ceil((double) totalBoardList / boardVO.getCurrentPrintBoardList());
+			//int totalPage = (int) Math.ceil((double) totalBoardList / boardVO.getCurrentPrintBoardList());
+			boardVO.setTotalPage((int) Math.ceil((double) totalBoardList / boardVO.getCurrentPrintBoardList()));
 			
 			/* 시작 페이지 번호 계산 */
-			int startPage = Math.max(1, Math.min(boardVO.getPageNum(), totalPage - boardVO.getCurrentPrintPage() + 1));
+			//int startPage = Math.max(1, Math.min(boardVO.getPageNum(), totalPage - boardVO.getCurrentPrintPage() + 1));
+			boardVO.setStartPage(Math.max(1, Math.min(boardVO.getPageNum(), boardVO.getTotalPage() - boardVO.getCurrentPrintPage() + 1)));
 			
 			/* 끝 페이지 번호 계산 */
-			int endPage = Math.min(totalPage, startPage + boardVO.getCurrentPrintPage() - 1);
-			
-			model.addAttribute("totalBoardList", totalBoardList);
-			model.addAttribute("totalPage", totalPage);
-			model.addAttribute("startPage", startPage);
-			model.addAttribute("endPage", endPage);
-			model.addAttribute("currentPrintPage", boardVO.getCurrentPrintPage());
+			//int endPage = Math.min(totalPage, startPage + boardVO.getCurrentPrintPage() - 1);
+			boardVO.setEndPage(Math.min(boardVO.getTotalPage(), boardVO.getStartPage() + boardVO.getCurrentPrintPage() - 1));
 			
 			model.addAttribute("result", result);
-			
+			model.addAttribute("totalBoardList", totalBoardList);
+			model.addAttribute("totalPage", boardVO.getTotalPage());
+			model.addAttribute("startPage", boardVO.getStartPage());
+			model.addAttribute("endPage", boardVO.getEndPage());
+			model.addAttribute("currentPrintPage", boardVO.getCurrentPrintPage());
+		
 		}catch(Exception e) {
 			System.out.println("board error -> " + e.getMessage());
 		}
@@ -79,7 +82,7 @@ public class BoardViewController {
 	 * 게시글 상세 조회 호출
 	 */
 	@RequestMapping(value = "/boardModify.do")
-	public String selectDBoard(BoardVO boardVO, Model model, HttpSession session) throws Exception {
+	public String selectDBoard(BoardVO boardVO, Model model, HttpSession session) {
 		
 		try{
 			/* 세션 처리 코드 추가 */
