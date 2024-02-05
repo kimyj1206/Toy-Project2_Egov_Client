@@ -57,77 +57,77 @@
     	color: #0000FF;
 	}
 	.search {
-	  width: 400px;
-	  height: 40px;
-	  float: right;
-	  margin: 0 18px 8px 0;
-	  display: flex;
-  	  align-items: center;
+		width: 400px;
+		height: 40px;
+		float: right;
+		margin: 0 18px 8px 0;
+		display: flex;
+  	 	align-items: center;
 	}
 	.search_gubun {
-	  margin-right: 10px;
+	 	margin-right: 10px;
 	}
 	.sort {
-	  width: 400px;
-	  height: 40px;
-	  float: right;
-	  display: flex;
-  	  align-items: center;
+	 	width: 400px;
+	 	height: 40px;
+	 	float: right;
+	 	display: flex;
+  	 	align-items: center;
 	}
 	.sort_gubun {
-	  margin-left: 220px;
+	 	margin-left: 220px;
 	}
 	.search input {
-	  width: 60%;
-	  height: 30px;
-	  font-size: 18px;
-	  border: none;
-	  border-bottom: 1px black solid;
-	  margin-right: 10px;
+	 	width: 60%;
+	 	height: 30px;
+	 	font-size: 18px;
+	 	border: none;
+	 	border-bottom: 1px black solid;
+	 	margin-right: 10px;
 	}
 	.search button {
-	  font-size: 18px;
-	  border: none;
-	  background-color: #FFCC00;
-	  width: 80px;
-	  height: 30px;
-	  border-radius: 11px;
-	  color: #333333;
-	  cursor: pointer;
+	 	font-size: 18px;
+	 	border: none;
+	 	background-color: #FFCC00;
+	 	width: 80px;
+	 	height: 30px;
+	 	border-radius: 11px;
+	 	color: #333333;
+	 	cursor: pointer;
 	}
 	select {
-	  width: 170px;
-	  height: 30px;
-  	  -moz-appearance: none;
-  	  -webkit-appearance: none;
-  	  appearance: none;
-  	  font-size: 1rem;
-  	  font-weight: 400;
-  	  line-height: 1.5;
-  	  color: #444;
-  	  background-color: #fff;
-  	  border: 1px solid #aaa;
-  	  border-radius: .3em;
-  	  box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
+	 	width: 170px;
+	 	height: 30px;
+  	 	-moz-appearance: none;
+  	 	-webkit-appearance: none;
+  	 	appearance: none;
+  	 	font-size: 1rem;
+  	 	font-weight: 400;
+  	 	line-height: 1.5;
+  	 	color: #444;
+  	 	background-color: #fff;
+  	 	border: 1px solid #aaa;
+  	 	border-radius: .3em;
+  	 	box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
 	}
 	select:hover {
-	  border-color: #888;
+	 	border-color: #888;
 	}
 	select:focus {
-	  border-color: #aaa;
-	  box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
-	  box-shadow: 0 0 0 3px -moz-mac-focusring;
-	  color: #222;
-	  outline: none;
+	 	border-color: #aaa;
+	 	box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
+	 	box-shadow: 0 0 0 3px -moz-mac-focusring;
+	 	color: #222;
+	 	outline: none;
 	}
 	select:disabled {
-  	  opacity: 0.5;
+  	 	opacity: 0.5;
 	}
 	.pageGroup {
-	  margin-top: 40px; 
+	 	margin-top: 40px; 
 	}
 	.page-link.active {
-	  color: #CCFFFF;
+	 	color: #CCFFFF;
 	}
 </style>
 </head>
@@ -216,6 +216,7 @@
 			fetchMainData();
 		});
 		
+		
 		/* previous */
 		$(".previous").click(function(e) {
 			var currentPageNum = $(".active").text();
@@ -223,11 +224,11 @@
 			if(currentPageNum != "" && currentPageNum > 1) {
 				var previousPageNum = currentPageNum - 1;
 				
-				// 이전 페이지 클릭 시 .active 클래스 설정
+				// 이전 페이지 클릭 시 active 클래스 설정
 	            $(".page-link").removeClass("active");
 	            $(".pageBtn:contains(" + previousPageNum + ")").addClass("active");
 				
-				fetchSideData(previousPageNum);
+	            fetchPrevData(previousPageNum);
 			}else {
 				alert('첫 페이지입니다.');
 			}
@@ -237,19 +238,21 @@
 		$(".next").click(function(e) {
 			var currentPageNum = $(".active").text();
 
-			if(currentPageNum != "" && currentPageNum > 1) {
-				var nextPageNum = currentPageNum + 1;
-				
-				// 이전 페이지 클릭 시 .active 클래스 설정
-	            $(".page-link").removeClass("active");
-	            $(".pageBtn:contains(" + previousPageNum + ")").addClass("active");
-				
-				// 1 페이지에서 다음 클릭 시 4 5 6 이 보이게 하도록 설정
-				
-			}else {
-				alert('마지막 페이지입니다.');
+			if(currentPageNum != "") {
+				var nextPageNum = Number(currentPageNum) + 1;
+
+				if(nextPageNum > ${totalPage}) {
+					alert('마지막 페이지입니다.');
+				} else {
+					// 다음 페이지 클릭 시 active 클래스 설정
+		            $(".page-link").removeClass("active");
+		            $(".pageBtn:contains(" + nextPageNum + ")").addClass("active");
+					
+		            fetchNextData(nextPageNum);	
+				}
 			}
 		});
+		
 		
 		function fetchMainData() {
 			$.ajax({
@@ -292,7 +295,7 @@
 		}
 		
 		
-		function fetchSideData(previousPageNum) {
+		function fetchPrevData(previousPageNum) {
 			$.ajax({
 				type: 'get',
 				url: 'pageLocation.do?pageNum=' + previousPageNum,
@@ -330,8 +333,48 @@
 					alert('시스템 에러 발생하였습니다. 관리자에게 연락해주세요.');
 				}
 			});
-		}
+		};
 		
+		
+		function fetchNextData(nextPageNum) {
+			$.ajax({
+				type: 'get',
+				url: 'pageLocation.do?pageNum=' + nextPageNum,
+				dataType: 'json',
+				contentType: 'application/json',
+				success: function(resultMap) {
+					// 기존 테이블의 행을 지움 -> 이걸 안하면 원래의 테이블 밑으로 검색 결과가 추가됨
+			        $("tbody").empty();
+
+			        // 검색 결과를 반복해서 테이블에 추가
+			        $.each(resultMap.listResult, function(index, listResult) {
+			            // 문자열 날짜를 JS 날짜 형태로 변환
+			            var date = new Date(listResult.rdate);
+
+			            // 표시할 날짜 형식 지정
+			            var formattedDate = date.getFullYear() + '-' + 
+			                ('0' + (date.getMonth() + 1)).slice(-2) + '-' + 
+			                ('0' + date.getDate()).slice(-2);
+
+			            // 테이블 행 구성
+			            var row = "<tr>" +
+			                "<td>" + listResult.idx + "</td>" +
+			                "<td><a href='boardModify.do?Idx=" + listResult.idx + "'>" + listResult.title + "</a></td>" +
+			                "<td>" + (listResult.anony === '1' ? listResult.userId : '익명') + "</td>" +
+			                "<td>" + formattedDate + "</td>" +
+			                "<td>" + listResult.hits + "</td>" +
+			                "</tr>";
+
+			            // 테이블에 행 추가
+			            $("tbody").append(row);
+			        });
+				},
+				error: function(xhr, status, error) {
+					console.log("code : " + xhr.status + "\n" + "message : " + xhr.responseText + "\n" + "error : " + error);
+					alert('시스템 에러 발생하였습니다. 관리자에게 연락해주세요.');
+				}
+			});
+		};	
 	});
 </script>
 <body>
@@ -406,26 +449,15 @@
 				<a class="page-link previous">&lt;</a>
 			</li>
 
-						
 			<c:choose>
-				<%-- 한 페이지에 출력되는 페이지 수(3)보다 총 페이지 수가 더 많을 경우 > 1부터 3까지만 --%>
 			    <c:when test="${totalPage >= currentPrintPage}">
-			        <c:forEach var="page" begin="1" end="${currentPrintPage}" step="1">
+			        <c:forEach var="page" begin="${startPage}" end="${totalPage}" step="1">
 			            <li class="page-item">
 			            	<a class="page-link pageBtn">${page}</a>
 			            </li>
 			        </c:forEach>
 			    </c:when>
-			    <%-- 총 페이지 수보다 한 페이지에 출력되는 페이지 수(3)가 더 많을 경우 > 1부터 ~ --%>
-			    <c:when test="${totalPage <= currentPrintPage}">
-			        <c:forEach var="page" begin="${startPage}" end="${endPage}" step="1">
-			            <li class="page-item">
-			            	<a class="page-link">${page}</a>
-			            </li>
-			        </c:forEach>
-			    </c:when>
 			</c:choose>
-
 
 			<%-- 다음 --%>
 			<li class="page-item">

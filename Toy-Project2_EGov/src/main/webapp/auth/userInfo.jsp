@@ -132,6 +132,9 @@
 					alert('유효한 회원입니다.')
 					$("#password").data("value", true);
 					$("#password").attr("readonly", true);
+				}else {
+					alert('비밀번호가 틀렸습니다. 다시 입력해주세요.');
+					$("#password").val("");
 				}
 			},
 			error: function(xhr, status, error, msg) {

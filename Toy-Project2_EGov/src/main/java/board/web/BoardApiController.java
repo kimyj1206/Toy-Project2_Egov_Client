@@ -36,13 +36,13 @@ public class BoardApiController {
 											Model model) {
 		
 		Map<String, Object> resultMap = new HashMap<>();
-		System.out.println(pageNum);
+
 		try {
 			Map<String, Integer> map = new HashMap<>();
 
 			map.put("pageNum", pageNum);
-			model.addAttribute("pageNumber", pageNum);
-			
+			model.addAttribute("pageNum", pageNum);
+
 			/* 한 페이지에 출력될 게시물 수 10개 */
 			boardVO.setCurrentPrintBoardList(10);
 
@@ -54,7 +54,6 @@ public class BoardApiController {
 			resultMap.put("listResult", listResult);
 
 		}catch(Exception e) {
-			resultMap.put("error", e.getMessage());
 			System.out.println("pageLocation error -> " + e.getMessage());
 		}
 
