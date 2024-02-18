@@ -109,9 +109,8 @@
 			url: "loginCheck.do",
 			dataType: "json",
 			contentType: 'application/json',
-			success: function(result) {
-				
-				if(result == "1") {
+			success: function(data) {
+				if(data.success) {
 					alert("로그인 완료되었습니다.");
 					location = "board.do";
 				} else {

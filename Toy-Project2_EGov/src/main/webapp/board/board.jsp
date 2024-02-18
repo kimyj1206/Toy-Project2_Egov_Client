@@ -214,7 +214,7 @@
 			clickedPageNum = $(this).text();
 
 			fetchMainData();
-		});
+		})
 		
 		
 		/* previous */
@@ -229,29 +229,36 @@
 	            $(".pageBtn:contains(" + previousPageNum + ")").addClass("active");
 				
 	            fetchPrevData(previousPageNum);
-			}else {
+			} else {
 				alert('첫 페이지입니다.');
 			}
-		});
+		})
 		
 		/* next */
 		$(".next").click(function(e) {
 			var currentPageNum = $(".active").text();
 
-			if(currentPageNum != "") {
-				var nextPageNum = Number(currentPageNum) + 1;
 
-				if(nextPageNum > ${totalPage}) {
-					alert('마지막 페이지입니다.');
-				} else {
-					// 다음 페이지 클릭 시 active 클래스 설정
-		            $(".page-link").removeClass("active");
-		            $(".pageBtn:contains(" + nextPageNum + ")").addClass("active");
-					
-		            fetchNextData(nextPageNum);	
-				}
+			var nextPageNum = Number(currentPageNum) + 1;
+			
+			
+			if(nextPageNum <= ${totalPage}) {
+				alert(${totalPage});
+				alert('currentPageNum1 = ' + currentPageNum);
+				alert('nextPageNum1 = ' + nextPageNum);
+				// 다음 페이지 클릭 시 active 클래스 설정
+	            $(".page-link").removeClass("active");
+	            $(".pageBtn:contains(" + nextPageNum + ")").addClass("active");
+				
+	            fetchNextData(nextPageNum);
+			} else {
+				alert(${totalPage});
+				alert('currentPageNum1 = ' + currentPageNum);
+				alert('nextPageNum1 = ' + nextPageNum);
+				alert('마지막 페이지입니다.');
 			}
-		});
+			
+		})
 		
 		
 		function fetchMainData() {
@@ -333,7 +340,7 @@
 					alert('시스템 에러 발생하였습니다. 관리자에게 연락해주세요.');
 				}
 			});
-		};
+		}
 		
 		
 		function fetchNextData(nextPageNum) {
@@ -374,7 +381,8 @@
 					alert('시스템 에러 발생하였습니다. 관리자에게 연락해주세요.');
 				}
 			});
-		};	
+		}
+		
 	});
 </script>
 <body>
@@ -451,7 +459,7 @@
 
 			<c:choose>
 			    <c:when test="${totalPage >= currentPrintPage}">
-			        <c:forEach var="page" begin="${startPage}" end="${totalPage}" step="1">
+			        <c:forEach var="page" begin="${startPage}" end="${endPage}" step="1">
 			            <li class="page-item">
 			            	<a class="page-link pageBtn">${page}</a>
 			            </li>

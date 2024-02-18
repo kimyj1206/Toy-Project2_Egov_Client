@@ -95,7 +95,6 @@
 				contentType: 'application/json',
 				url: 'authFindIdCheck.do',
 				success: function(data) {
-					
 					if(data.success) {
 						$("#idResult").show();
 						$("#id1").val(data.userId.id);
@@ -124,7 +123,6 @@
 				contentType: 'application/json',
 				url: 'authFindIdCheck.do',
 				success: function(data) {
-					
 					if(data.success) {
 						$("#phoneResult").show();
 						$("#id2").val(data.userId.id);

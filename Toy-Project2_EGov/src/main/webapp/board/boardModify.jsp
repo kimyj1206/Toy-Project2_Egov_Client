@@ -50,8 +50,8 @@
 			type: "post",
 			url: "updateBoard.do",
 			data: JSON.stringify({
-				"title": "${result.title}",
-				"content": "${result.content}",
+				"title": $("#title").val(),
+				"content": $("#content").val(),
 				"userId": "${result.userId}",
 				"anony": $("#anony").val(),
 				"hits": $("#hits").val(),
@@ -59,8 +59,8 @@
 			}),
 			dataType: "json",
 			contentType: 'application/json',
-			success: function(msg) {
-				if(msg == 'ok') {
+			success: function(data) {
+				if(data.success) {
 					alert('게시글 수정 완료되었습니다.');
 					location = "board.do";
 				}else {
@@ -80,8 +80,8 @@
 			type: "post",
 			url: "deleteBoard.do",
 			data: JSON.stringify({
-				"title": "${result.title}",
-				"content": "${result.content}",
+				"title": $("#title").val(),
+				"content": $("#content").val(),
 				"userId": "${result.userId}",
 				"anony": $("#anony").val(),
 				"hits": $("#hits").val(),
@@ -89,8 +89,8 @@
 			}),
 			dataType: "json",
 			contentType: 'application/json',
-			success: function(msg) {
-				if(msg == "ok") {
+			success: function(data) {
+				if(data.success) {
 					alert('게시글 삭제 완료되었습니다.');
 					location = "board.do";
 				}else {

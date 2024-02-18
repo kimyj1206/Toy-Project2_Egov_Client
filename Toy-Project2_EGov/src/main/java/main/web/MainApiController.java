@@ -9,13 +9,10 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import main.service.MainService;
@@ -34,6 +31,7 @@ public class MainApiController {
 	 */
 	@RequestMapping(value = "/duplicatedID.do")
 	public Map<String, Object> duplicatedID(@RequestBody MainVO mainVO) {
+		
 		Map<String, Object> resultMap = new HashMap<>();
 		
 		try {
@@ -57,6 +55,7 @@ public class MainApiController {
 	 */
 	@RequestMapping(value = "/joinSave.do", method = RequestMethod.POST)
 	public Map<String, Object> insertJoin(@RequestBody MainVO mainVO) {
+		
 		Map<String, Object> resultMap = new HashMap<>();
 		
 		try {
@@ -79,11 +78,12 @@ public class MainApiController {
 	 * 로그인
 	 */
 	@RequestMapping(value = "/loginCheck.do", method = RequestMethod.POST)
-	public String selectLogin(@RequestBody MainVO mainVO, HttpServletRequest request) {
-		int result = 0;
+	public Map<String, Object> selectLogin(@RequestBody MainVO mainVO, HttpServletRequest request) {
+		
+		Map<String, Object> resultMap = new HashMap<>();
 		
 		try {
-			result = mainService.selectLogin(mainVO);
+			int result = mainService.selectLogin(mainVO);
 			
 			if(result == 1) {
 				/* session 생성 */
@@ -95,11 +95,13 @@ public class MainApiController {
 				
 				/* 세션 타임아웃 지정 */
 				session.setMaxInactiveInterval(60*30);
+				
+				resultMap.put("success", "로그인 완료");
 			}
 		} catch(Exception e) {
 			System.out.println("selectLogin error -> " + e.getMessage());
 		}
-		return result + "";
+		return resultMap;
 	}
 	
 	
@@ -109,6 +111,7 @@ public class MainApiController {
 	 */
 	@RequestMapping(value = "/authFindIdCheck.do", method = RequestMethod.POST)
 	public Map<String, Object> authFindIdCheck(@RequestBody MainVO mainVO, Model model) {
+		
 		Map<String, Object> resultMap = new HashMap<>();
 		
 		try {
@@ -148,6 +151,7 @@ public class MainApiController {
 	 */
 	@RequestMapping(value = "/authIdCheck.do", method = RequestMethod.POST)
 	public Map<String, Object> authIdCheck(@RequestBody MainVO mainVO) {
+		
 		Map<String, Object> resultMap = new HashMap<>();
 		
 		try {
@@ -171,6 +175,7 @@ public class MainApiController {
 	 */
 	@RequestMapping(value = "/authPwReset.do", method = RequestMethod.POST)
 	public Map<String, Object> authPwReset(@RequestBody MainVO mainVO) {
+		
 		Map<String, Object> resultMap = new HashMap<>();
 		
 		try {
@@ -194,6 +199,7 @@ public class MainApiController {
 	 */
 	@RequestMapping(value = "/authPwCheck.do")
 	public Map<String, Object> authPwCheck(@RequestBody MainVO mainVO) {
+		
 		Map<String, Object> resultMap = new HashMap<>();
 		
 		try {
@@ -218,6 +224,7 @@ public class MainApiController {
 	 */
 	@RequestMapping(value = "/authUserInfoUpdate.do")
 	public Map<String, Object> authUserInfoUpdate(@RequestBody MainVO mainVO) {
+		
 		Map<String, Object> resultMap = new HashMap<>();
 		
 		try {
@@ -242,6 +249,7 @@ public class MainApiController {
 	 */
 	@RequestMapping(value = "/leave.do")
 	public Map<String, Object> authUserleave(@RequestBody MainVO mainVO) {
+		
 		Map<String, Object> resultMap = new HashMap<>();
 		
 		try {

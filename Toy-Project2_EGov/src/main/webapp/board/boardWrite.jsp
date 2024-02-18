@@ -53,17 +53,6 @@
 </head>
 <script>
 	function btnSubmit() {
-		
-		/* var data = JSON.stringify({
-						"title": $("#title").val(),
-						"content": $("#content").val(),
-						"userId": "${sessionScope.sessionID}",
-						"anony": $("#anony").val(),
-						"hits": $("#hits").val() })
-		
-		var formData = new FormData();
-		formData.append("data", data); */
-		
 		$.ajax({
 			type : "post",
 			url : "boardSave.do",
@@ -76,8 +65,8 @@
 			}),
 			dataType : "json",
 			contentType: 'application/json',
-			success : function(msg) {
-				if(msg == "ok") {
+			success : function(data) {
+				if(data.success) {
 					alert('게시글이 저장되었습니다.');
 					location = "board.do";
 				}else {

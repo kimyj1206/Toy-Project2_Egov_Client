@@ -54,7 +54,6 @@
 			contentType: 'application/json',
 			url: 'authIdCheck.do',
 			success: function(data) {
-
 				if(data.success) {
 					$("#pwResult").show();					
 				}else {
@@ -80,7 +79,6 @@
 			contentType: 'application/json',
 			url: 'authPwReset.do',
 			success: function(data) {
-
 				if(data.success) {
 					alert('비밀번호 변경이 완료됐습니다.');
 					location = 'authLogin.do';

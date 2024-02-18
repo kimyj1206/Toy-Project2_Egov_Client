@@ -102,9 +102,9 @@ public class BoardApiController {
 	 * 게시글 작성
 	 */
 	@RequestMapping(value = "/boardSave.do", method = RequestMethod.POST)
-	public String insertBoard(@RequestBody BoardVO boardVO, HttpSession session) {
+	public Map<String, Object> insertBoard(@RequestBody BoardVO boardVO, HttpSession session) {
 		
-		String msg = "";
+		Map<String, Object> resultMap = new HashMap<>();
 		
 		try {
 			String sessionID = (String) session.getAttribute("sessionID");
@@ -113,14 +113,14 @@ public class BoardApiController {
 				String result = boardService.insertBoard(boardVO);
 				
 				if(result == null) {
-					msg = "ok";
+					resultMap.put("success", "게시글 작성 성공");
 				}
 			}
 		} catch(Exception e) {
 			System.out.println("boardSave error -> " + e.getMessage());
 			
 		}
-		return msg;
+		return resultMap;
 	}
 	
 	
@@ -128,21 +128,21 @@ public class BoardApiController {
 	 * 게시글 수정 호출
 	 */
 	@RequestMapping(value = "/updateBoard.do", method = RequestMethod.POST)
-	public String updateBoard(@RequestBody BoardVO boardVO) {
+	public Map<String, Object> updateBoard(@RequestBody BoardVO boardVO) {
 		
-		String msg = "";
+		Map<String, Object> resultMap = new HashMap<>();
 		
 		try {
 			int result = boardService.updateBoard(boardVO);
 			
 			if(result == 1) {
-				msg = "ok";
+				resultMap.put("success", "게시글 수정 성공");
 			}
 			
 		}catch(Exception e) {
 			System.out.println("updateBoard error -> " + e.getMessage());
 		}
-		return msg;
+		return resultMap;
 	}
 	
 	
@@ -150,19 +150,19 @@ public class BoardApiController {
 	 * 게시글 삭제 호출
 	 */
 	@RequestMapping(value = "/deleteBoard.do", method = RequestMethod.POST)
-	public String deleteBoard(@RequestBody BoardVO boardVO) {
+	public Map<String, Object> deleteBoard(@RequestBody BoardVO boardVO) {
 		
-		String msg = "";
+		Map<String, Object> resultMap = new HashMap<>();
 		
 		try {
 			int result = boardService.deleteBoard(boardVO.getIdx());
 			
 			if(result == 1) {
-				msg = "ok";
+				resultMap.put("success", "게시글 삭제 성공");
 			}
 		}catch(Exception e) {
 			System.out.println("deleteBoard error -> " + e.getMessage());
 		}
-		return msg;
+		return resultMap;
 	}
 }

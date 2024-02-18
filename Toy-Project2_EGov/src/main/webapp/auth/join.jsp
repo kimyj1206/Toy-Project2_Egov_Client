@@ -118,7 +118,6 @@
 			dataType: 'json',
 			contentType: 'application/json',
 			success: function(data) {
-				
 				if(data.success) {
 					alert(joinID + ' 는 사용 가능한 아이디입니다.');
 					$("#id").data("value", true);
@@ -152,7 +151,6 @@
 				dataType : "json",
 				contentType: 'application/json',
 				success: function(data) {
-					
 					if(data.success) {
 						alert('회원가입이 완료되었습니다.');
 						location = 'authLogin.do';

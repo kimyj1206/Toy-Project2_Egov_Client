@@ -167,7 +167,6 @@
 					}else {
 						alert("회원 정보 수정 실패했습니다.\n입력 값을 확인해주세요.");
 					}
-					
 				},
 				error: function(xhr, status, error) {
 					console.log("code : " + xhr.status + "\n" + "message : " + xhr.responseText + "\n" + "error : " + error);
