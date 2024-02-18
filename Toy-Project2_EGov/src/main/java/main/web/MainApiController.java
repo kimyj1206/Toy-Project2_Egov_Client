@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,8 @@ import main.service.MainVO;
 public class MainApiController {
 		
 	// MainService 이름을 가진 Impl 클래스를 찾음
-	@Resource(name = "mainService")
+	/*@Resource(name = "mainService")*/
+	@Autowired
 	private MainService mainService;
 	
 	

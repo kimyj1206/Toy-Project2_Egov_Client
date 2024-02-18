@@ -2,6 +2,7 @@ package main.web;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +16,8 @@ import main.service.MainVO;
 public class MainViewController {
 
 	// MainService 이름을 가진 Impl 클래스를 찾음
-	@Resource(name = "mainService")
+	/*@Resource(name = "mainService")*/
+	@Autowired
 	private MainService mainService;
 	
 	
