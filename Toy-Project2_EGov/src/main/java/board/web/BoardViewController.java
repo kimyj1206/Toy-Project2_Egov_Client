@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +17,8 @@ import board.service.PageVO;
 @Controller
 public class BoardViewController {
 
-	@Resource(name = "boardService")
+	/*@Resource(name = "boardService")*/
+	@Autowired
 	private BoardService boardService;
 	
 	
@@ -24,42 +26,39 @@ public class BoardViewController {
 	 * 게시판 호출
 	 */
 	@RequestMapping(value = "/board.do")
-	public String selectBoard(BoardVO boardVO, PageVO pageVO, Model model) {
+	public String selectBoard(PageVO pageVO, Model model) {
 		
 		try{
 			/* 초기 조회 시 페이지 번호 1로 고정 */
-			boardVO.setPageNum(1);
-			
+			pageVO.setPageNum(1);
+
 			/* 한 페이지에 출력될 페이지 수 */
-			boardVO.setCurrentPrintPage(3);
+			pageVO.setCurrentPrintPage(2);
 			
 			/* 한 페이지에 출력될 게시물 수 */
-			boardVO.setCurrentPrintBoardList(10);
+			pageVO.setCurrentPrintBoardList(10);
 			
 			/* 게시글 조회 */
-			List<BoardVO> result = boardService.selectBoard(boardVO);
+			List<BoardVO> result = boardService.selectBoard(pageVO);
 			
 			/* 게시물 총 개수 */
 			int totalBoardList = boardService.selectBoardCnt();
 			
 			/* 전체 페이지 수(소수점 값이 있다면 올림 처리) */
-			//int totalPage = (int) Math.ceil((double) totalBoardList / boardVO.getCurrentPrintBoardList());
-			boardVO.setTotalPage((int) Math.ceil((double) totalBoardList / boardVO.getCurrentPrintBoardList()));
+			pageVO.setTotalPage((int) Math.ceil((double) totalBoardList / pageVO.getCurrentPrintBoardList()));
 			
-			/* 시작 페이지 번호 계산 */
-			//int startPage = Math.max(1, Math.min(boardVO.getPageNum(), totalPage - boardVO.getCurrentPrintPage() + 1));
-			boardVO.setStartPage(Math.max(1, Math.min(boardVO.getPageNum(), boardVO.getTotalPage() - boardVO.getCurrentPrintPage() + 1)));
+			/* 시작 페이지 번호 */
+			pageVO.setStartPage(Math.max(1, Math.min(pageVO.getPageNum(), pageVO.getTotalPage() - pageVO.getCurrentPrintPage() + 1)));
 			
-			/* 끝 페이지 번호 계산 */
-			//int endPage = Math.min(totalPage, startPage + boardVO.getCurrentPrintPage() - 1);
-			boardVO.setEndPage(Math.min(boardVO.getTotalPage(), boardVO.getStartPage() + boardVO.getCurrentPrintPage() - 1));
+			/* 끝 페이지 번호 */
+			pageVO.setEndPage(Math.min(pageVO.getTotalPage(), pageVO.getStartPage() + pageVO.getCurrentPrintPage() - 1));
 			
+			model.addAttribute("currentPrintPage", pageVO.getCurrentPrintPage());
 			model.addAttribute("result", result);
 			model.addAttribute("totalBoardList", totalBoardList);
-			model.addAttribute("totalPage", boardVO.getTotalPage());
-			model.addAttribute("startPage", boardVO.getStartPage());
-			model.addAttribute("endPage", boardVO.getEndPage());
-			model.addAttribute("currentPrintPage", boardVO.getCurrentPrintPage());
+			model.addAttribute("totalPage", pageVO.getTotalPage());
+			model.addAttribute("startPage", pageVO.getStartPage());
+			model.addAttribute("endPage", pageVO.getEndPage());
 		
 		}catch(Exception e) {
 			System.out.println("board error -> " + e.getMessage());

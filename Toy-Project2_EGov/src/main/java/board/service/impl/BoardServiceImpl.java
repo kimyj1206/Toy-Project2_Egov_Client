@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import board.service.BoardService;
 import board.service.BoardVO;
+import board.service.PageVO;
 
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
@@ -29,9 +30,9 @@ public class BoardServiceImpl implements BoardService {
 	 * 게시글 조회
 	 */
 	@Override
-	public List<BoardVO> selectBoard(BoardVO boardVO) throws Exception {
+	public List<BoardVO> selectBoard(PageVO pageVO) throws Exception {
 		
-		return boardDAO.selectBoard(boardVO);
+		return boardDAO.selectBoard(pageVO);
 	}
 
 	/***

@@ -13,7 +13,7 @@ public interface BoardService {
 	/***
 	 * 게시글 조회
 	 */
-	public List<BoardVO> selectBoard(BoardVO boardVO) throws Exception;
+	public List<BoardVO> selectBoard(PageVO pageVO) throws Exception;
 	
 	/***
 	 * 게시글 상세 조회

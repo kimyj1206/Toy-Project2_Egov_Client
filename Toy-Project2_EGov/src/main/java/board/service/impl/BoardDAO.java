@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 import board.service.BoardVO;
+import board.service.PageVO;
 import egovframework.rte.psl.dataaccess.EgovAbstractDAO;
 
 @Repository("boardDAO")
@@ -22,9 +23,9 @@ public class BoardDAO extends EgovAbstractDAO {
 	/*
 	 * Select
 	 */
-	public List<BoardVO> selectBoard(BoardVO boardVO) {
+	public List<BoardVO> selectBoard(PageVO pageVO) {
 
-		return (List<BoardVO>) list("board.selectBoard", boardVO);
+		return (List<BoardVO>) list("board.selectBoard", pageVO);
 	}
 
 	/*

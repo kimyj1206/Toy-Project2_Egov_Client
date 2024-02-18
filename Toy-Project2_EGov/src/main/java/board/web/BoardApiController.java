@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,8 @@ import javax.servlet.http.HttpSession;
 @RestController
 public class BoardApiController {
 	
-	@Resource(name = "boardService")
+	/*@Resource(name = "boardService")*/
+	@Autowired
 	private BoardService boardService;
 	
 	
@@ -31,7 +33,6 @@ public class BoardApiController {
 	 */
 	@RequestMapping(value = "/pageLocation.do", method = RequestMethod.GET)
 	public Map<String, Object> pageLocation(@RequestParam(name = "pageNum", defaultValue = "1") int pageNum,
-											BoardVO boardVO,
 											PageVO pageVO,
 											Model model) {
 		
@@ -40,18 +41,30 @@ public class BoardApiController {
 		try {
 			Map<String, Integer> map = new HashMap<>();
 
-			map.put("pageNum", pageNum);
-			model.addAttribute("pageNum", pageNum);
+			/* 한 페이지에 출력될 페이지 수 */
+	        pageVO.setCurrentPrintPage(2);
 
 			/* 한 페이지에 출력될 게시물 수 10개 */
-			boardVO.setCurrentPrintBoardList(10);
-
-			map.put("currentPrintBoardList", boardVO.getCurrentPrintBoardList());
+			pageVO.setCurrentPrintBoardList(10);
 			
-			/* 출력될 게시물 범위 계산(rownum 이용) 및 리스트 가져오기 */
+			/* 전체 페이지 수(소수점 값이 있다면 올림 처리) */
+			pageVO.setTotalPage((int) Math.ceil((double) boardService.selectBoardCnt() / pageVO.getCurrentPrintBoardList()));
+			
+			/* 시작 페이지 번호 */
+			int startPage = ((pageNum - 1) / pageVO.getCurrentPrintPage()) * pageVO.getCurrentPrintPage() + 1;
+	        
+			/* 끝 페이지 번호 */
+			int endPage = Math.min(startPage + pageVO.getCurrentPrintPage() - 1, pageVO.getTotalPage());
+			
+	        map.put("pageNum", pageNum);
+	        map.put("currentPrintBoardList", pageVO.getCurrentPrintBoardList());
+	        
+			/* 출력될 게시물 범위 계산(rownum 이용), 리스트 가져오기 */
 			List<BoardVO> listResult = boardService.selectBoardPrintList(map);
 
 			resultMap.put("listResult", listResult);
+			resultMap.put("startPage", startPage);
+			resultMap.put("endPage", endPage);
 
 		}catch(Exception e) {
 			System.out.println("pageLocation error -> " + e.getMessage());
