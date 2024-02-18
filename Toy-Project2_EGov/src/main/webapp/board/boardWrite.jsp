@@ -11,45 +11,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="css/board/boardWrite.css">
 <title>게시글 작성</title>
-<style>
-	* {
-		font-family: 'Nanum Myeongjo', serif;
-	}
-	h1 {
-		padding: 20px;
-		text-align: center;
-	}
-	.form-floating {
-		margin: 20px;
-	}
-	.btn_group {
-		display: flex;
-  		justify-content: center;
-  		align-items: center;
-  		height: 40vh;
-	}
-	.btn-primary {
-		padding: 10px;
-		 margin: 0 40px;
-
-	}
-	.anony-check {
-		margin: 20px 10px 0 20px;
-		display: inline-block;
-	}
-	.file-check {
-		margin: 20px 0 0 20px;
-		display: inline-block;
-	}
-	.requiredEle::after {
-	    content: '*';
-	    color: #ff0000;
-	}
-	.btn-primary {
-		margin-right: 90px;
-	}
-</style>
 </head>
 <script>
 	function btnSubmit() {

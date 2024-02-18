@@ -13,123 +13,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="css/board/board.css">
 <title>게시판</title>
-<style>
-	* {
-		margin: 0;
-    	padding: 0;
-		text-align: center;
-		font-family: 'Nanum Myeongjo', serif;
-	}
-	h1 {
-		padding: 20px;
-	}
-	.btn_group {
-		position: fixed;
-		top: 15px;
-  		right: 20px;
-		padding-bottom: 20px;
-	}
-	.btnGroup {
-		background-color: #5AC8C8;
-	    color: white;
-	    border-radius: 5px;
-	    outline: none;
-	    border: 0;
-	    padding: 8px;
-	}
-	a {
-		text-decoration: none;
-		color: #464646;
-		font-weight: bold;
-	}
-	.user-info {
-    	position: fixed;
-    	top: 15px;
-    	left: 20px;
-    	display: flex;
-    	align-items: center;
-	}
-	#user-id {
-   	 	margin-left: 15px;
-   	 	font-size: 18px;
-    	font-weight: bold;
-    	color: #0000FF;
-	}
-	.search {
-		width: 400px;
-		height: 40px;
-		float: right;
-		margin: 0 18px 8px 0;
-		display: flex;
-  	 	align-items: center;
-	}
-	.search_gubun {
-	 	margin-right: 10px;
-	}
-	.sort {
-	 	width: 400px;
-	 	height: 40px;
-	 	float: right;
-	 	display: flex;
-  	 	align-items: center;
-	}
-	.sort_gubun {
-	 	margin-left: 220px;
-	}
-	.search input {
-	 	width: 60%;
-	 	height: 30px;
-	 	font-size: 18px;
-	 	border: none;
-	 	border-bottom: 1px black solid;
-	 	margin-right: 10px;
-	}
-	.search button {
-	 	font-size: 18px;
-	 	border: none;
-	 	background-color: #FFCC00;
-	 	width: 80px;
-	 	height: 30px;
-	 	border-radius: 11px;
-	 	color: #333333;
-	 	cursor: pointer;
-	}
-	select {
-	 	width: 170px;
-	 	height: 30px;
-  	 	-moz-appearance: none;
-  	 	-webkit-appearance: none;
-  	 	appearance: none;
-  	 	font-size: 1rem;
-  	 	font-weight: 400;
-  	 	line-height: 1.5;
-  	 	color: #444;
-  	 	background-color: #fff;
-  	 	border: 1px solid #aaa;
-  	 	border-radius: .3em;
-  	 	box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
-	}
-	select:hover {
-	 	border-color: #888;
-	}
-	select:focus {
-	 	border-color: #aaa;
-	 	box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
-	 	box-shadow: 0 0 0 3px -moz-mac-focusring;
-	 	color: #222;
-	 	outline: none;
-	}
-	select:disabled {
-  	 	opacity: 0.5;
-	}
-	.pageGroup {
-	 	margin-top: 40px; 
-	}
-	.page-link.active {
-	 	color: #CCFFFF;
-	}
-</style>
 </head>
 <%
 	String sessionId = (String) session.getAttribute("sessionID");
@@ -151,6 +36,101 @@
 		location.href = '/main.do';
 	}
 
+	/* 페이징 */
+	$(document).ready(function() {
+		$(".pageBtn:contains('1')").addClass("active");
+		
+		var clickedPageNum;
+
+		$(".pageBtn").click(function(e) {
+			
+			$(".page-link").removeClass("active");
+			$(this).addClass("active");
+			
+			clickedPageNum = $(this).text();
+
+			fetchPageData(clickedPageNum);
+		})
+		
+		
+		/* previous */
+		$(".previous").click(function(e) {
+			var currentPageNum = $(".active").text();
+
+			if(currentPageNum != "" && currentPageNum > 1) {
+				var previousPageNum = currentPageNum - 1;
+				
+				// 이전 페이지 클릭 시 active 클래스 설정
+	            $(".page-link").removeClass("active");
+	            $(".pageBtn:contains(" + previousPageNum + ")").addClass("active");
+	            
+	            fetchPageData(previousPageNum);
+			} else {
+				alert('첫 페이지입니다.');
+			}
+		})
+		
+		/* next */
+		$(".next").click(function(e) {
+			var currentPageNum = $(".active").text();
+
+			var nextPageNum = Number(currentPageNum) + 1;
+			
+			if(nextPageNum <= ${totalPage}) {
+				// 다음 페이지 클릭 시 active 클래스 설정
+	            $(".page-link").removeClass("active");
+	            $(".pageBtn:contains(" + nextPageNum + ")").addClass("active");
+	            
+	            fetchPageData(nextPageNum);
+			} else {
+				alert('마지막 페이지입니다.');
+			}
+			
+		})
+		
+		
+		function fetchPageData(pageNum) {
+			$.ajax({
+				type: 'get',
+				url: 'pageLocation.do?pageNum=' + pageNum,
+				dataType: 'json',
+				contentType: 'application/json',
+				success: function(resultMap) {
+					// 기존 테이블의 행을 지움 -> 이걸 안하면 원래의 테이블 밑으로 검색 결과가 추가됨
+			        $("tbody").empty();
+
+			        // 검색 결과를 반복해서 테이블에 추가
+			        $.each(resultMap.listResult, function(index, listResult) {
+			            // 문자열 날짜를 JS 날짜 형태로 변환
+			            var date = new Date(listResult.rdate);
+
+			            // 표시할 날짜 형식 지정
+			            var formattedDate = date.getFullYear() + '-' + 
+			                ('0' + (date.getMonth() + 1)).slice(-2) + '-' + 
+			                ('0' + date.getDate()).slice(-2);
+
+			            // 테이블 행 구성
+			            var row = "<tr>" +
+			                "<td>" + listResult.idx + "</td>" +
+			                "<td><a href='boardModify.do?Idx=" + listResult.idx + "'>" + listResult.title + "</a></td>" +
+			                "<td>" + (listResult.anony === '1' ? listResult.userId : '익명') + "</td>" +
+			                "<td>" + formattedDate + "</td>" +
+			                "<td>" + listResult.hits + "</td>" +
+			                "</tr>";
+
+			            // 테이블에 행 추가
+			            $("tbody").append(row);
+			        });
+				},
+				error: function(xhr, status, error) {
+					console.log("code : " + xhr.status + "\n" + "message : " + xhr.responseText + "\n" + "error : " + error);
+					alert('시스템 에러 발생하였습니다. 관리자에게 연락해주세요.');
+				}
+			});
+		}
+		
+	});
+	
 	function search() {
 		var param = $("#searchContent").val();
 		var searchGubun = $("#search_gubun option:selected").val();
@@ -198,192 +178,6 @@
 			}
 		});
 	}
-
-	/* 페이징 */
-	$(document).ready(function() {
-		var clickedPageNum;
-		
-		/* page number */
-		$(".pageBtn").click(function(e) {
-			
-			$(".page-link").removeClass("active");
-			$(this).addClass("active");
-			
-			e.preventDefault(); // 페이지 이동 방지
-			
-			clickedPageNum = $(this).text();
-
-			fetchMainData();
-		})
-		
-		
-		/* previous */
-		$(".previous").click(function(e) {
-			var currentPageNum = $(".active").text();
-
-			if(currentPageNum != "" && currentPageNum > 1) {
-				var previousPageNum = currentPageNum - 1;
-				
-				// 이전 페이지 클릭 시 active 클래스 설정
-	            $(".page-link").removeClass("active");
-	            $(".pageBtn:contains(" + previousPageNum + ")").addClass("active");
-				
-	            fetchPrevData(previousPageNum);
-			} else {
-				alert('첫 페이지입니다.');
-			}
-		})
-		
-		/* next */
-		$(".next").click(function(e) {
-			var currentPageNum = $(".active").text();
-
-
-			var nextPageNum = Number(currentPageNum) + 1;
-			
-			
-			if(nextPageNum <= ${totalPage}) {
-				alert(${totalPage});
-				alert('currentPageNum1 = ' + currentPageNum);
-				alert('nextPageNum1 = ' + nextPageNum);
-				// 다음 페이지 클릭 시 active 클래스 설정
-	            $(".page-link").removeClass("active");
-	            $(".pageBtn:contains(" + nextPageNum + ")").addClass("active");
-				
-	            fetchNextData(nextPageNum);
-			} else {
-				alert(${totalPage});
-				alert('currentPageNum1 = ' + currentPageNum);
-				alert('nextPageNum1 = ' + nextPageNum);
-				alert('마지막 페이지입니다.');
-			}
-			
-		})
-		
-		
-		function fetchMainData() {
-			$.ajax({
-				type: 'get',
-				url: 'pageLocation.do?pageNum=' + clickedPageNum,
-				dataType: 'json',
-				contentType: 'application/json',
-				success: function(resultMap) {
-					// 기존 테이블의 행을 지움 -> 이걸 안하면 원래의 테이블 밑으로 검색 결과가 추가됨
-			        $("tbody").empty();
-
-			        // 검색 결과를 반복해서 테이블에 추가
-			        $.each(resultMap.listResult, function(index, listResult) {
-			            // 문자열 날짜를 JS 날짜 형태로 변환
-			            var date = new Date(listResult.rdate);
-
-			            // 표시할 날짜 형식 지정
-			            var formattedDate = date.getFullYear() + '-' + 
-			                ('0' + (date.getMonth() + 1)).slice(-2) + '-' + 
-			                ('0' + date.getDate()).slice(-2);
-
-			            // 테이블 행 구성
-			            var row = "<tr>" +
-			                "<td>" + listResult.idx + "</td>" +
-			                "<td><a href='boardModify.do?Idx=" + listResult.idx + "'>" + listResult.title + "</a></td>" +
-			                "<td>" + (listResult.anony === '1' ? listResult.userId : '익명') + "</td>" +
-			                "<td>" + formattedDate + "</td>" +
-			                "<td>" + listResult.hits + "</td>" +
-			                "</tr>";
-
-			            // 테이블에 행 추가
-			            $("tbody").append(row);
-			        });
-				},
-				error: function(xhr, status, error) {
-					console.log("code : " + xhr.status + "\n" + "message : " + xhr.responseText + "\n" + "error : " + error);
-					alert('시스템 에러 발생하였습니다. 관리자에게 연락해주세요.');
-				}
-			});
-		}
-		
-		
-		function fetchPrevData(previousPageNum) {
-			$.ajax({
-				type: 'get',
-				url: 'pageLocation.do?pageNum=' + previousPageNum,
-				dataType: 'json',
-				contentType: 'application/json',
-				success: function(resultMap) {
-					// 기존 테이블의 행을 지움 -> 이걸 안하면 원래의 테이블 밑으로 검색 결과가 추가됨
-			        $("tbody").empty();
-
-			        // 검색 결과를 반복해서 테이블에 추가
-			        $.each(resultMap.listResult, function(index, listResult) {
-			            // 문자열 날짜를 JS 날짜 형태로 변환
-			            var date = new Date(listResult.rdate);
-
-			            // 표시할 날짜 형식 지정
-			            var formattedDate = date.getFullYear() + '-' + 
-			                ('0' + (date.getMonth() + 1)).slice(-2) + '-' + 
-			                ('0' + date.getDate()).slice(-2);
-
-			            // 테이블 행 구성
-			            var row = "<tr>" +
-			                "<td>" + listResult.idx + "</td>" +
-			                "<td><a href='boardModify.do?Idx=" + listResult.idx + "'>" + listResult.title + "</a></td>" +
-			                "<td>" + (listResult.anony === '1' ? listResult.userId : '익명') + "</td>" +
-			                "<td>" + formattedDate + "</td>" +
-			                "<td>" + listResult.hits + "</td>" +
-			                "</tr>";
-
-			            // 테이블에 행 추가
-			            $("tbody").append(row);
-			        });
-				},
-				error: function(xhr, status, error) {
-					console.log("code : " + xhr.status + "\n" + "message : " + xhr.responseText + "\n" + "error : " + error);
-					alert('시스템 에러 발생하였습니다. 관리자에게 연락해주세요.');
-				}
-			});
-		}
-		
-		
-		function fetchNextData(nextPageNum) {
-			$.ajax({
-				type: 'get',
-				url: 'pageLocation.do?pageNum=' + nextPageNum,
-				dataType: 'json',
-				contentType: 'application/json',
-				success: function(resultMap) {
-					// 기존 테이블의 행을 지움 -> 이걸 안하면 원래의 테이블 밑으로 검색 결과가 추가됨
-			        $("tbody").empty();
-
-			        // 검색 결과를 반복해서 테이블에 추가
-			        $.each(resultMap.listResult, function(index, listResult) {
-			            // 문자열 날짜를 JS 날짜 형태로 변환
-			            var date = new Date(listResult.rdate);
-
-			            // 표시할 날짜 형식 지정
-			            var formattedDate = date.getFullYear() + '-' + 
-			                ('0' + (date.getMonth() + 1)).slice(-2) + '-' + 
-			                ('0' + date.getDate()).slice(-2);
-
-			            // 테이블 행 구성
-			            var row = "<tr>" +
-			                "<td>" + listResult.idx + "</td>" +
-			                "<td><a href='boardModify.do?Idx=" + listResult.idx + "'>" + listResult.title + "</a></td>" +
-			                "<td>" + (listResult.anony === '1' ? listResult.userId : '익명') + "</td>" +
-			                "<td>" + formattedDate + "</td>" +
-			                "<td>" + listResult.hits + "</td>" +
-			                "</tr>";
-
-			            // 테이블에 행 추가
-			            $("tbody").append(row);
-			        });
-				},
-				error: function(xhr, status, error) {
-					console.log("code : " + xhr.status + "\n" + "message : " + xhr.responseText + "\n" + "error : " + error);
-					alert('시스템 에러 발생하였습니다. 관리자에게 연락해주세요.');
-				}
-			});
-		}
-		
-	});
 </script>
 <body>
 	<h1>게시판</h1>
@@ -457,15 +251,11 @@
 				<a class="page-link previous">&lt;</a>
 			</li>
 
-			<c:choose>
-			    <c:when test="${totalPage >= currentPrintPage}">
-			        <c:forEach var="page" begin="${startPage}" end="${endPage}" step="1">
-			            <li class="page-item">
-			            	<a class="page-link pageBtn">${page}</a>
-			            </li>
-			        </c:forEach>
-			    </c:when>
-			</c:choose>
+	        <c:forEach var="page" begin="${startPage}" end="${endPage}" step="1">
+	            <li class="page-item">
+	            	<a class="page-link pageBtn">${page}</a>
+	            </li>
+	        </c:forEach>
 
 			<%-- 다음 --%>
 			<li class="page-item">

@@ -10,37 +10,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="css/auth/findPW.css">
 <title>사용자 비밀번호 찾기</title>
-<style>
-	* {
-		font-family: 'Nanum Myeongjo', serif;
-	}
-	h2 {
-		text-align: center;
-		padding: 30px;
-	}
-	.findId {
-		text-align: center;
-	}
-	p {
-		padding: 20px;
-		text-align: center;
-	}
-	a {
-		text-align: center;
-		color: #0033CC;
-		text-decoration: none;
-		font-weight: 700;
-	}
-	.btnPw {
-		margin: 20px;
-		text-align: center;
-	}
-	#pwResult {
-		margin: 35px auto;
-		text-align: center;
-	}
-</style>
 </head>
 <script>
 	/* 비밀번호 초기화 전 아이디 찾기 */

@@ -12,53 +12,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="css/auth/findID.css">
 <title>사용자 아이디 찾기</title>
 </head>
-<style>
-	* {
-		font-family: 'Nanum Myeongjo', serif;
-	}
-	h2 {
-		text-align: center;
-		padding: 30px;
-	}
-	.form-check, .emailGrp, .telGrp {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-	}
-	.emailGrp, .telGrp {
-		display: none;
-		margin: 20px 0;
-	}
-	.emailGrp div, .telGrp div, .form-check div {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		justify-content: center;
-		margin: 10px 0;
-	}
-	.emailGrp label, .telGrp label, .form-check label {
-		margin-right: 10px;
-	}
-	.btn {
-    	display: flex;
-    	align-items: center;
-    	justify-content: center;
-	}
-	#idResult {
-		margin: 35px auto;
-		text-align: center;
-	}
-	#phoneResult {
-		margin: 35px auto;
-		text-align: center;
-	}
-	.btn-primary {
-		margin: 35px auto;
-		text-align: center;
-	}
-</style>
 <script>
 	function checkBtn() {
 		var btnEmail = document.getElementById("flexRadioDefault1");

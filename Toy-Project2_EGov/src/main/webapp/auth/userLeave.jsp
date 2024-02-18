@@ -11,88 +11,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="css/auth/userLeave.css">
 <title>회원 탈퇴</title>
-<style>
-	* {
-	  	font-family: 'Nanum Myeongjo', serif;
-	  	text-align: center;
-	  	overflow: hidden;
-	}
-	.title {
-	  	color: #5AC8C8;
-	 	font-size: 2em;
-	  	padding: 10px;
-	}
-	.form-check-input {
-    	margin-right: 20px;
-  	}
-  	.vertical-center {
-        min-height: 20vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-    .modalCheck {
-    	margin: 30px 0;
-    }
-    .leaveCheck {
-	    width: 30%;
-	    height: 500px;
-	    background: white;
-	    border-radius: 20px;
-	    display: flex;
-	    justify-content: center;
-	    align-items: center;
-	    flex-direction: column;
-	    margin: 0 auto;
-	    display: none;
-	}
-    .inputId,
-	.inputPw {
-	    width: 80%;
-	    margin: 30px auto;
-	}
-	.inputId input,
-	.inputPw input {
-	    width: 100%;
-	    height: 45px;
-	    border-radius: 30px;
-	    margin-top: 4px;
-	    padding: 0px 20px;
-	    border: 1px solid lightgray;
-	    outline: none;
-	}
-	.requiredEle::after {
-	    content: '*';
-	    color: #ff0000;
-	}
-	.submit {
-		margin: 20px auto;
-	    width: 80%;
-	}
-	.submit button {
-	    width: 100%;
-	    height: 50px;
-	    border: 0;
-	    outline: none;
-	    border-radius: 40px;
-	    background: #5AC8C8;
-	    color: white;
-	    font-size: 1.2em;
-	    letter-spacing: 2px;
-	}
-	p {
-		padding: 20px;
-		text-align: center;
-	}
-	a {
-		text-align: center;
-		color: #0033CC;
-		text-decoration: none;
-		font-weight: 700;
-	}
-</style>
 </head>
 <script>
 	function agreeChecked() {
