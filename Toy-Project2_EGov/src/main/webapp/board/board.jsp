@@ -38,11 +38,11 @@
 
 	/* 페이징 */
 	$(document).ready(function() {
-		$(".pageBtn:contains('1')").addClass("active");
+		$(".pageNum:contains('1')").addClass("active");
 		
 		var clickedPageNum;
 
-		$(".pageBtn").click(function(e) {
+		$(".pageNum").click(function(e) {
 			
 			$(".page-link").removeClass("active");
 			$(this).addClass("active");
@@ -52,16 +52,15 @@
 			fetchPageData(clickedPageNum);
 		})
 		
-		/* previous */
-		$(".previous").click(function(e) {
+		/* prev */
+		$(".prev").click(function(e) {
 			var currentPageNum = $(".active").text();
 
 			if(currentPageNum != "" && currentPageNum > 1) {
 				var previousPageNum = currentPageNum - 1;
-				
-				// 이전 페이지 클릭 시 active 클래스 설정
+
 	            $(".page-link").removeClass("active");
-	            $(".pageBtn:contains(" + previousPageNum + ")").addClass("active");
+	            $(".pageNum:contains(" + previousPageNum + ")").addClass("active");
 	            
 	            fetchPageData(previousPageNum);
 			} else {
@@ -74,11 +73,10 @@
 			var currentPageNum = $(".active").text();
 
 			var nextPageNum = Number(currentPageNum) + 1;
-			
+
 			if(nextPageNum <= ${totalPage}) {
-				// 다음 페이지 클릭 시 active 클래스 설정
 	            $(".page-link").removeClass("active");
-	            $(".pageBtn:contains(" + nextPageNum + ")").addClass("active");
+	            $(".pageNum:contains(" + nextPageNum + ")").addClass("active");
 	            
 	            fetchPageData(nextPageNum);
 			} else {
@@ -94,7 +92,63 @@
 				dataType: 'json',
 				contentType: 'application/json',
 				success: function(resultMap) {
-					// 기존 테이블의 행을 지움 -> 이걸 안하면 원래의 테이블 밑으로 검색 결과가 추가됨
+
+					$(".next").on('click', function() {
+						var refStart = resultMap.refreshStartPage;
+						var refEnd = resultMap.refreshEndPage;
+						var totalPage = ${totalPage};
+						var currentPage = resultMap.pageNum;
+						var nextPageNum = currentPage + 1;
+
+						// 현재 페이지가 끝 페이지일 때만 동작
+						if (currentPage == refEnd) {
+							var newStart = Math.min(refStart + 3, totalPage);
+							var newEnd = Math.min(refEnd + 3, totalPage);
+
+							// 새로운 페이지 번호로 갱신
+							$(".pageNum").each(function(index) {
+								var pageNum = newStart + index;
+
+								if (pageNum <= totalPage) {
+									$(this).text(pageNum);
+									$(this).show();
+								} else {
+									$(this).hide();
+								}
+							});
+
+							// refreshStartPage와 refreshEndPage 값도 갱신
+							resultMap.refreshStartPage = newStart;
+							resultMap.refreshEndPage = newEnd;
+							/* console.log(resultMap); */
+							$(".page-link").removeClass("active");
+							$(".pageNum:contains(" + nextPageNum + ")").addClass("active");
+						}
+					});
+					
+					$(".prev").on('click', function() {
+					    var currentPageNum = resultMap.pageNum;
+					    var prevPageNum = Math.max(currentPageNum - 1, 1); // 이전 페이지
+					    var newStart = Math.max(prevPageNum - 1, 1); // 새로운 시작 페이지
+					    var newEnd = newStart + 1; // 새로운 끝 페이지
+
+					    // 새로운 페이지 번호로 갱신
+					    $(".pageNum").each(function(index) {
+					        var pageNum = newStart + index;
+
+					        if (pageNum <= ${totalPage}) {
+					            $(this).text(pageNum);
+					            $(this).show();
+					        } else {
+					            $(this).hide();
+					        }
+					    });
+					    
+					    $(".page-link").removeClass("active");
+					    $(".pageNum:contains(" + prevPageNum + ")").addClass("active");
+					});
+
+					// 기존 테이블의 행을 지움 -> 이걸 안하면 원래의 테이블 밑으로 결과가 추가됨
 			        $("tbody").empty();
 
 			        // 검색 결과를 반복해서 테이블에 추가
@@ -246,12 +300,12 @@
 			
 			<%-- 이전 --%>
 			<li class="page-item">
-				<a class="page-link previous">&lt;</a>
+				<a class="page-link prev">&lt;</a>
 			</li>
 
-	        <c:forEach var="page" begin="${startPage}" end="${totalPage}" step="1">
-	            <li class="page-item">
-	            	<a class="page-link pageBtn">${page}</a>
+			<c:forEach var="page" begin="${startPage}" end="${endPage}" step="1">
+	        	<li class="page-item">
+	            	<a class="page-link pageNum">${page}</a>
 	            </li>
 	        </c:forEach>
 

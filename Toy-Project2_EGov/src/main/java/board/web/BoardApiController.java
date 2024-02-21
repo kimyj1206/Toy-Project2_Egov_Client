@@ -42,7 +42,7 @@ public class BoardApiController {
 			Map<String, Integer> map = new HashMap<>();
 
 			/* 한 페이지에 출력될 페이지 수 */
-	        pageVO.setCurrentPrintPage(2);
+	        pageVO.setCurrentPrintPage(3);
 
 			/* 한 페이지에 출력될 게시물 수 10개 */
 			pageVO.setCurrentPrintBoardList(10);
@@ -52,10 +52,10 @@ public class BoardApiController {
 			
 			/* 시작 페이지 번호 */
 			int startPage = ((pageNum - 1) / pageVO.getCurrentPrintPage()) * pageVO.getCurrentPrintPage() + 1;
-	        
+
 			/* 끝 페이지 번호 */
 			int endPage = Math.min(startPage + pageVO.getCurrentPrintPage() - 1, pageVO.getTotalPage());
-			
+
 	        map.put("pageNum", pageNum);
 	        map.put("currentPrintBoardList", pageVO.getCurrentPrintBoardList());
 	        
@@ -63,9 +63,10 @@ public class BoardApiController {
 			List<BoardVO> listResult = boardService.selectBoardPrintList(map);
 
 			resultMap.put("listResult", listResult);
-			resultMap.put("startPage", startPage);
-			resultMap.put("endPage", endPage);
-
+			resultMap.put("refreshStartPage", startPage);
+			resultMap.put("refreshEndPage", endPage);
+			resultMap.put("pageNum", pageNum);
+			
 		}catch(Exception e) {
 			System.out.println("pageLocation error -> " + e.getMessage());
 		}

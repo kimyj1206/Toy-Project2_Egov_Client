@@ -33,7 +33,7 @@ public class BoardViewController {
 			pageVO.setPageNum(1);
 
 			/* 한 페이지에 출력될 페이지 수 */
-			pageVO.setCurrentPrintPage(2);
+			pageVO.setCurrentPrintPage(3);
 			
 			/* 한 페이지에 출력될 게시물 수 */
 			pageVO.setCurrentPrintBoardList(10);
@@ -49,10 +49,10 @@ public class BoardViewController {
 			
 			/* 시작 페이지 번호 */
 			pageVO.setStartPage(Math.max(1, Math.min(pageVO.getPageNum(), pageVO.getTotalPage() - pageVO.getCurrentPrintPage() + 1)));
-			
+
 			/* 끝 페이지 번호 */
 			pageVO.setEndPage(Math.min(pageVO.getTotalPage(), pageVO.getStartPage() + pageVO.getCurrentPrintPage() - 1));
-			
+
 			model.addAttribute("currentPrintPage", pageVO.getCurrentPrintPage());
 			model.addAttribute("result", result);
 			model.addAttribute("totalBoardList", totalBoardList);
@@ -63,6 +63,7 @@ public class BoardViewController {
 		}catch(Exception e) {
 			System.out.println("board error -> " + e.getMessage());
 		}
+		
 		return "board/board";
 	}
 	
@@ -106,6 +107,7 @@ public class BoardViewController {
 			System.out.println("boardModify error -> " + e.getMessage());
 			
 		}
+		
 		return "board/boardModify";
 	}
 }
