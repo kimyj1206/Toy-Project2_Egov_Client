@@ -26,13 +26,14 @@
 			contentType: 'application/json',
 			success: function(data) {
 				if(data.success) {
-					alert("로그인 완료되었습니다.");
+					alert(data.success);
 					location = "board.do";
 				} else {
-					alert("입력하신 로그인 정보가 틀립니다.");
+					alert(data.fail);
 				}
 			},
-			error: function() {
+			error: function(xhr, status, error) {
+				console.log("code : " + xhr.status + "\n" + "message : " + xhr.responseText + "\n" + "error : " + error);
 				alert('시스템 에러 발생하였습니다. 관리자에게 연락해주세요.');
 			}
 		});

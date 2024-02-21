@@ -81,6 +81,7 @@ public class MainViewController {
 			MainVO result = mainService.selectUser(id);
 			
 			model.addAttribute("result", result);
+			
 		}catch(Exception e) {
 			System.out.println("userInfo error -> " + e.getMessage());
 		}
@@ -99,6 +100,7 @@ public class MainViewController {
 			MainVO result = mainService.selectUser(id);
 			
 			model.addAttribute("result", result);
+			
 		}catch(Exception e) {
 			System.out.println("userLeave error -> " + e.getMessage());
 		}

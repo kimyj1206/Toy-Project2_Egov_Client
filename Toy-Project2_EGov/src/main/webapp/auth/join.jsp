@@ -28,14 +28,15 @@
 			contentType: 'application/json',
 			success: function(data) {
 				if(data.success) {
-					alert(joinID + ' 는 사용 가능한 아이디입니다.');
+					alert(joinID + ' is ' + data.success);
 					$("#id").data("value", true);
 				}else {
-					alert(joinID + ' 는 사용 불가능한 아이디입니다. 다른 아이디로 변경해주세요.');
+					alert(joinID + ' is ' + data.fail);
 					$("#id").val("");
 				}
 			},
-			error: function() {
+			error: function(xhr, status, error) {
+				console.log("code : " + xhr.status + "\n" + "message : " + xhr.responseText + "\n" + "error : " + error);
 				alert('시스템 에러 발생하였습니다. 관리자에게 연락해주세요.');
 			}
 		});
@@ -61,17 +62,18 @@
 				contentType: 'application/json',
 				success: function(data) {
 					if(data.success) {
-						alert('회원가입이 완료되었습니다.');
+						alert(data.success);
 						location = 'authLogin.do';
-					}else {
-						alert('회원가입에 실패했습니다.');
+					} else {
+						alert(data.fail);
 					}
 				},
-				error: function() {
+				error: function(xhr, status, error) {
+					console.log("code : " + xhr.status + "\n" + "message : " + xhr.responseText + "\n" + "error : " + error);
 					alert('시스템 에러 발생하였습니다. 관리자에게 연락해주세요.');
 				}
 			});
-		}else {
+		} else {
 			alert('유효하지 않는 필드가 포함되어 있습니다. 다시 작성해주세요.');
 		}
 	}	

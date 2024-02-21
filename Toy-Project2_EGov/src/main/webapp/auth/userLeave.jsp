@@ -36,10 +36,10 @@
 			contentType: 'application/json',
 			success: function(data) {
 				if(data.success) {
-					alert('회원 탈퇴가 정상적으로 진행됐습니다.\n감사합니다.');
+					alert(data.success);
 					location.href = '/main.do';
 				}else {
-					alert('회원 탈퇴 실패했습니다.\n입력하신 정보를 확인해주세요.');
+					alert(data.fail);
 					$("#password").val("");
 				}
 			},

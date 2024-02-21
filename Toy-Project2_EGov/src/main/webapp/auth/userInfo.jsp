@@ -28,11 +28,11 @@
 			contentType: 'application/json',
 			success: function(data) {
 				if(data.success) {
-					alert('유효한 회원입니다.')
+					alert(data.success);
 					$("#password").data("value", true);
 					$("#password").attr("readonly", true);
-				}else {
-					alert('비밀번호가 틀렸습니다. 다시 입력해주세요.');
+				} else {
+					alert(data.fail);
 					$("#password").val("");
 				}
 			},
@@ -61,10 +61,10 @@
 				contentType: 'application/json',
 				success: function(data) {
 					if(data.success) {
-						alert("회원 정보 수정되었습니다.\n로그인 페이지로 이동합니다.");
+						alert(data.success);
 						location.href = "authLogin.do";
-					}else {
-						alert("회원 정보 수정 실패했습니다.\n입력 값을 확인해주세요.");
+					} else {
+						alert(data.fail);
 					}
 				},
 				error: function(xhr, status, error) {

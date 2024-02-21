@@ -30,13 +30,14 @@
 			contentType: 'application/json',
 			success : function(data) {
 				if(data.success) {
-					alert('게시글이 저장되었습니다.');
+					alert(data.success);
 					location = "board.do";
-				}else {
-					alert('게시글 저장 실패했습니다\n로그인 여부 및 입력칸을 확인해주세요.');
+				} else {
+					alert(data.fail);
 				}
 			},
-			error : function() {
+			error: function(xhr, status, error) {
+				console.log("code : " + xhr.status + "\n" + "message : " + xhr.responseText + "\n" + "error : " + error);
 				alert('시스템 에러 발생하였습니다. 관리자에게 연락해주세요.');
 			}
 		});

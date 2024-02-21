@@ -32,10 +32,10 @@
 			contentType: 'application/json',
 			success: function(data) {
 				if(data.success) {
-					alert('게시글 수정 완료되었습니다.');
+					alert(data.success);
 					location = "board.do";
-				}else {
-					alert('게시글 수정 실패했습니다.');
+				} else {
+					alert(data.fail);
 				}
 			},
 			error: function(xhr, status, error) {
@@ -62,10 +62,10 @@
 			contentType: 'application/json',
 			success: function(data) {
 				if(data.success) {
-					alert('게시글 삭제 완료되었습니다.');
+					alert(data.success);
 					location = "board.do";
-				}else {
-					alert('게시글 삭제 실패했습니다.');
+				} else {
+					alert(data.fail);
 				}
 			},
 			error: function(xhr, status, error) {

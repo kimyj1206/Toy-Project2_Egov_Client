@@ -126,9 +126,12 @@ public class BoardApiController {
 				String result = boardService.insertBoard(boardVO);
 				
 				if(result == null) {
-					resultMap.put("success", "게시글 작성 성공");
+					resultMap.put("success", "Success created the post.");
+				} else {
+					resultMap.put("fail", "Fail create the post. Please try again.");
 				}
 			}
+			
 		} catch(Exception e) {
 			System.out.println("boardSave error -> " + e.getMessage());
 			
@@ -149,7 +152,9 @@ public class BoardApiController {
 			int result = boardService.updateBoard(boardVO);
 			
 			if(result == 1) {
-				resultMap.put("success", "게시글 수정 성공");
+				resultMap.put("success", "Success updated the post.");
+			} else {
+				resultMap.put("fail", "Fail update the post. Please try again.");
 			}
 			
 		}catch(Exception e) {
@@ -171,8 +176,11 @@ public class BoardApiController {
 			int result = boardService.deleteBoard(boardVO.getIdx());
 			
 			if(result == 1) {
-				resultMap.put("success", "게시글 삭제 성공");
+				resultMap.put("success", "Success deleted the post.");
+			} else {
+				resultMap.put("fail", "Fail delete the post. Please try again.");
 			}
+			
 		}catch(Exception e) {
 			System.out.println("deleteBoard error -> " + e.getMessage());
 		}

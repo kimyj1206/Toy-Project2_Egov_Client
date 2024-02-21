@@ -26,9 +26,10 @@
 			url: 'authIdCheck.do',
 			success: function(data) {
 				if(data.success) {
+					alert(data.success);
 					$("#pwResult").show();					
-				}else {
-					alert('입력한 정보가 틀립니다.');
+				} else {
+					alert(data.fail);
 				}
 			},
 			error: function(xhr, status, error) {
@@ -51,10 +52,10 @@
 			url: 'authPwReset.do',
 			success: function(data) {
 				if(data.success) {
-					alert('비밀번호 변경이 완료됐습니다.');
+					alert(data.success);
 					location = 'authLogin.do';
-				}else {
-					alert('비밀번호 변경 실패했습니다. 다시 시도해주세요.');
+				} else {
+					alert(data.fail);
 				}
 			},
 			error: function(xhr, status, error) {

@@ -52,7 +52,6 @@
 			fetchPageData(clickedPageNum);
 		})
 		
-		
 		/* previous */
 		$(".previous").click(function(e) {
 			var currentPageNum = $(".active").text();
@@ -85,7 +84,6 @@
 			} else {
 				alert('마지막 페이지입니다.');
 			}
-			
 		})
 		
 		
@@ -168,7 +166,7 @@
 			            // 테이블에 행 추가
 			            $("tbody").append(row);
 			        });
-			    }else {
+			    } else {
 			       alert('입력하신 검색어를 포함한 게시물이 없습니다.');
 			    }
 			},
@@ -251,7 +249,7 @@
 				<a class="page-link previous">&lt;</a>
 			</li>
 
-	        <c:forEach var="page" begin="${startPage}" end="${endPage}" step="1">
+	        <c:forEach var="page" begin="${startPage}" end="${totalPage}" step="1">
 	            <li class="page-item">
 	            	<a class="page-link pageBtn">${page}</a>
 	            </li>

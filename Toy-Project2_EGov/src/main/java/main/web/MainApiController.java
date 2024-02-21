@@ -23,7 +23,7 @@ import main.service.MainVO;
 public class MainApiController {
 		
 	// MainService 이름을 가진 Impl 클래스를 찾음
-	/*@Resource(name = "mainService")*/
+	/* @Resource(name = "mainService") */
 	@Autowired
 	private MainService mainService;
 	
@@ -40,9 +40,9 @@ public class MainApiController {
 			int result = mainService.duplicatedID(mainVO.getId());
 
 			if(result == 0) {
-				resultMap.put("success", "회원 가입 가능");
-			}else {
-				resultMap.put("fail", "회원 가입 불가능");
+				resultMap.put("success", "available ID.");
+			} else {
+				resultMap.put("fail", "already in use.");
 			}
 		}catch(Exception e) {
 			System.out.println("duplicatedID error -> " + e.getMessage());
@@ -64,9 +64,9 @@ public class MainApiController {
 			String result = mainService.insertJoin(mainVO);
 			
 			if(result == null) {
-				resultMap.put("success", "회원 가입 완료");
+				resultMap.put("success", "Success sign up.");
 			}else {
-				resultMap.put("fail", "회원 가입 실패");
+				resultMap.put("fail", "Fail sign up. Please try again.");
 			}
 			
 		} catch(Exception e) {
@@ -98,7 +98,9 @@ public class MainApiController {
 				/* 세션 타임아웃 지정 */
 				session.setMaxInactiveInterval(60*30);
 				
-				resultMap.put("success", "로그인 완료");
+				resultMap.put("success", "Success login.");
+			} else {
+				resultMap.put("fail", "Fail login. Please try again.");
 			}
 		} catch(Exception e) {
 			System.out.println("selectLogin error -> " + e.getMessage());
@@ -122,9 +124,9 @@ public class MainApiController {
 				MainVO result = mainService.authFindIdCheckEmail(mainVO);
 				
 				if(result != null) {
-					resultMap.put("success", "Success Found User");
+					resultMap.put("success", "Success found user.");
 				}else {
-					resultMap.put("fail", "Fail Not Found User");
+					resultMap.put("fail", "Fail not found user. Please try again.");
 				}
 				
 				resultMap.put("userId", result);
@@ -132,9 +134,9 @@ public class MainApiController {
 				MainVO result = mainService.authFindIdCheckPhone(mainVO);
 				
 				if(result != null) {
-					resultMap.put("success", "Success Found User");
+					resultMap.put("success", "Success found user.");
 				}else {
-					resultMap.put("fail", "Fail Not Found User");
+					resultMap.put("fail", "Fail not found user. Please try again.");
 				}
 				
 				resultMap.put("userId", result);
@@ -160,9 +162,9 @@ public class MainApiController {
 			int idCheck = mainService.authIdCheck(mainVO.getId());
 			
 			if(idCheck == 1) {
-				resultMap.put("success", "Success Found User");
+				resultMap.put("success", "Success found user.");
 			}else {
-				resultMap.put("fail", "Fail Not Found User");
+				resultMap.put("fail", "Fail not found user. Please try again.");
 			}
 			
 		}catch(Exception e) {
@@ -184,9 +186,9 @@ public class MainApiController {
 			int result = mainService.authPwReset(mainVO);
 			
 			if(result == 1) {
-				resultMap.put("success", "Success Found User");
+				resultMap.put("success", "Success found user.");
 			}else {
-				resultMap.put("fail", "Fail Not Found User");
+				resultMap.put("fail", "Fail not found user. Please try again.");
 			}
 			
 		}catch(Exception e) {
@@ -209,9 +211,9 @@ public class MainApiController {
 			
 			if(result == 1) {
 				// 유효한 회원이 존재
-				resultMap.put("success", "Success Found User");
+				resultMap.put("success", "Success found user.");
 			}else {
-				resultMap.put("fail", "Fail Not Found User");
+				resultMap.put("fail", "Fail not found user. Please try again.");
 			}
 			
 		}catch(Exception e) {
@@ -234,9 +236,9 @@ public class MainApiController {
 			
 			if(result == 1) {
 				// 유효한 회원이 존재
-				resultMap.put("success", "Success Update User");
-			}else {
-				resultMap.put("fail", "Fail Not Update User");
+				resultMap.put("success", "Success updated user.");
+			} else {
+				resultMap.put("fail", "Fail not update user. Please try again.");
 			}
 			
 		}catch(Exception e) {
@@ -259,9 +261,9 @@ public class MainApiController {
 			int result = mainService.deleteLeaveUser(mainVO);
 			
 			if(result == 1) {
-				resultMap.put("success", "Success Delete User");
-			}else {
-				resultMap.put("fail", "Fail Not Delete User");
+				resultMap.put("success", "Success deleted user.");
+			} else {
+				resultMap.put("fail", "Fail not delete user. Please try again.");
 			}
 			
 		}catch(Exception e) {

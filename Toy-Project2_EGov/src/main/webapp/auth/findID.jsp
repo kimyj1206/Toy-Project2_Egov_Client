@@ -52,12 +52,13 @@
 				url: 'authFindIdCheck.do',
 				success: function(data) {
 					if(data.success) {
+						alert(data.success);
 						$("#idResult").show();
 						$("#id1").val(data.userId.id);
 						$("#phoneResult").hide();
 					}else {
 						/* 조건에 맞는 아이디가 없다면 팝업 노출 */
-						alert('입력하신 정보로 가입된 아이디가 없습니다.');
+						alert(data.fail);
 						$("#name").val("");
 						$("#email").val("");
 					}
@@ -80,12 +81,13 @@
 				url: 'authFindIdCheck.do',
 				success: function(data) {
 					if(data.success) {
+						alert(data.success);
 						$("#phoneResult").show();
 						$("#id2").val(data.userId.id);
 						$("#idResult").hide();
 					}else {
 						/* 조건에 맞는 아이디가 없다면 팝업 노출 */
-						alert('입력하신 정보로 가입된 아이디가 없습니다.');
+						alert(data.fail);
 						$("#name2").val("");
 						$("#phone").val("");
 					}
