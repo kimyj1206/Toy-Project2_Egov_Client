@@ -39,9 +39,9 @@ public class BoardServiceImpl implements BoardService {
 	 * 게시글 상세 조회
 	 */
 	@Override
-	public BoardVO selectDBoard(BoardVO boardVO) throws Exception {
+	public BoardVO selectDBoard(int idx) throws Exception {
 		
-		return boardDAO.selectDBoard(boardVO);
+		return boardDAO.selectDBoard(idx);
 	}
 
 	/***

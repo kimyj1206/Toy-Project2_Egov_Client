@@ -31,9 +31,9 @@ public class BoardDAO extends EgovAbstractDAO {
 	/*
 	 * Select
 	 */
-	public BoardVO selectDBoard(BoardVO boardVO) {
+	public BoardVO selectDBoard(int idx) {
 
-		return (BoardVO) select("board.selectDBoard", boardVO);
+		return (BoardVO) select("board.selectDBoard", idx);
 	}
 
 	/*

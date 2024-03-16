@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700&display=swap" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="css/auth/findID.css">
+<link rel="stylesheet" type="text/css" href="../css/auth/findID.css">
 <title>사용자 아이디 찾기</title>
 </head>
 <script>
@@ -49,7 +49,7 @@
 			}), // JSON 문자열로 변환
 				dataType: 'json',
 				contentType: 'application/json',
-				url: 'authFindIdCheck.do',
+				url: '/api/v1/members/find.do',
 				success: function(data) {
 					if(data.success) {
 						alert(data.success);
@@ -78,7 +78,7 @@
 				}),
 				dataType: 'json',
 				contentType: 'application/json',
-				url: 'authFindIdCheck.do',
+				url: '/api/v1/members/find.do',
 				success: function(data) {
 					if(data.success) {
 						alert(data.success);
@@ -101,7 +101,7 @@
 	}
 	
 	function btn_location() {
-		location.href = '/authLogin.do';
+		location.href = '/members/login.do';
 	}
 </script>
 <body>

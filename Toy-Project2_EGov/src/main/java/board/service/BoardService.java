@@ -18,7 +18,7 @@ public interface BoardService {
 	/***
 	 * 게시글 상세 조회
 	 */
-	public BoardVO selectDBoard(BoardVO boardVO) throws Exception;
+	public BoardVO selectDBoard(int idx) throws Exception;
 	
 	/***
 	 * 게시글 수정

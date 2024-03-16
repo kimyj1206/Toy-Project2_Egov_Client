@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700&display=swap" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="css/auth/userLeave.css">
+<link rel="stylesheet" type="text/css" href="../css/auth/userLeave.css">
 <title>회원 탈퇴</title>
 </head>
 <script>
@@ -27,7 +27,7 @@
 	function userLeave() {
 		$.ajax({
 			type: 'post',
-			url: 'leave.do',
+			url: 'api/v1/mypage/delete',
 			data: JSON.stringify({
 				"id": $("#id").val(),
 				"password": $("#password").val()
@@ -37,7 +37,7 @@
 			success: function(data) {
 				if(data.success) {
 					alert(data.success);
-					location.href = '/main.do';
+					location.href = '/index.do';
 				}else {
 					alert(data.fail);
 					$("#password").val("");
@@ -98,7 +98,7 @@
 			<input type="password" name="password" id="password" placeholder="비밀번호를 입력해주세요." required />
 		</div>
 		
-		<p>로그인 페이지로 이동하려면? <a href="/authLogin.do">로그인</a></p>
+		<p>로그인 페이지로 이동하려면? <a href="/members/login.do">로그인</a></p>
 		
 		<div class="submit">
 	        <button type="button" onclick="userLeave()">탈퇴하기</button>

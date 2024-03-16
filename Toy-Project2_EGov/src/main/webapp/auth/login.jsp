@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700&display=swap" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="css/auth/login.css">
+<link rel="stylesheet" type="text/css" href="../css/auth/login.css">
 <title>로그인</title>
 </head>
 <script>
@@ -21,13 +21,13 @@
 				"id": $("#id").val(),
 				"password": $("#password").val()
 			}),
-			url: "loginCheck.do",
+			url: "/api/v1/members/login.do",
 			dataType: "json",
 			contentType: 'application/json',
 			success: function(data) {
 				if(data.success) {
 					alert(data.success);
-					location = "board.do";
+					location = "/boards/list.do";
 				} else {
 					alert(data.fail);
 				}
@@ -55,13 +55,13 @@
             
             <div class="login_etc">
                 <div class="find_id">
-                	<a href="/authFindId.do">아이디 찾기</a>
+                	<a href="/members/find-id.do">아이디 찾기</a>
             	</div>
             	<div class="find_pw">
-                	<a href="/authFindPw.do">비밀번호 찾기</a>
+                	<a href="/members/reset-pw.do">비밀번호 찾기</a>
             	</div>
                 <div class="join">
-                	<a href="/authJoin.do">회원가입</a>
+                	<a href="/members/join.do">회원가입</a>
             	</div>
             </div>
             

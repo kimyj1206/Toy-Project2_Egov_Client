@@ -12,14 +12,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700&display=swap" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="css/board/boardModify.css">
+<link rel="stylesheet" type="text/css" href="../css/board/boardModify.css">
 <title>게시글 조회</title>
 </head>
 <script>
 	function btnUpdate() {
 		$.ajax({
 			type: "post",
-			url: "updateBoard.do",
+			url: "/api/v1/boards/update.do",
 			data: JSON.stringify({
 				"title": $("#title").val(),
 				"content": $("#content").val(),
@@ -33,7 +33,7 @@
 			success: function(data) {
 				if(data.success) {
 					alert(data.success);
-					location = "board.do";
+					location = "/boards/list.do";
 				} else {
 					alert(data.fail);
 				}
@@ -49,7 +49,7 @@
 	function btnDelete() {
 		$.ajax({
 			type: "post",
-			url: "deleteBoard.do",
+			url: "/api/v1/boards/delete.do",
 			data: JSON.stringify({
 				"title": $("#title").val(),
 				"content": $("#content").val(),
@@ -63,7 +63,7 @@
 			success: function(data) {
 				if(data.success) {
 					alert(data.success);
-					location = "board.do";
+					location = "/boards/list.do";
 				} else {
 					alert(data.fail);
 				}

@@ -13,27 +13,27 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700&display=swap" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="css/board/board.css">
+<link rel="stylesheet" type="text/css" href="../css/board/board.css">
 <title>게시판</title>
 </head>
 <%
 	String sessionId = (String) session.getAttribute("sessionID");
 
 	if(sessionId == null || sessionId == "") {
-		response.sendRedirect("/authLogin.do");
+		response.sendRedirect("/members/login.do");
 	}
 %>
 <script>
 	function boardWirte() {
-		location.href = '/boardWrite.do';
+		location.href = '/boards/write.do';
 	}
 
 	function loginGo() {
-		location.href = '/authLogin.do';
+		location.href = '/members/login.do';
 	}
 	
 	function logout() {
-		location.href = '/main.do';
+		location.href = '/index.do';
 	}
 
 	/* 페이징 */
@@ -65,6 +65,7 @@
 	            fetchPageData(previousPageNum);
 			} else {
 				alert('첫 페이지입니다.');
+				return false; // e.preventDefault();
 			}
 		})
 		
@@ -81,6 +82,7 @@
 	            fetchPageData(nextPageNum);
 			} else {
 				alert('마지막 페이지입니다.');
+				return false; // e.preventDefault();
 			}
 		})
 		
@@ -88,7 +90,7 @@
 		function fetchPageData(pageNum) {
 			$.ajax({
 				type: 'get',
-				url: 'pageLocation.do?pageNum=' + pageNum,
+				url: '/api/v1/boards/page.do?pageNum=' + pageNum,
 				dataType: 'json',
 				contentType: 'application/json',
 				success: function(resultMap) {
@@ -97,11 +99,11 @@
 						var refStart = resultMap.refreshStartPage;
 						var refEnd = resultMap.refreshEndPage;
 						var totalPage = ${totalPage};
-						var currentPage = resultMap.pageNum;
-						var nextPageNum = currentPage + 1;
+						var currentPageNum = resultMap.pageNum;
+						var nextPageNum = currentPageNum + 1;
 
 						// 현재 페이지가 끝 페이지일 때만 동작
-						if (currentPage == refEnd) {
+						if (currentPageNum == refEnd) {
 							var newStart = Math.min(refStart + 3, totalPage);
 							var newEnd = Math.min(refEnd + 3, totalPage);
 
@@ -120,7 +122,7 @@
 							// refreshStartPage와 refreshEndPage 값도 갱신
 							resultMap.refreshStartPage = newStart;
 							resultMap.refreshEndPage = newEnd;
-							/* console.log(resultMap); */
+
 							$(".page-link").removeClass("active");
 							$(".pageNum:contains(" + nextPageNum + ")").addClass("active");
 						}
@@ -164,7 +166,7 @@
 			            // 테이블 행 구성
 			            var row = "<tr>" +
 			                "<td>" + listResult.idx + "</td>" +
-			                "<td><a href='boardModify.do?Idx=" + listResult.idx + "'>" + listResult.title + "</a></td>" +
+			                "<td><a href='/boards/detail.do?Idx=" + listResult.idx + "'>" + listResult.title + "</a></td>" +
 			                "<td>" + (listResult.anony === '1' ? listResult.userId : '익명') + "</td>" +
 			                "<td>" + formattedDate + "</td>" +
 			                "<td>" + listResult.hits + "</td>" +
@@ -190,7 +192,7 @@
 
 		$.ajax({
 			type: 'get',
-			url: 'search.do?keyword=' + param + '&searchGubun=' + searchGubun + '&sortGubun=' + sortGubun, 
+			url: '/api/v1/boards/search.do?keyword=' + param + '&searchGubun=' + searchGubun + '&sortGubun=' + sortGubun, 
 			dataType: 'json',
 			contentType: 'application/json',
 			success: function(response) {
@@ -211,7 +213,7 @@
 			            // 테이블 행 구성
 			            var row = "<tr>" +
 			                "<td>" + searchResult.idx + "</td>" +
-			                "<td><a href='boardModify.do?Idx=" + searchResult.idx + "'>" + searchResult.title + "</a></td>" +
+			                "<td><a href='/boards/detail.do?Idx=" + searchResult.idx + "'>" + searchResult.title + "</a></td>" +
 			                "<td>" + (searchResult.anony === '1' ? searchResult.userId : '익명') + "</td>" +
 			                "<td>" + formattedDate + "</td>" +
 			                "<td>" + searchResult.hits + "</td>" +
@@ -234,7 +236,7 @@
 <body>
 	<h1>게시판</h1>
 	<div class="user-info">
-		<a href="/userInfo.do?ID=${sessionScope.sessionID}"><span id="user-id">${sessionScope.sessionID} 님!</span></a>
+		<a href="/members/mypage.do?ID=${sessionScope.sessionID}"><span id="user-id">${sessionScope.sessionID} 님!</span></a>
     </div>
 	
 	<div class="btn_group">
@@ -278,7 +280,7 @@
 			    <c:forEach items="${result}" var="result">
 			    	<tr>
 				      <td>${result.idx}</td>
-				      <td><a href="boardModify.do?Idx=${result.idx}">${result.title}</a></td>
+				      <td><a href="/boards/detail.do?Idx=${result.idx}">${result.title}</a></td>
 				      <c:choose>
 				      	<c:when test="${result.anony eq '1'}">
 				      		<td>${result.userId}</td>

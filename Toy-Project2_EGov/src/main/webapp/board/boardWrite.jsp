@@ -11,14 +11,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700&display=swap" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="css/board/boardWrite.css">
+<link rel="stylesheet" type="text/css" href="../css/board/boardWrite.css">
 <title>게시글 작성</title>
 </head>
 <script>
 	function btnSubmit() {
 		$.ajax({
 			type : "post",
-			url : "boardSave.do",
+			url : "/api/v1/boards/create.do",
 			data : JSON.stringify({
 				"title": $("#title").val(),
 				"content": $("#content").val(),
@@ -31,7 +31,7 @@
 			success : function(data) {
 				if(data.success) {
 					alert(data.success);
-					location = "board.do";
+					location = "/boards/list.do";
 				} else {
 					alert(data.fail);
 				}
@@ -65,7 +65,10 @@
 		</div>
 		
 		<div class="file-check">
-			<input type="file" name="" />
+			<input type="file" name="file1" />
+		</div>
+		<div class="file-check">
+			<input type="file" name="file2" />
 		</div>
 		
 		<div>

@@ -21,6 +21,7 @@ import board.service.PageVO;
 import javax.servlet.http.HttpSession;
 
 @RestController
+@RequestMapping("/api/v1/boards")
 public class BoardApiController {
 	
 	/*@Resource(name = "boardService")*/
@@ -31,7 +32,7 @@ public class BoardApiController {
 	/***
 	 * 페이징
 	 */
-	@RequestMapping(value = "/pageLocation.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/page.do", method = RequestMethod.GET)
 	public Map<String, Object> pageLocation(@RequestParam(name = "pageNum", defaultValue = "1") int pageNum,
 											PageVO pageVO,
 											Model model) {
@@ -115,7 +116,7 @@ public class BoardApiController {
 	/***
 	 * 게시글 작성
 	 */
-	@RequestMapping(value = "/boardSave.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/create.do", method = RequestMethod.POST)
 	public Map<String, Object> insertBoard(@RequestBody BoardVO boardVO, HttpSession session) {
 		
 		Map<String, Object> resultMap = new HashMap<>();
@@ -127,14 +128,14 @@ public class BoardApiController {
 				String result = boardService.insertBoard(boardVO);
 				
 				if(result == null) {
-					resultMap.put("success", "Success created the post.");
+					resultMap.put("success", "게시글 저장 성공했습니다.");
 				} else {
-					resultMap.put("fail", "Fail create the post. Please try again.");
+					resultMap.put("fail", "게시글 저장 실패했습니다.");
 				}
 			}
 			
 		} catch(Exception e) {
-			System.out.println("boardSave error -> " + e.getMessage());
+			System.out.println("insertBoard error -> " + e.getMessage());
 			
 		}
 		return resultMap;
@@ -144,7 +145,7 @@ public class BoardApiController {
 	/***
 	 * 게시글 수정 호출
 	 */
-	@RequestMapping(value = "/updateBoard.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/update.do", method = RequestMethod.POST)
 	public Map<String, Object> updateBoard(@RequestBody BoardVO boardVO) {
 		
 		Map<String, Object> resultMap = new HashMap<>();
@@ -153,9 +154,9 @@ public class BoardApiController {
 			int result = boardService.updateBoard(boardVO);
 			
 			if(result == 1) {
-				resultMap.put("success", "Success updated the post.");
+				resultMap.put("success", "게시글 수정 성공했습니다.");
 			} else {
-				resultMap.put("fail", "Fail update the post. Please try again.");
+				resultMap.put("fail", "게시글 수정 실패했습니다.");
 			}
 			
 		}catch(Exception e) {
@@ -168,7 +169,7 @@ public class BoardApiController {
 	/***
 	 * 게시글 삭제 호출
 	 */
-	@RequestMapping(value = "/deleteBoard.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/delete.do", method = RequestMethod.POST)
 	public Map<String, Object> deleteBoard(@RequestBody BoardVO boardVO) {
 		
 		Map<String, Object> resultMap = new HashMap<>();
@@ -177,9 +178,9 @@ public class BoardApiController {
 			int result = boardService.deleteBoard(boardVO.getIdx());
 			
 			if(result == 1) {
-				resultMap.put("success", "Success deleted the post.");
+				resultMap.put("success", "게시글 삭제 성공했습니다.");
 			} else {
-				resultMap.put("fail", "Fail delete the post. Please try again.");
+				resultMap.put("fail", "게시글 삭제 실패했습니다.");
 			}
 			
 		}catch(Exception e) {

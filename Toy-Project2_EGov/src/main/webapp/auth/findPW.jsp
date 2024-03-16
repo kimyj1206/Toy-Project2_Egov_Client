@@ -10,20 +10,19 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700&display=swap" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="css/auth/findPW.css">
+<link rel="stylesheet" type="text/css" href="../css/auth/findPW.css">
 <title>사용자 비밀번호 찾기</title>
 </head>
 <script>
 	/* 비밀번호 초기화 전 아이디 찾기 */
 	function idCheck() {
+		var userId = $("#id").val();
+		
 		$.ajax({
-			type: 'post',
-			data: JSON.stringify({
-				"id": $("#id").val()
-			}),
+			type: 'get',
+			url: '/api/v1/members/validate/' + userId + '.do',
 			dataType: 'json',
 			contentType: 'application/json',
-			url: 'authIdCheck.do',
 			success: function(data) {
 				if(data.success) {
 					alert(data.success);
@@ -49,11 +48,11 @@
 			}),
 			dataType: 'json',
 			contentType: 'application/json',
-			url: 'authPwReset.do',
+			url: '/api/v1/members/reset-pw.do',
 			success: function(data) {
 				if(data.success) {
 					alert(data.success);
-					location = 'authLogin.do';
+					location = '/members/login.do';
 				} else {
 					alert(data.fail);
 				}
@@ -73,7 +72,7 @@
 		<input type="text" id="id" placeholder="아이디를 입력해주세요." />
 	</div>
 	
-	<p>아이디가 기억나지 않는다면? <a href="authFindId.do">아이디 찾기</a></p>
+	<p>아이디가 기억나지 않는다면? <a href="/members/find-id.do">아이디 찾기</a></p>
 	
 	<div class="btnPw">
 		<button type="button" class="btn btn-outline-primary" onclick="idCheck()">확인</button>

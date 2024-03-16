@@ -10,28 +10,25 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700&display=swap" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="css/auth/join.css">
+<link rel="stylesheet" type="text/css" href="../css/auth/join.css">
 <title>회원가입</title>
 </head>
 <script>
 	/* 아이디 중복 체크 */
 	function duplicatedID () {
-		var joinID = $("#id").val();
+		var userId = $("#id").val();
 
 		$.ajax({
 			type: 'post',
-			data: JSON.stringify({
-				"id": joinID
-			}),
-			url: 'duplicatedID.do',
+			url: '/api/v1/members/duplicate-check/' + userId + '.do',
 			dataType: 'json',
 			contentType: 'application/json',
 			success: function(data) {
 				if(data.success) {
-					alert(joinID + ' is ' + data.success);
+					alert(userId + '은/는 ' + data.success);
 					$("#id").data("value", true);
 				}else {
-					alert(joinID + ' is ' + data.fail);
+					alert(userId + '은/는 ' + data.fail);
 					$("#id").val("");
 				}
 			},
@@ -57,13 +54,13 @@
 					"email": $("#email").val(),
 					"gender": $("#gender :checked").val()
 				}),
-				url : "joinSave.do",
+				url : "/api/v1/members/signup.do",
 				dataType : "json",
 				contentType: 'application/json',
 				success: function(data) {
 					if(data.success) {
 						alert(data.success);
-						location = 'authLogin.do';
+						location = '/members/login.do';
 					} else {
 						alert(data.fail);
 					}

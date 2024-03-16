@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700&display=swap" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="css/auth/userInfo.css">
+<link rel="stylesheet" type="text/css" href="../css/auth/userInfo.css">
 <title>회원 정보</title>
 </head>
 <script>
@@ -19,7 +19,7 @@
 		/* 비밀번호 체크로 회원 검증 */
 		$.ajax({
 			type: 'post',
-			url: 'authPwCheck.do',
+			url: 'api/v1/mypage/validate-pw',
 			data: JSON.stringify({
 				"id": $("#id").val(),
 				"password": $("#password").val() 
@@ -48,7 +48,7 @@
 		if($("#password").data("value") == true) {
 			$.ajax({
 				type: 'post',
-				url: 'authUserInfoUpdate.do',
+				url: 'api/v1/mypage/update',
 				data: JSON.stringify({
 					"id": $("#id").val(),
 					"password": $("#password").val(),
@@ -62,7 +62,7 @@
 				success: function(data) {
 					if(data.success) {
 						alert(data.success);
-						location.href = "authLogin.do";
+						location.href = "/members/login";
 					} else {
 						alert(data.fail);
 					}
@@ -82,7 +82,7 @@
 		<div class="infoUpdate">
 			<h2>회원 정보 수정</h2>
 			
-			<a href="/userLeave.do?id=${result.id}" class="arrow-link">회원탈퇴<span class="arrow">&gt;</span></a>
+			<a href="/mypage/delete?id=${result.id}" class="arrow-link">회원탈퇴<span class="arrow">&gt;</span></a>
 			
 	        <div class="inputId">
 	        	<h4 class="requiredEle">ID</h4>
