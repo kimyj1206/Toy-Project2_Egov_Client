@@ -57,18 +57,21 @@
 	  		<label for="content" class="requiredEle">내용</label>
 		</div>
 		
+		<div class="files">
+			<span class="form-floating">
+	            <input type="file" name="file1">
+	        </span>
+	        
+	        <span class="form-floating">
+	            <input type="file" name="file2">
+	        </span>
+		</div>
+       
 		<div class="anony-check">	
   			<select class="form-select" name="anony" id="anony">
 			  <option value="1" selected>아이디 게시</option>
 			  <option value="2">익명 게시</option>
 			</select>
-		</div>
-		
-		<div class="file-check">
-			<input type="file" name="file1" />
-		</div>
-		<div class="file-check">
-			<input type="file" name="file2" />
 		</div>
 		
 		<div>

@@ -86,7 +86,7 @@ public class BoardServiceImpl implements BoardService {
 	 * 게시글 검색
 	 */
 	@Override
-	public List<BoardVO> selectSearchKeyword(Map<String, String> param) throws Exception {
+	public List<BoardVO> selectSearchKeyword(Map<String, Object> param) throws Exception {
 
 		return boardDAO.selectSearchKeyword(param);
 	}
@@ -98,6 +98,15 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardVO> selectBoardPrintList(Map<String, Integer> list) throws Exception {
 
 		return boardDAO.selectBoardPrintList(list);
+	}
+
+	/***
+	 * 검색어 포함 게시물 개수 조회
+	 */
+	@Override
+	public int selectSearchKeywordCnt(Map<String, Object> map) throws Exception {
+
+		return boardDAO.selectSearchKeywordCnt(map);
 	}
 
 }

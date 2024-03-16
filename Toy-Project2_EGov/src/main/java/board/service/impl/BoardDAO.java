@@ -71,7 +71,7 @@ public class BoardDAO extends EgovAbstractDAO {
 	/*
 	 * Select
 	 */
-	public List<BoardVO> selectSearchKeyword(Map<String, String> param) {
+	public List<BoardVO> selectSearchKeyword(Map<String, Object> param) {
 
 		return (List<BoardVO>) list("board.selectSearchKeyword", param);
 	}
@@ -84,5 +84,11 @@ public class BoardDAO extends EgovAbstractDAO {
 		return (List<BoardVO>) list("board.selectBoardPrintList", list);
 	}
 
-
+	/*
+	 * Select
+	 */
+	public int selectSearchKeywordCnt(Map<String, Object> map) {
+		
+		return (int) select("board.selectSearchKeywordCnt", map);
+	}
 }

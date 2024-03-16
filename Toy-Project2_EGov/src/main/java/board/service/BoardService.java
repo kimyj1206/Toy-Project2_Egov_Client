@@ -43,10 +43,15 @@ public interface BoardService {
 	/***
 	 * 게시글 검색
 	 */
-	public List<BoardVO> selectSearchKeyword(Map<String, String> param) throws Exception;
+	public List<BoardVO> selectSearchKeyword(Map<String, Object> param) throws Exception;
 	
 	/**
 	 * 게시물 범위 계산 및 리스트 리턴
 	 */
 	public List<BoardVO> selectBoardPrintList(Map<String, Integer> list) throws Exception;
+	
+	/***
+	 * 검색어 포함 게시물 개수 조회
+	 */
+	public int selectSearchKeywordCnt(Map<String, Object> map) throws Exception;
 }

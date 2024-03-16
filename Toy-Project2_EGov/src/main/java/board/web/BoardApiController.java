@@ -68,7 +68,7 @@ public class BoardApiController {
 			resultMap.put("refreshEndPage", endPage);
 			resultMap.put("pageNum", pageNum);
 			
-		}catch(Exception e) {
+		} catch(Exception e) {
 			System.out.println("pageLocation error -> " + e.getMessage());
 		}
 
@@ -83,33 +83,64 @@ public class BoardApiController {
 	public Map<String, Object> search(@RequestParam("keyword") String keyword,
 									  @RequestParam("searchGubun") String searchGubun,
 									  @RequestParam("sortGubun") String sortGubun,
+									  @RequestParam("pageNum") int pageNum,
+									  PageVO pageVO,
 									  Model model) {
 		
-		Map<String, Object> response = new HashMap<>();
+		Map<String, Object> resultMap = new HashMap<>();
 		
 		try{
-			/* map에 검색어, 검색구분, 정렬순을 넣음 */
-			Map<String, String> param = new HashMap<>();
+			Map<String, Object> map = new HashMap<>();
+
+			/* 한 페이지에 출력될 페이지 수 */
+	        pageVO.setCurrentPrintPage(3);
+
+			/* 한 페이지에 출력될 게시물 수 10개 */
+			pageVO.setCurrentPrintBoardList(10);
+			
+			map.put("keyword", keyword);
+			map.put("searchGubun", searchGubun);
+			map.put("sortGubun", sortGubun);
+			
+			/* 검색어 포함된 페이지 수(소수점 값이 있다면 올림 처리) */
+			pageVO.setTotalPage((int) Math.ceil((double) boardService.selectSearchKeywordCnt(map) / pageVO.getCurrentPrintBoardList()));
+			
+			/* 시작 페이지 번호 */
+			int startPage = ((pageNum - 1) / pageVO.getCurrentPrintPage()) * pageVO.getCurrentPrintPage() + 1;
+
+			/* 끝 페이지 번호 */
+			int endPage = Math.min(startPage + pageVO.getCurrentPrintPage() - 1, pageVO.getTotalPage());
+			
+			
+			/* map에 검색어, 검색구분, 정렬순, 페이지 값(1)을 넣음 */
+			Map<String, Object> param = new HashMap<>();
+			
 			param.put("keyword", keyword);
 			param.put("searchGubun", searchGubun);
 			param.put("sortGubun", sortGubun);
+			param.put("pageNum", pageNum);
+			param.put("currentPrintBoardList", pageVO.getCurrentPrintBoardList());
 			
 			/* 검색어 조회 */
 			List<BoardVO> searchResult = boardService.selectSearchKeyword(param);
 
 			/* 검색어가 없을 경우 searchResult에 빈 값이 들어감 */
 			if(searchResult.isEmpty()) {
-				 response.put("searchYN", false);
+				resultMap.put("searchYN", false);
 			}else {
-				response.put("searchYN", true);
-				response.put("searchResult", searchResult);
+				resultMap.put("searchYN", true);
+				resultMap.put("searchResult", searchResult);
 			}
 			
-		}catch(Exception e) {
+			resultMap.put("refreshStartPage", startPage);
+			resultMap.put("refreshEndPage", endPage);
+			resultMap.put("pageNum", pageNum);
+			
+		} catch(Exception e) {
 			System.out.println("search error -> " + e.getMessage());
 		}
 		
-		return response;
+		return resultMap;
 	}
 	
 	
@@ -159,7 +190,7 @@ public class BoardApiController {
 				resultMap.put("fail", "게시글 수정 실패했습니다.");
 			}
 			
-		}catch(Exception e) {
+		} catch(Exception e) {
 			System.out.println("updateBoard error -> " + e.getMessage());
 		}
 		return resultMap;
@@ -183,7 +214,7 @@ public class BoardApiController {
 				resultMap.put("fail", "게시글 삭제 실패했습니다.");
 			}
 			
-		}catch(Exception e) {
+		} catch(Exception e) {
 			System.out.println("deleteBoard error -> " + e.getMessage());
 		}
 		return resultMap;

@@ -24,14 +24,13 @@
 		margin: 20px 10px 0 20px;
 		display: inline-block;
 	}
-	.file-check {
-		margin: 20px 0 0 20px;
-		display: inline-block;
-	}
 	.requiredEle::after {
 	    content: '*';
 	    color: #ff0000;
 	}
 	.btn-primary {
 		margin-right: 90px;
+	}
+	.files {
+    	display: flex;
 	}
