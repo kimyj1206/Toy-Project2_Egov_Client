@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import board.service.BoardService;
 import board.service.BoardVO;
 import board.service.PageVO;
+import board.service.SearchVO;
 
 import javax.servlet.http.HttpSession;
 
@@ -30,53 +30,6 @@ public class BoardApiController {
 	
 	
 	/***
-	 * 페이징
-	 */
-	@RequestMapping(value = "/page.do", method = RequestMethod.GET)
-	public Map<String, Object> pageLocation(@RequestParam(name = "pageNum", defaultValue = "1") int pageNum,
-											PageVO pageVO,
-											Model model) {
-		
-		Map<String, Object> resultMap = new HashMap<>();
-
-		try {
-			Map<String, Integer> map = new HashMap<>();
-
-			/* 한 페이지에 출력될 페이지 수 */
-	        pageVO.setCurrentPrintPage(3);
-
-			/* 한 페이지에 출력될 게시물 수 10개 */
-			pageVO.setCurrentPrintBoardList(10);
-			
-			/* 전체 페이지 수(소수점 값이 있다면 올림 처리) */
-			pageVO.setTotalPage((int) Math.ceil((double) boardService.selectBoardCnt() / pageVO.getCurrentPrintBoardList()));
-			
-			/* 시작 페이지 번호 */
-			int startPage = ((pageNum - 1) / pageVO.getCurrentPrintPage()) * pageVO.getCurrentPrintPage() + 1;
-
-			/* 끝 페이지 번호 */
-			int endPage = Math.min(startPage + pageVO.getCurrentPrintPage() - 1, pageVO.getTotalPage());
-
-	        map.put("pageNum", pageNum);
-	        map.put("currentPrintBoardList", pageVO.getCurrentPrintBoardList());
-	        
-			/* 출력될 게시물 범위 계산(rownum 이용), 리스트 가져오기 */
-			List<BoardVO> listResult = boardService.selectBoardPrintList(map);
-
-			resultMap.put("listResult", listResult);
-			resultMap.put("refreshStartPage", startPage);
-			resultMap.put("refreshEndPage", endPage);
-			resultMap.put("pageNum", pageNum);
-			
-		} catch(Exception e) {
-			System.out.println("pageLocation error -> " + e.getMessage());
-		}
-
-		return resultMap;
-	}
-	
-	
-	/***
 	 * 게시물 검색 
 	 */
 	@RequestMapping(value = "/search.do", method = RequestMethod.GET)
@@ -84,7 +37,9 @@ public class BoardApiController {
 									  @RequestParam("searchGubun") String searchGubun,
 									  @RequestParam("sortGubun") String sortGubun,
 									  @RequestParam("pageNum") int pageNum,
+									  @RequestParam("sizeGubun") int sizeGubun,
 									  PageVO pageVO,
+									  SearchVO searchVO,
 									  Model model) {
 		
 		Map<String, Object> resultMap = new HashMap<>();
@@ -96,7 +51,7 @@ public class BoardApiController {
 	        pageVO.setCurrentPrintPage(3);
 
 			/* 한 페이지에 출력될 게시물 수 10개 */
-			pageVO.setCurrentPrintBoardList(10);
+			pageVO.setCurrentPrintBoardList(sizeGubun);
 			
 			map.put("keyword", keyword);
 			map.put("searchGubun", searchGubun);
@@ -110,7 +65,6 @@ public class BoardApiController {
 
 			/* 끝 페이지 번호 */
 			int endPage = Math.min(startPage + pageVO.getCurrentPrintPage() - 1, pageVO.getTotalPage());
-			
 			
 			/* map에 검색어, 검색구분, 정렬순, 페이지 값(1)을 넣음 */
 			Map<String, Object> param = new HashMap<>();
@@ -132,9 +86,10 @@ public class BoardApiController {
 				resultMap.put("searchResult", searchResult);
 			}
 			
-			resultMap.put("refreshStartPage", startPage);
-			resultMap.put("refreshEndPage", endPage);
+			resultMap.put("startPage", startPage);
+			resultMap.put("endPage", endPage);
 			resultMap.put("pageNum", pageNum);
+			resultMap.put("sizeGubun", sizeGubun);
 			
 		} catch(Exception e) {
 			System.out.println("search error -> " + e.getMessage());

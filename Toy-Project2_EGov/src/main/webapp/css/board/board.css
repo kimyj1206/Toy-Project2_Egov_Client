@@ -61,6 +61,16 @@
 	.sort_gubun {
 	 	margin-left: 220px;
 	}
+	.size {
+	    width: 400px;
+	    height: 40px;
+	    float: right;
+	    display: flex;
+	    align-items: center;
+	}
+	.size_gubun {
+	    margin-left: 474px;
+	}
 	.search input {
 	 	width: 60%;
 	 	height: 30px;

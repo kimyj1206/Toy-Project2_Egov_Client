@@ -14,7 +14,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="../css/board/board.css">
-
 <title>게시판</title>
 </head>
 <%
@@ -62,6 +61,14 @@
 		</select>
 	</div>
 		
+	<div class="size">
+		<select class="size_gubun" id="size_gubun">
+			<option value="10" selected>-- 10개씩 출력 --</option>
+			<option value="20">20개씩 출력</option>
+			<option value="30">30개씩 출력</option>
+		</select>
+	</div>	
+		
 	<table class="table table-bordered">
 	  	<thead>
 		    <tr>
@@ -97,23 +104,25 @@
 
 	<nav aria-label="Page navigation example" class="pageGroup">
 		<ul class="pagination justify-content-center">
-			
 			<%-- 이전 --%>
-			<li class="page-item">
-				<a class="page-link prev">&lt;</a>
-			</li>
-
-			<c:forEach var="page" begin="${startPage}" end="${endPage}" step="1">
+			<c:if test="${pageNum > 1}">
+				<li class="page-item">
+					<a class="page-link" href="/boards/list.do?pageNum=${pageNum -1}">이전</a>
+				</li>
+			</c:if>
+			
+	        <c:forEach var="i" begin="${startPage}" end="${endPage}" step="1">
 	        	<li class="page-item">
-	            	<a class="page-link pageNum">${page}</a>
+	            	<a class="page-link pageNum" href="/boards/list.do?pageNum=${i}">${i}</a>
 	            </li>
 	        </c:forEach>
 
 			<%-- 다음 --%>
-			<li class="page-item">
-				<a class="page-link next">&gt;</a>
-			</li>
-
+			<c:if test="${pageNum < totalPage}">
+				<li class="page-item">
+					<a class="page-link" href="/boards/list.do?pageNum=${pageNum +1}">다음</a>
+				</li>
+			</c:if>
 		</ul>
 	</nav>
 </body>

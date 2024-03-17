@@ -12,10 +12,6 @@ public class BoardVO {
 	private Date rdate;
 	private int idx;
 	
-	private String keyword;
-	private String gubun;
-	
-	
 	public String getTitle() {
 		return title;
 	}
@@ -57,17 +53,5 @@ public class BoardVO {
 	}
 	public void setIdx(int idx) {
 		this.idx = idx;
-	}
-	public String getKeyword() {
-		return keyword;
-	}
-	public void setKeyword(String keyword) {
-		this.keyword = keyword;
-	}
-	public String getGubun() {
-		return gubun;
-	}
-	public void setGubun(String gubun) {
-		this.gubun = gubun;
 	}
 }

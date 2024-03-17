@@ -31,7 +31,7 @@
 			success : function(data) {
 				if(data.success) {
 					alert(data.success);
-					location = "/boards/list.do";
+					location = "/boards/list.do?pageNum=1";
 				} else {
 					alert(data.fail);
 				}
