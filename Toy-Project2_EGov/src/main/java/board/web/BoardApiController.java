@@ -57,8 +57,10 @@ public class BoardApiController {
 			map.put("searchGubun", searchGubun);
 			map.put("sortGubun", sortGubun);
 			
+			int searchCnt = boardService.selectSearchKeywordCnt(map);
+			
 			/* 검색어 포함된 페이지 수(소수점 값이 있다면 올림 처리) */
-			pageVO.setTotalPage((int) Math.ceil((double) boardService.selectSearchKeywordCnt(map) / pageVO.getCurrentPrintBoardList()));
+			pageVO.setTotalPage((int) Math.ceil((double) searchCnt / pageVO.getCurrentPrintBoardList()));
 			
 			/* 시작 페이지 번호 */
 			int startPage = ((pageNum - 1) / pageVO.getCurrentPrintPage()) * pageVO.getCurrentPrintPage() + 1;
@@ -90,6 +92,7 @@ public class BoardApiController {
 			resultMap.put("endPage", endPage);
 			resultMap.put("pageNum", pageNum);
 			resultMap.put("sizeGubun", sizeGubun);
+			resultMap.put("searchCnt", searchCnt);
 			
 		} catch(Exception e) {
 			System.out.println("search error -> " + e.getMessage());
