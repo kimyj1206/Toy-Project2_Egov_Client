@@ -34,33 +34,33 @@ public class UserDAO extends EgovAbstractDAO {
 	/*
 	 * Select
 	 */
-	public UserVO authFindIdCheckEmail(UserVO userVO) {
+	public UserVO findIdCheckEmail(UserVO userVO) {
 		
-		return (UserVO) select("user.authFindIdCheckEmail", userVO);
+		return (UserVO) select("user.findIdCheckEmail", userVO);
 	}
 
 	/*
 	 * Select
 	 */
-	public UserVO authFindIdCheckPhone(UserVO userVO) {
+	public UserVO findIdCheckPhone(UserVO userVO) {
 
-		return (UserVO) select("user.authFindIdCheckPhone", userVO);
+		return (UserVO) select("user.findIdCheckPhone", userVO);
 	}
 
 	/*
 	 * Select
 	 */
-	public int authIdCheck(String id) {
+	public int idCheck(String id) {
 
-		return (int) select("user.authIdCheck", id);
+		return (int) select("user.idCheck", id);
 	}
 
 	/*
 	 * Update
 	 */
-	public int authPwReset(UserVO userVO) {
+	public int pwReset(UserVO userVO) {
 		
-		return update("user.authPwReset", userVO);
+		return update("user.pwReset", userVO);
 	}
 
 	/*
@@ -74,9 +74,9 @@ public class UserDAO extends EgovAbstractDAO {
 	/*
 	 * Select
 	 */
-	public int SelectPwCheck(UserVO userVO) {
+	public int selectPwCheck(UserVO userVO) {
 
-		return (int) select("user.SelectPwCheck", userVO);
+		return (int) select("user.selectPwCheck", userVO);
 	}
 
 	/*

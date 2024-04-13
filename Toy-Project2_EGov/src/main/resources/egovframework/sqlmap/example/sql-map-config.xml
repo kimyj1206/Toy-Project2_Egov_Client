@@ -3,6 +3,6 @@
 
 <sqlMapConfig>
 	<sqlMap resource="egovframework/sqlmap/example/sample/EgovSample_Sample_SQL.xml"/>
-	<sqlMap resource="egovframework/sqlmap/auth/auth_SQL.xml"/>
+	<sqlMap resource="egovframework/sqlmap/user/user_SQL.xml"/>
 	<sqlMap resource="egovframework/sqlmap/board/board_SQL.xml"/>
 </sqlMapConfig>

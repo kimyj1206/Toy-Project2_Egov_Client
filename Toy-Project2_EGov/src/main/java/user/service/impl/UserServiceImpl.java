@@ -44,36 +44,36 @@ public class UserServiceImpl implements UserService {
 	 * 이메일로 아이디 찾기
 	 */
 	@Override
-	public UserVO authFindIdCheckEmail(UserVO userVO) throws Exception {
+	public UserVO findIdCheckEmail(UserVO userVO) throws Exception {
 		
-		return userDAO.authFindIdCheckEmail(userVO);
+		return userDAO.findIdCheckEmail(userVO);
 	}
 
 	/*
 	 * 핸드폰으로 아이디 찾기
 	 */
 	@Override
-	public UserVO authFindIdCheckPhone(UserVO userVO) throws Exception {
+	public UserVO findIdCheckPhone(UserVO userVO) throws Exception {
 
-		return userDAO.authFindIdCheckPhone(userVO);
+		return userDAO.findIdCheckPhone(userVO);
 	}
 
 	/*
 	 * 비밀번호 초기화 전 아이디 찾기
 	 */
 	@Override
-	public int authIdCheck(String id) throws Exception {
+	public int idCheck(String id) throws Exception {
 		
-		return userDAO.authIdCheck(id);
+		return userDAO.idCheck(id);
 	}
 
 	/*
 	 * 비밀번호 초기화
 	 */
 	@Override
-	public int authPwReset(UserVO userVO) throws Exception {
+	public int pwReset(UserVO userVO) throws Exception {
 		
-		return userDAO.authPwReset(userVO);
+		return userDAO.pwReset(userVO);
 	}
 
 	/*
@@ -89,9 +89,9 @@ public class UserServiceImpl implements UserService {
 	 * 유효 회원 검증
 	 */
 	@Override
-	public int SelectPwCheck(UserVO userVO) throws Exception {
+	public int selectPwCheck(UserVO userVO) throws Exception {
 		
-		return userDAO.SelectPwCheck(userVO);
+		return userDAO.selectPwCheck(userVO);
 	}
 
 	/*

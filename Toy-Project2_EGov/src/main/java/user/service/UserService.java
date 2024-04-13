@@ -29,28 +29,28 @@ public interface UserService {
 	 * @return
 	 * @throws Exception
 	 */
-	public UserVO authFindIdCheckEmail(UserVO userVO) throws Exception;
+	public UserVO findIdCheckEmail(UserVO userVO) throws Exception;
 	
 	/*
 	 * Select 핸드폰으로 아이디 찾기
 	 * @return
 	 * @throws Exception
 	 */
-	public UserVO authFindIdCheckPhone(UserVO userVO) throws Exception;
+	public UserVO findIdCheckPhone(UserVO userVO) throws Exception;
 
 	/*
 	 * Select 비밀번호 찾기 전 아이디 찾기
 	 * @return
 	 * @throws Exception
 	 */
-	public int authIdCheck(String id) throws Exception;
+	public int idCheck(String id) throws Exception;
 	
 	/*
 	 * Update 비밀번호 초기화
 	 * @return
 	 * @throws Exception
 	 */
-	public int authPwReset(UserVO userVO) throws Exception;
+	public int pwReset(UserVO userVO) throws Exception;
 
 	/*
 	 * Select 회원 조회
@@ -64,7 +64,7 @@ public interface UserService {
 	 * @return
 	 * @throws Exception
 	 */
-	public int SelectPwCheck(UserVO userVO) throws Exception;
+	public int selectPwCheck(UserVO userVO) throws Exception;
 	
 	/*
 	 * Update 회원 정보 수정

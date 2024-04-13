@@ -118,7 +118,7 @@ public class UserApiController {
 		try {
 			// 핸드폰 번호 필드 비어있으면 이메일 값이므로 실행			
 			if(userVO.getPhone() == null || userVO.getPhone() == "") {
-				UserVO result = userService.authFindIdCheckEmail(userVO);
+				UserVO result = userService.findIdCheckEmail(userVO);
 				
 				if(result != null) {
 					resultMap.put("success", "입력하신 정보에 맞는 사용자를 찾았습니다.");
@@ -128,7 +128,7 @@ public class UserApiController {
 				
 				resultMap.put("userId", result);
 			}else {
-				UserVO result = userService.authFindIdCheckPhone(userVO);
+				UserVO result = userService.findIdCheckPhone(userVO);
 				
 				if(result != null) {
 					resultMap.put("success", "입력하신 정보에 맞는 사용자를 찾았습니다.");
@@ -156,7 +156,7 @@ public class UserApiController {
 		Map<String, Object> resultMap = new HashMap<>();
 		
 		try {
-			int userId = userService.authIdCheck(id);
+			int userId = userService.idCheck(id);
 			
 			if(userId == 1) {
 				resultMap.put("success", "입력하신 정보에 맞는 사용자를 찾았습니다.");
@@ -180,7 +180,7 @@ public class UserApiController {
 		Map<String, Object> resultMap = new HashMap<>();
 		
 		try {
-			int result = userService.authPwReset(userVO);
+			int result = userService.pwReset(userVO);
 			
 			if(result == 1) {
 				resultMap.put("success", "비밀번호 변경이 완료되었습니다.");
@@ -204,7 +204,7 @@ public class UserApiController {
 		Map<String, Object> resultMap = new HashMap<>();
 		
 		try {
-			int result = userService.SelectPwCheck(userVO);
+			int result = userService.selectPwCheck(userVO);
 			
 			if(result == 1) {
 				// 유효한 회원이 존재

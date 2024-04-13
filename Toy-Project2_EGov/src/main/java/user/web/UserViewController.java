@@ -24,9 +24,9 @@ public class UserViewController {
 	 * 회원가입 jsp 호출
 	 */
 	@RequestMapping(value = "/join.do", method = RequestMethod.GET)
-	public String authJoin() {
+	public String join() {
 		
-		return "auth/join";
+		return "user/join";
 	}
 	
 	
@@ -34,9 +34,9 @@ public class UserViewController {
 	 * 로그인 jsp 호출
 	 */
 	@RequestMapping(value = "/login.do", method = RequestMethod.GET)
-	public String authLogin() {
+	public String login() {
 		
-		return "auth/login";
+		return "user/login";
 	}
 	
 	
@@ -46,7 +46,7 @@ public class UserViewController {
 	@RequestMapping(value = "/find-id.do", method = RequestMethod.GET)
 	public String findID() {
 
-		return "auth/findID";
+		return "user/findID";
 	}
 	
 	
@@ -56,7 +56,7 @@ public class UserViewController {
 	@RequestMapping(value = "/reset-pw.do", method = RequestMethod.GET)
 	public String findPW() {
 		
-		return "auth/findPW";
+		return "user/findPW";
 	}
 	
 	
@@ -75,15 +75,15 @@ public class UserViewController {
 			System.out.println("userInfo error -> " + e.getMessage());
 		}
 		
-		return "auth/userInfo";
+		return "user/userInfo";
 	}
 	
 	
 	/***
 	 * 회원 탈퇴 jsp 호출
 	 */
-	@RequestMapping(value = "/mypage/delete/{id}.do", method = RequestMethod.GET)
-	public String userLeave(@PathVariable("id") String id, Model model) {
+	@RequestMapping(value = "/mypage/delete.do", method = RequestMethod.GET)
+	public String userLeave(@RequestParam("ID") String id, Model model) {
 		
 		try {
 			UserVO result = userService.selectUser(id);
@@ -94,7 +94,7 @@ public class UserViewController {
 			System.out.println("userLeave error -> " + e.getMessage());
 		}
 		
-		return "auth/userLeave";
+		return "user/userLeave";
 	}
 
 }
