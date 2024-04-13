@@ -1,0 +1,101 @@
+@CHARSET "UTF-8";
+	* {
+	  margin: 0;
+	  padding: 0;
+	  box-sizing: border-box;
+	  font-family: 'Nanum Myeongjo', serif;
+	}
+	a {
+	  text-decoration: none;
+	  color: black;
+	}
+	li {
+	  list-style: none;
+	}
+	.wrap {
+	  width: 100%;
+	  height: 100vh;
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	}
+	.infoUpdate {
+	  width: 30%;
+	  height: 600px;
+	  background: white;
+	  border-radius: 20px;
+	  display: flex;
+	  justify-content: center;
+	  align-items: center;
+	  flex-direction: column;
+	}
+	h2 {
+	  color: #5AC8C8;
+	  font-size: 2em;
+	}
+	.inputId,
+	.inputPw,
+	.inputName,
+	.inputTel,
+	.inputEmail {
+	  margin-top: 20px;
+	  width: 80%;
+	}
+	.inputId input,
+	.inputPw input,
+	.inputName input,
+	.inputTel input,
+	.inputEmail input {
+	  width: 100%;
+	  height: 45px;
+	  border-radius: 30px;
+	  margin-top: 4px;
+	  padding: 0px 20px;
+	  border: 1px solid lightgray;
+	  outline: none;
+	}
+	.pwContainer {
+	  display: flex;
+	  align-items: center;
+	}
+	.userCheck {
+	  margin-left: 10px;
+	  white-space: nowrap;
+	}
+	.inputGender {
+	  display: flex;
+	  align-items: center;
+	  margin-top: 10px;
+	  padding: 15px;
+	}
+	.inputGender label {
+	  margin-right: 50px;
+	}
+	.submit {
+	  width: 80%;
+	}
+	.submit button {
+	  width: 100%;
+	  height: 50px;
+	  border: 0;
+	  outline: none;
+	  border-radius: 40px;
+	  background: #5AC8C8;
+	  color: white;
+	  font-size: 1.2em;
+	  letter-spacing: 2px;
+	}
+	.requiredEle::after {
+	    content: '*';
+	    color: #ff0000;
+	}
+	.arrow-link {
+	  text-decoration: none;
+	  color: #333333;
+	  display: flex;
+	  align-items: center;
+	  margin-top: 10px;
+	}
+	.arrow {
+	  margin-left: 3px;
+	}

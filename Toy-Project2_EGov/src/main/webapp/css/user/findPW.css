@@ -1,0 +1,29 @@
+@CHARSET "UTF-8";
+	* {
+		font-family: 'Nanum Myeongjo', serif;
+	}
+	h2 {
+		text-align: center;
+		padding: 30px;
+	}
+	.findId {
+		text-align: center;
+	}
+	p {
+		padding: 20px;
+		text-align: center;
+	}
+	a {
+		text-align: center;
+		color: #0033CC;
+		text-decoration: none;
+		font-weight: 700;
+	}
+	.btnPw {
+		margin: 20px;
+		text-align: center;
+	}
+	#pwResult {
+		margin: 35px auto;
+		text-align: center;
+	}

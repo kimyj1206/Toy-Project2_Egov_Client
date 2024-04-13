@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="user">
+
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="userVO" type="user.service.UserVO"/>
+
+	<insert id="user.insertJoin">
+		INSERT INTO USERS
+						(id, password, name, phone, email, gender)
+					VALUES
+						(TRIM(#id#), TRIM(#password#), TRIM(#name#), TRIM(#phone#), TRIM(#email#), #gender#)
+	</insert>
+	
+	<select id="user.selectLogin" resultClass="java.lang.Integer">
+		SELECT COUNT(*) FROM USERS
+								WHERE id = #id#
+								AND password = #password#
+	</select>
+	
+	<select id="user.duplicatedID" resultClass="java.lang.Integer">
+		SELECT COUNT(*) FROM USERS
+								WHERE id = #id#
+	</select>
+	
+	<select id="user.findIdCheckEmail" resultClass="userVO">
+		SELECT * FROM USERS
+							WHERE name = #name#
+							AND email = #email#
+	</select>
+	
+	<select id="user.findIdCheckPhone" resultClass="userVO">
+		SELECT * FROM USERS
+							WHERE name = #name#
+							AND phone = #phone#
+	</select>
+	
+	<select id="user.idCheck" resultClass="java.lang.Integer">
+		SELECT COUNT(*) FROM USERS
+								WHERE id = #id#
+	</select>
+	
+	<update id="user.pwReset">
+		UPDATE USERS SET password = #password#
+											WHERE id = #id#
+	</update>
+	
+	<select id="user.selectUser" resultClass="userVO">
+		SELECT * FROM USERS
+						WHERE id = #id#
+	</select>
+	
+	<select id="user.selectPwCheck" resultClass="java.lang.Integer">
+		SELECT COUNT(*) FROM USERS
+								WHERE id = #id#
+								AND password = #password#
+	</select>
+	
+	<update id="user.updateUserInfo">
+		UPDATE USERS SET name = #name#,
+						phone = #phone#,
+						email = #email#,
+						gender = #gender#
+					WHERE
+						id = #id#
+						
+	</update>
+	
+	<delete id="user.deleteLeaveUser">
+		DELETE FROM USERS
+						WHERE id = #id#
+						AND password = #password#
+	</delete>
+</sqlMap>
