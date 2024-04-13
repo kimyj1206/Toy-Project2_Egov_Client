@@ -15,66 +15,9 @@
 <link rel="stylesheet" type="text/css" href="../css/board/boardModify.css">
 <title>게시글 조회</title>
 </head>
-<script>
-	function btnUpdate() {
-		$.ajax({
-			type: "post",
-			url: "/api/v1/boards/update.do",
-			data: JSON.stringify({
-				"title": $("#title").val(),
-				"content": $("#content").val(),
-				"userId": "${result.userId}",
-				"anony": $("#anony").val(),
-				"hits": $("#hits").val(),
-				"idx": "${result.idx}"
-			}),
-			dataType: "json",
-			contentType: 'application/json',
-			success: function(data) {
-				if(data.success) {
-					alert(data.success);
-					location = "/boards/list.do?pageNum=1";
-				} else {
-					alert(data.fail);
-				}
-			},
-			error: function(xhr, status, error) {
-				console.log("code : " + xhr.status + "\n" + "message : " + xhr.responseText + "\n" + "error : " + error);
-				alert('시스템 에러 발생하였습니다. 관리자에게 연락해주세요.');
-			}
-		});
-	}
-	
-	
-	function btnDelete() {
-		$.ajax({
-			type: "post",
-			url: "/api/v1/boards/delete.do",
-			data: JSON.stringify({
-				"title": $("#title").val(),
-				"content": $("#content").val(),
-				"userId": "${result.userId}",
-				"anony": $("#anony").val(),
-				"hits": $("#hits").val(),
-				"idx": "${result.idx}"
-			}),
-			dataType: "json",
-			contentType: 'application/json',
-			success: function(data) {
-				if(data.success) {
-					alert(data.success);
-					location = "/boards/list.do?pageNum=1";
-				} else {
-					alert(data.fail);
-				}
-			},
-			error: function(xhr, status, error) {
-				console.log("code : " + xhr.status + "\n" + "message : " + xhr.responseText + "\n" + "error : " + error);
-				alert('시스템 에러 발생하였습니다. 관리자에게 연락해주세요.');
-			}
-		});
-	}
-</script>
+
+<script src="../js/board/boardModify.js"></script>
+
 <body>
 	<h1>게시글 조회</h1>
 	
@@ -84,10 +27,10 @@
 			
 			<c:choose>
 				<c:when test="${result.anony eq '1'}">
-  					<input type="text" name="userId" id="userId" aria-label="First name" class="form-control" readonly value="${result.userId}"  style="margin-right: 10px;">
+  					<input type="text" name="userId" id="userId" aria-label="First name" class="form-control" readonly value="${result.userId}" />
   				</c:when>
   				<c:when test="${result.anony eq '2'}">
-					<input type="text" aria-label="First name" class="form-control" readonly value="익명" style="margin-right: 10px;">
+					<input type="text" aria-label="First name" class="form-control" class="anony" readonly value="익명" />
 				</c:when>
   			</c:choose>
   			
@@ -101,7 +44,7 @@
 		</div>
 		
 		<div class="form-floating">
-	 		<textarea class="form-control" id="content" style="height: 100px" name="content" required>${result.content}</textarea>
+	 		<textarea class="form-control" id="content" name="content" required style="height: 150px;">${result.content}</textarea>
 	  		<label for="content" class="requiredEle" id="label">내용</label>
 		</div>
 		
@@ -114,10 +57,9 @@
 			</div>
 		</c:if>
 		
-		<div>
-			<input type="text" name="idx" id="idx" hidden value="${result.idx}" />
-			<input type="text" name="hits" id="hits" hidden value="${result.hits}" />
-		</div>
+
+		<input type="text" name="idx" id="idx" hidden value="${result.idx}" />
+		<input type="text" name="hits" id="hits" hidden value="${result.hits}" />
 	</form>
 	
 	<c:if test="${sessionID == result.userId}">

@@ -14,35 +14,9 @@
 <link rel="stylesheet" type="text/css" href="../css/board/boardWrite.css">
 <title>게시글 작성</title>
 </head>
-<script>
-	function btnSubmit() {
-		$.ajax({
-			type : "post",
-			url : "/api/v1/boards/create.do",
-			data : JSON.stringify({
-				"title": $("#title").val(),
-				"content": $("#content").val(),
-				"userId": "${sessionScope.sessionID}",
-				"anony": $("#anony").val(),
-				"hits": $("#hits").val()
-			}),
-			dataType : "json",
-			contentType: 'application/json',
-			success : function(data) {
-				if(data.success) {
-					alert(data.success);
-					location = "/boards/list.do?pageNum=1";
-				} else {
-					alert(data.fail);
-				}
-			},
-			error: function(xhr, status, error) {
-				console.log("code : " + xhr.status + "\n" + "message : " + xhr.responseText + "\n" + "error : " + error);
-				alert('시스템 에러 발생하였습니다. 관리자에게 연락해주세요.');
-			}
-		});
-	}
-</script>
+
+<script src="../js/board/boardWrite.js"></script>
+
 <body>
 	<h1>게시글 작성</h1>
 	
@@ -53,20 +27,10 @@
 		</div>
 		
 		<div class="form-floating">
-	 		<textarea class="form-control" placeholder="내용을 입력해주세요." id="content" style="height: 100px" name="content" required></textarea>
+	 		<textarea class="form-control" placeholder="내용을 입력해주세요." id="content" name="content" required></textarea>
 	  		<label for="content" class="requiredEle">내용</label>
 		</div>
-		
-		<div class="files">
-			<span class="form-floating">
-	            <input type="file" name="file1">
-	        </span>
-	        
-	        <span class="form-floating">
-	            <input type="file" name="file2">
-	        </span>
-		</div>
-       
+   		
 		<div class="anony-check">	
   			<select class="form-select" name="anony" id="anony">
 			  <option value="1" selected>아이디 게시</option>
@@ -74,10 +38,14 @@
 			</select>
 		</div>
 		
-		<div>
-			<input type="hidden" id="hits" name="hits" value="0" />
-			<input type="hidden" id="userId" name="userId" value="${sessionScope.sessionID}" />
-		</div>
+		<div class="files">
+       		<input type="file" name="file">
+       		<button type="button" class="btn btn-warning addFiles">+</button>
+       		<button type="button" class="btn btn-danger removeFiles">-</button>
+   		</div>  	
+   		
+		<input type="hidden" id="hits" name="hits" value="0" />
+		<input type="hidden" id="userId" name="userId" value="${sessionScope.sessionID}" />
 	</form>
 	
 	<div class="btn_group">

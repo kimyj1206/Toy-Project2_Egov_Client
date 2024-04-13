@@ -9,16 +9,18 @@
 	.form-floating {
 		margin: 20px;
 	}
+	#content {
+		height: 150px;
+	}
 	.btn_group {
 		display: flex;
   		justify-content: center;
   		align-items: center;
-  		height: 40vh;
+  		height: 20vh;
 	}
 	.btn-primary {
 		padding: 10px;
 		 margin: 0 40px;
-
 	}
 	.anony-check {
 		margin: 20px 10px 0 20px;
@@ -32,5 +34,13 @@
 		margin-right: 90px;
 	}
 	.files {
-    	display: flex;
+		display: flex;
+		margin: 20px 0 0 20px;
+	}
+	.removeFiles {
+		margin-left: 15px;
+	}
+	.file {
+		display: flex;
+		margin: 20px 10px 0 20px;
 	}

@@ -81,7 +81,6 @@
 			            $("tbody").append(row);
 			        });
 			        
-
 			        
 			        let pageNum = resultMap.pageNum;
 	                let startPage = resultMap.startPage;
@@ -114,8 +113,6 @@
 	                        '<a class="page-link searchNext">다음</a>' +
 	                        '</li>';
 	                }
-	                
-	                
 	                
 			    } else {
 			       alert('입력하신 검색어를 포함한 게시물이 없습니다.');
