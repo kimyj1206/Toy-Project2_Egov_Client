@@ -50,8 +50,7 @@
 		</select>
     
         <input type="text" name="searchContent" id="searchContent" placeholder="검색어를 입력하세요.">
-        <button type="button" onclick="search(page)">검색</button>
-        <!-- <a id="search_link" href="#" onclick="generateURL()">검색</a> -->
+        <button type="button" id="searchBtn" onclick="search(1)">검색</button>
     </div>
 
 

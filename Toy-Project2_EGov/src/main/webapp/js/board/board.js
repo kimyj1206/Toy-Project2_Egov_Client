@@ -15,21 +15,39 @@
 		const urlParams = new URLSearchParams(window.location.search);
 		const pageNum = urlParams.get("pageNum");
 		
-		 $(".pageNum:contains(" + pageNum + ")").addClass("active");
+		$(".pageNum:contains(" + pageNum + ")").addClass("active");
 		
+
+	    // 페이징 버튼 클릭 이벤트 처리
+		$(document).on("click", ".searchPageNum", function() {
+	        let searchPageNum = $(this).text();
+	        search(searchPageNum);
+	    }); 
+	    
+	    // 이전 페이지 버튼 클릭 이벤트 처리
+		$(document).on("click", ".searchPrev", function() {
+	        let currentPage = parseInt($(".active .searchPageNum").text());
+	        search(currentPage - 1);
+	    });
+
+	    // 다음 페이지 버튼 클릭 이벤트 처리
+		$(document).on("click", ".searchNext", function() {
+	        let currentPage = parseInt($(".active .searchPageNum").text());
+	        search(currentPage + 1);
+	    });
+		 
 	});
 	
 
-	function search(page) {
-		alert(page);
+	function search(pageNum) {
+
 		let keyword = $("#searchContent").val();
 		let searchGubun = $("#search_gubun option:selected").val();
 		let sortGubun = $("#sort_gubun option:selected").val();
 		let sizeGubun = $("#size_gubun option:selected").val();
-		let pageNum = page;
 
 		$.ajax({
-			type: 'get',
+			type: 'GET',
 			url: '/api/v1/boards/search.do?keyword=' + keyword + '&searchGubun=' + searchGubun + '&sortGubun=' + sortGubun + '&pageNum=' + pageNum + '&sizeGubun=' + sizeGubun, 
 			dataType: 'json',
 			contentType: 'application/json',
@@ -65,36 +83,35 @@
 			        
 
 			        
-			        var pageNum = resultMap.pageNum;
-	                var startPage = resultMap.startPage;
-	                var endPage = resultMap.endPage;
-
-	                var pagination = document.querySelector('.pageGroup ul.pagination');
+			        let pageNum = resultMap.pageNum;
+	                let startPage = resultMap.startPage;
+	                let endPage = resultMap.endPage;
+	                let pagination = document.querySelector('.pageGroup ul.pagination');
 
 	                // 기존에 있던 페이지 번호 요소들 지움
 	                pagination.innerHTML = '';
 
 	                if (pageNum > 1) {
 	                    pagination.innerHTML += '<li class="page-item">' +
-	                        '<a class="page-link" href="javascript:void(0)" onclick="search(' + (pageNum - 1) + ')">이전</a>' +
+	                        '<a class="page-link searchPrev">이전</a>' +
 	                        '</li>';
 	                }
 
 	                for (let i = startPage; i <= endPage; i++) {
-	                    if (i === pageNum) {
+	                    if (i == pageNum) {
 	                        pagination.innerHTML += '<li class="page-item active">' +
-	                            '<a class="page-link pageNum" href="javascript:void(0)" onclick="search(' + i + ')">' + i + '</a>' +
+	                            '<a class="page-link searchPageNum">' + i + '</a>' +
 	                            '</li>';
 	                    } else {
 	                        pagination.innerHTML += '<li class="page-item">' +
-	                            '<a class="page-link pageNum" href="javascript:void(0)" onclick="search(' + i + ')">' + i + '</a>' +
+	                            '<a class="page-link searchPageNum">' + i + '</a>' +
 	                            '</li>';
 	                    }
 	                }
 
 	                if (pageNum < endPage) {
 	                    pagination.innerHTML += '<li class="page-item">' +
-	                        '<a class="page-link" href="javascript:void(0)" onclick="search(' + (pageNum + 1) + ')">다음</a>' +
+	                        '<a class="page-link searchNext">다음</a>' +
 	                        '</li>';
 	                }
 	                
@@ -110,27 +127,3 @@
 			}
 		});
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-/*	function generateURL() {
-		var searchContent = document.getElementById('searchContent').value;
-		var searchGubun = document.getElementById('search_gubun').value;
-		var sort_gubun = document.getElementById('sort_gubun').value;
-		var size_gubun = document.getElementById('size_gubun').value;
-		var pageNum = 1
-		
-		var url = '/api/v1/boards/search.do?keyword=' + encodeURIComponent(searchContent)
-				+ '&searchGubun=' + encodeURIComponent(searchGubun)
-				+ '&sortGubun=' + encodeURIComponent(sort_gubun)
-				+ '&pageNum=' + encodeURIComponent(pageNum)
-				+ '&sizeGubun=' + encodeURIComponent(size_gubun);
-		
-		window.location.href = url;
-	}*/

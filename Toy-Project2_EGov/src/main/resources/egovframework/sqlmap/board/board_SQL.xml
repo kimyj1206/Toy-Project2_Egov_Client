@@ -132,7 +132,7 @@
 	<select id="board.selectSearchKeyword" resultClass="boardVO">
 		SELECT idx, title, content, anony, userId, rdate, hits
 			FROM (
-    			SELECT ROWNUM, a.*
+    			SELECT ROWNUM AS rnum, a.*
    					FROM (
         				SELECT idx, title, content, anony, userId, rdate, hits
         					FROM BOARD WHERE 1=1
@@ -205,7 +205,7 @@
     				) A
     				WHERE ROWNUM <![CDATA[ <= ]]> (#pageNum# * #currentPrintBoardList#)
 			)
-			WHERE ROWNUM <![CDATA[ >= ]]> ((#pageNum# - 1) * #currentPrintBoardList#) + 1
+			WHERE rnum <![CDATA[ >= ]]> ((#pageNum# - 1) * #currentPrintBoardList#) + 1
 	</select>
 	
 	<select id="board.selectBoardPrintList" resultClass="boardVO">
