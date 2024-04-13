@@ -32,7 +32,7 @@
 </style>
 </head>
 <script>
-	function auth() {
+	function user() {
 		location.href = '/members/login.do';
 	}
 	
@@ -49,7 +49,7 @@
 	<h2>이동할 페이지를 선택해주세요.</h2>
 	
 	<div class="d-grid gap-2 col-6 mx-auto">
-  		<button class="btn btn-info" type="button" onclick="auth()">로그인 및 회원가입</button>
+  		<button class="btn btn-info" type="button" onclick="user()">로그인 및 회원가입</button>
   		<!-- <button class="btn btn-info" type="button" onclick="notice()">게시판</button> -->
   		<button class="btn btn-info" type="button" onclick="">채팅방</button>
   		<button class="btn btn-info" type="button" onclick="">SMS 전송</button>
