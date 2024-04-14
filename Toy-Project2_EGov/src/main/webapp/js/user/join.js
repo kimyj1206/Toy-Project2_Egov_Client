@@ -1,18 +1,18 @@
 	/* 아이디 중복 체크 */
 	function duplicatedID () {
-		var userId = $("#id").val();
+		var id = $("#id").val();
 
 		$.ajax({
 			type: 'post',
-			url: '/api/v1/members/duplicate-check/' + userId + '.do',
+			url: '/api/v1/members/duplicate-check/' + id + '.do',
 			dataType: 'json',
 			contentType: 'application/json',
 			success: function(data) {
 				if(data.success) {
-					alert(userId + '은/는 ' + data.success);
+					alert(id + '은/는 ' + data.success);
 					$("#id").data("value", true);
 				}else {
-					alert(userId + '은/는 ' + data.fail);
+					alert(id + '은/는 ' + data.fail);
 					$("#id").val("");
 				}
 			},

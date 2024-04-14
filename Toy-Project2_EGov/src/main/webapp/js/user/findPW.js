@@ -1,10 +1,10 @@
 	/* 비밀번호 초기화 전 아이디 찾기 */
 	function idCheck() {
-		var userId = $("#id").val();
+		var id = $("#id").val();
 		
 		$.ajax({
-			type: 'get',
-			url: '/api/v1/members/validate/' + userId + '.do',
+			type: 'GET',
+			url: '/api/v1/members/validate/' + id + '.do',
 			dataType: 'json',
 			contentType: 'application/json',
 			success: function(data) {
@@ -25,7 +25,7 @@
 	/* 비밀번호 초기화 */
 	function resetPw() {
 		$.ajax({
-			type: 'post',
+			type: 'POST',
 			data: JSON.stringify({
 				"id": $("#id").val(),
 				"password": $("#password").val()

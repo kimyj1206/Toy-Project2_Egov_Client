@@ -126,7 +126,7 @@ public class UserApiController {
 					resultMap.put("fail", "입력하신 정보에 맞는 사용자가 없습니다.");
 				}
 				
-				resultMap.put("userId", result);
+				resultMap.put("id", result);
 			}else {
 				UserVO result = userService.findIdCheckPhone(userVO);
 				
@@ -136,7 +136,7 @@ public class UserApiController {
 					resultMap.put("fail", "입력하신 정보에 맞는 사용자가 없습니다.");
 				}
 				
-				resultMap.put("userId", result);
+				resultMap.put("id", result);
 			}
 			
 		}catch(Exception e) {

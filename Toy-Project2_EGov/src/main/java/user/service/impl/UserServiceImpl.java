@@ -3,6 +3,7 @@ package user.service.impl;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import user.service.UserService;
 import user.service.UserVO;
@@ -17,6 +18,7 @@ public class UserServiceImpl implements UserService {
 	 * 회원가입 
 	 */
 	@Override
+	@Transactional
 	public String insertJoin(UserVO userVO) throws Exception {
 		
 		return userDAO.insertJoin(userVO);
@@ -26,6 +28,7 @@ public class UserServiceImpl implements UserService {
 	 * 로그인
 	 */
 	@Override
+	@Transactional
 	public int selectLogin(UserVO userVO) throws Exception {
 
 		return userDAO.selectLogin(userVO);
@@ -71,6 +74,7 @@ public class UserServiceImpl implements UserService {
 	 * 비밀번호 초기화
 	 */
 	@Override
+	@Transactional
 	public int pwReset(UserVO userVO) throws Exception {
 		
 		return userDAO.pwReset(userVO);
@@ -98,6 +102,7 @@ public class UserServiceImpl implements UserService {
 	 * 회원 정보 수정
 	 */
 	@Override
+	@Transactional
 	public int updateUserInfo(UserVO userVO) throws Exception {
 
 		return userDAO.updateUserInfo(userVO);
@@ -107,6 +112,7 @@ public class UserServiceImpl implements UserService {
 	 * 회원 탈퇴
 	 */
 	@Override
+	@Transactional
 	public int deleteLeaveUser(UserVO userVO) throws Exception {
 		
 		return userDAO.deleteLeaveUser(userVO);

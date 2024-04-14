@@ -36,7 +36,7 @@
 					if(data.success) {
 						alert(data.success);
 						$("#idResult").show();
-						$("#id1").val(data.userId.id);
+						$("#id1").val(data.id.id);
 						$("#phoneResult").hide();
 					}else {
 						/* 조건에 맞는 아이디가 없다면 팝업 노출 */
@@ -65,7 +65,7 @@
 					if(data.success) {
 						alert(data.success);
 						$("#phoneResult").show();
-						$("#id2").val(data.userId.id);
+						$("#id2").val(data.id.id);
 						$("#idResult").hide();
 					}else {
 						/* 조건에 맞는 아이디가 없다면 팝업 노출 */

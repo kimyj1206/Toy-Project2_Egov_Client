@@ -1,8 +1,8 @@
 	function userCheck() {
 		/* 비밀번호 체크로 회원 검증 */
 		$.ajax({
-			type: 'post',
-			url: 'api/v1/mypage/validate-pw',
+			type: 'POST',
+			url: '/api/v1/members/mypage/validate-pw.do',
 			data: JSON.stringify({
 				"id": $("#id").val(),
 				"password": $("#password").val() 
@@ -30,8 +30,8 @@
 		/* 비밀번호 체크 실행했다면 update 진행 */
 		if($("#password").data("value") == true) {
 			$.ajax({
-				type: 'post',
-				url: 'api/v1/mypage/update',
+				type: 'POST',
+				url: '/api/v1/members/mypage/update.do',
 				data: JSON.stringify({
 					"id": $("#id").val(),
 					"password": $("#password").val(),
@@ -45,7 +45,7 @@
 				success: function(data) {
 					if(data.success) {
 						alert(data.success);
-						location.href = "/members/login";
+						location.href = "/members/login.do";
 					} else {
 						alert(data.fail);
 					}
