@@ -41,7 +41,7 @@
 	}
 	
 	function git() {
-		location.href = 'https://github.com/kimyj1206/kimyj1206';
+		window.open("about:blank").location.href = 'https://github.com/kimyj1206/kimyj1206';
 	}
 </script>
 
