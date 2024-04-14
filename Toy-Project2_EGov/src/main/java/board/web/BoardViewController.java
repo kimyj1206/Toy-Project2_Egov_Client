@@ -96,7 +96,7 @@ public class BoardViewController {
 			/* 게시글 상세 조회 코드 추가 */
 			BoardVO result = boardService.selectDBoard(idx);
 			
-			if(!sessionID.equals(result.getUserId())) {
+			if(!sessionID.equals(result.getId())) {
 				/* 조회수 처리 코드 추가 */
 				boardService.updateHits(result);
 			}

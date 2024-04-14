@@ -27,7 +27,7 @@
 			
 			<c:choose>
 				<c:when test="${result.anony eq '1'}">
-  					<input type="text" name="userId" id="userId" aria-label="First name" class="form-control" readonly value="${result.userId}" />
+  					<input type="text" name="id" id="id" aria-label="First name" class="form-control" readonly value="${result.id}" />
   				</c:when>
   				<c:when test="${result.anony eq '2'}">
 					<input type="text" aria-label="First name" class="form-control" class="anony" readonly value="익명" />
@@ -48,7 +48,7 @@
 	  		<label for="content" class="requiredEle" id="label">내용</label>
 		</div>
 		
-		<c:if test="${sessionID == result.userId}">
+		<c:if test="${sessionID == result.id}">
 			<div class="form-check">	
 	  			<select class="form-select" name="anony" id="anony">
 				  <option value="1" selected>아이디 게시</option>
@@ -57,12 +57,16 @@
 			</div>
 		</c:if>
 		
+		<!-- 첨부 파일이 여부에 따라서 파일 리스트 or 첨부 파일 없음 문구 노출되게 -->
+		<div class="fileList">
+			<span>첨부파일</span>
+		</div>
 
 		<input type="text" name="idx" id="idx" hidden value="${result.idx}" />
 		<input type="text" name="hits" id="hits" hidden value="${result.hits}" />
 	</form>
 	
-	<c:if test="${sessionID == result.userId}">
+	<c:if test="${sessionID == result.id}">
 		<div class="btn_submit">
 			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1">수정하기</button>
 			<!-- 수정 modal -->

@@ -6,7 +6,7 @@
 			data : JSON.stringify({
 				"title": $("#title").val(),
 				"content": $("#content").val(),
-				"userId": "${sessionScope.sessionID}",
+				"id": $("#id").val(),
 				"anony": $("#anony").val(),
 				"hits": $("#hits").val()
 			}),

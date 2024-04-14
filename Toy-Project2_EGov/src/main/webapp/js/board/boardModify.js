@@ -1,15 +1,15 @@
 	/** 게시글 수정 */
 	function btnUpdate() {
 		$.ajax({
-			type: "post",
+			type: "POST",
 			url: "/api/v1/boards/update.do",
 			data: JSON.stringify({
 				"title": $("#title").val(),
 				"content": $("#content").val(),
-				"userId": "${result.userId}",
+				"id": $("#id").val(),
 				"anony": $("#anony").val(),
 				"hits": $("#hits").val(),
-				"idx": "${result.idx}"
+				"idx": $("#idx").val()
 			}),
 			dataType: "json",
 			contentType: 'application/json',
@@ -31,15 +31,15 @@
 	/** 게시글 삭제 */
 	function btnDelete() {
 		$.ajax({
-			type: "post",
+			type: "POST",
 			url: "/api/v1/boards/delete.do",
 			data: JSON.stringify({
 				"title": $("#title").val(),
 				"content": $("#content").val(),
-				"userId": "${result.userId}",
+				"id": $("#id").val(),
 				"anony": $("#anony").val(),
 				"hits": $("#hits").val(),
-				"idx": "${result.idx}"
+				"idx": $("#idx").val()
 			}),
 			dataType: "json",
 			contentType: 'application/json',

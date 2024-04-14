@@ -109,10 +109,11 @@ public class BoardApiController {
 	public Map<String, Object> insertBoard(@RequestBody BoardVO boardVO, HttpSession session) {
 		
 		Map<String, Object> resultMap = new HashMap<>();
-		
+
 		try {
 			String sessionID = (String) session.getAttribute("sessionID");
-			
+			System.out.println(sessionID);
+			System.out.println(boardVO.getId());
 			if(!sessionID.equals("") || !sessionID.equals(null)) {
 				String result = boardService.insertBoard(boardVO);
 				
@@ -123,7 +124,7 @@ public class BoardApiController {
 				}
 			}
 			
-		} catch(Exception e) {
+ 		} catch(Exception e) {
 			System.out.println("insertBoard error -> " + e.getMessage());
 			
 		}
@@ -132,7 +133,7 @@ public class BoardApiController {
 	
 	
 	/***
-	 * 게시글 수정 호출
+	 * 게시글 수정
 	 */
 	@RequestMapping(value = "/update.do", method = RequestMethod.POST)
 	public Map<String, Object> updateBoard(@RequestBody BoardVO boardVO) {
@@ -156,7 +157,7 @@ public class BoardApiController {
 	
 	
 	/***
-	 * 게시글 삭제 호출
+	 * 게시글 삭제
 	 */
 	@RequestMapping(value = "/delete.do", method = RequestMethod.POST)
 	public Map<String, Object> deleteBoard(@RequestBody BoardVO boardVO) {

@@ -4,14 +4,21 @@ import java.util.Date;
 
 public class BoardVO {
 
+	private int idx;
 	private String title;
 	private String content;
+	private String id;
 	private String anony;
 	private int hits;
-	private String userId;
 	private Date rdate;
-	private int idx;
+	private Date modifyDt;
 	
+	public int getIdx() {
+		return idx;
+	}
+	public void setIdx(int idx) {
+		this.idx = idx;
+	}
 	public String getTitle() {
 		return title;
 	}
@@ -23,6 +30,12 @@ public class BoardVO {
 	}
 	public void setContent(String content) {
 		this.content = content;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 	public String getAnony() {
 		return anony;
@@ -36,22 +49,16 @@ public class BoardVO {
 	public void setHits(int hits) {
 		this.hits = hits;
 	}
-	public String getUserId() {
-		return userId;
-	}
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
 	public Date getRdate() {
 		return rdate;
 	}
 	public void setRdate(Date rdate) {
 		this.rdate = rdate;
 	}
-	public int getIdx() {
-		return idx;
+	public Date getModifyDt() {
+		return modifyDt;
 	}
-	public void setIdx(int idx) {
-		this.idx = idx;
+	public void setModifyDt(Date modifyDt) {
+		this.modifyDt = modifyDt;
 	}
 }

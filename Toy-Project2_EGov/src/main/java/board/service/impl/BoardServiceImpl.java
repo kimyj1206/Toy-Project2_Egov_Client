@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import board.service.BoardService;
 import board.service.BoardVO;
@@ -21,6 +22,7 @@ public class BoardServiceImpl implements BoardService {
 	 * 게시글 저장
 	 */
 	@Override
+	@Transactional
 	public String insertBoard(BoardVO boardVO) throws Exception {
 		
 		return boardDAO.insertBoard(boardVO);
@@ -48,6 +50,7 @@ public class BoardServiceImpl implements BoardService {
 	 * 게시글 수정
 	 */
 	@Override
+	@Transactional
 	public int updateBoard(BoardVO boardVO) throws Exception {
 		
 		return boardDAO.updateBoard(boardVO);
@@ -57,6 +60,7 @@ public class BoardServiceImpl implements BoardService {
 	 * 게시글 삭제
 	 */
 	@Override
+	@Transactional
 	public int deleteBoard(int idx) throws Exception {
 
 		return boardDAO.deleteBoard(idx);
@@ -66,6 +70,7 @@ public class BoardServiceImpl implements BoardService {
 	 * 게시글 조회수
 	 */
 	@Override
+	@Transactional
 	public int updateHits(BoardVO boardVO) throws Exception {
 		
 		boardVO.setHits(boardVO.getHits() + 1);
@@ -86,6 +91,7 @@ public class BoardServiceImpl implements BoardService {
 	 * 게시글 검색
 	 */
 	@Override
+	@Transactional
 	public List<BoardVO> selectSearchKeyword(Map<String, Object> param) throws Exception {
 
 		return boardDAO.selectSearchKeyword(param);

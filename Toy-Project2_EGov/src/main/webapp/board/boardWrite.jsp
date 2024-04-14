@@ -14,9 +14,14 @@
 <link rel="stylesheet" type="text/css" href="../css/board/boardWrite.css">
 <title>게시글 작성</title>
 </head>
+<%
+	String sessionId = (String) session.getAttribute("sessionID");
 
+	if(sessionId == null || sessionId == "") {
+		response.sendRedirect("/members/login.do");
+	}
+%>
 <script src="../js/board/boardWrite.js"></script>
-
 <body>
 	<h1>게시글 작성</h1>
 	
@@ -45,7 +50,7 @@
    		</div>  	
    		
 		<input type="hidden" id="hits" name="hits" value="0" />
-		<input type="hidden" id="userId" name="userId" value="${sessionScope.sessionID}" />
+		<input type="hidden" id="id" name="id" value="<%= sessionId %>" />
 	</form>
 	
 	<div class="btn_group">
