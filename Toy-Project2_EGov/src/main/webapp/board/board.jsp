@@ -23,7 +23,6 @@
 		response.sendRedirect("/members/login.do");
 	}
 %>
-
 <script>
 	var totalPage = ${totalPage};
 </script>
@@ -73,14 +72,22 @@
 	  	<thead>
 		    <tr>
 			    <th width="13%">글 번호</th>
-				<th width="40%">제목</th>
-				<th width="17%">작성자</th>
+				<th width="34%">제목</th>
+				<th width="15%">작성자</th>
+				<th width="8%">첨부파일</th>
 				<th width="17%">등록일</th>
 				<th width="13%">조회수</th>
 		    </tr>
 	  	</thead>
 	  	
 	  	<tbody class="table-group-divider">
+	  	
+	  		<c:if test="${totalBoardList == 0}">
+	    		<tr>
+	    			<td colspan="6" style="text-align: center;">등록된 게시물이 없습니다.</td>
+	    		</tr>
+	    	</c:if>
+	  	
 			<c:if test="${!response.searchYN}">
 			    <c:forEach items="${result}" var="result">
 			    	<tr>
@@ -88,12 +95,13 @@
 				      <td><a href="/boards/detail.do?Idx=${result.idx}">${result.title}</a></td>
 				      <c:choose>
 				      	<c:when test="${result.anony eq '1'}">
-				      		<td>${result.userId}</td>
+				      		<td>${result.id}</td>
 				      	</c:when>
 				      	<c:when test="${result.anony eq '2'}">
 				      		<td>익명</td>
 				      	</c:when>
 				      </c:choose>
+				      <td>Y</td>
 				      <td><fmt:formatDate pattern="yyyy-MM-dd" value="${result.rdate}" /></td>
 				      <td>${result.hits}</td>
 			    	</tr>

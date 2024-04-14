@@ -60,6 +60,7 @@
 			        
 			        // 검색 결과를 반복해서 테이블에 추가
 			        $.each(resultMap.searchResult, function(index, searchResult) {
+			        	
 			            // 문자열 날짜를 JS 날짜 형태로 변환
 			        	let date = new Date(searchResult.rdate);
 
@@ -72,7 +73,8 @@
 			        	let row = "<tr>" +
 			                "<td>" + searchResult.idx + "</td>" +
 			                "<td><a href='/boards/detail.do?Idx=" + searchResult.idx + "'>" + searchResult.title + "</a></td>" +
-			                "<td>" + (searchResult.anony === '1' ? searchResult.userId : '익명') + "</td>" +
+			                "<td>" + (searchResult.anony == '1' ? searchResult.id : '익명') + "</td>" +
+			                "<td>" + "Y" + "</td>" +
 			                "<td>" + formattedDate + "</td>" +
 			                "<td>" + searchResult.hits + "</td>" +
 			                "</tr>";
