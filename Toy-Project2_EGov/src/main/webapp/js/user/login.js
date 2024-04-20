@@ -1,6 +1,6 @@
 	function loginSubmit() {	
 		$.ajax({
-			type: "post",
+			type: "POST",
 			data: JSON.stringify({
 				"id": $("#id").val(),
 				"password": $("#password").val()
@@ -17,7 +17,7 @@
 				}
 			},
 			error: function(xhr, status, error) {
-				console.log("code : " + xhr.status + "\n" + "message : " + xhr.responseText + "\n" + "error : " + error);
+				/*console.log("code : " + xhr.status + "\n" + "message : " + xhr.responseText + "\n" + "error : " + error);*/
 				alert('시스템 에러 발생하였습니다. 관리자에게 연락해주세요.');
 			}
 		});

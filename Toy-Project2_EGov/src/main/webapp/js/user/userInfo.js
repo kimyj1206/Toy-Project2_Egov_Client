@@ -20,7 +20,7 @@
 				}
 			},
 			error: function(xhr, status, error, msg) {
-				console.log("code : " + xhr.status + "\n" + "message : " + xhr.responseText + "\n" + "error : " + error);
+				/*console.log("code : " + xhr.status + "\n" + "message : " + xhr.responseText + "\n" + "error : " + error);*/
 				alert('시스템 에러 발생하였습니다. 관리자에게 연락해주세요.');
 			}
 		});
@@ -51,7 +51,7 @@
 					}
 				},
 				error: function(xhr, status, error) {
-					console.log("code : " + xhr.status + "\n" + "message : " + xhr.responseText + "\n" + "error : " + error);
+					/*console.log("code : " + xhr.status + "\n" + "message : " + xhr.responseText + "\n" + "error : " + error);*/
 					alert('시스템 에러 발생하였습니다. 관리자에게 연락해주세요.');
 				}
 			});

@@ -18,7 +18,7 @@
 </head>
 <body>	
 	<div class="wrap">
-        <form class="login" id="frm">
+        <div class="login">
             <h2>로그인</h2>
             <div class="login_id">
                 <h4>ID</h4>
@@ -45,7 +45,7 @@
             <div class="submit">
                 <button type="button" onclick="loginSubmit()">로그인</button>
             </div>
-        </form>
+        </div>
     </div>
 </body>
 </html>
