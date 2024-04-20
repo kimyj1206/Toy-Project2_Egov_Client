@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
 import board.service.BoardVO;
 import board.service.PageVO;
@@ -12,80 +13,113 @@ import egovframework.rte.psl.dataaccess.EgovAbstractDAO;
 @Repository("boardDAO")
 public class BoardDAO extends EgovAbstractDAO {
 
-	/*
-	 * Insert
+	/**
+	 * INSERT
+	 * @param boardVO
+	 * @return
+	 * @throws Exception
 	 */
-	public String insertBoard(BoardVO boardVO) throws Exception {
+	public int insertBoard(BoardVO boardVO) throws Exception {
 		
-		return (String) insert("board.insertBoard", boardVO);
+		return (int) insert("board.insertBoard", boardVO);
 	}
+	
+	/**
+	 * INSERT
+	 * @param file
+	 * @return
+	 * @throws Exception
+	 */
+	public int insertFile(MultipartFile file) throws Exception {
+		
+		return /*(int) insert("board.insertFile", file)*/ 0;
+	}
+	
+	
 
-	/*
-	 * Select
+	/**
+	 * SELECT
+	 * @param pageVO
+	 * @return
 	 */
 	public List<BoardVO> selectBoard(PageVO pageVO) {
 
 		return (List<BoardVO>) list("board.selectBoard", pageVO);
 	}
 
-	/*
-	 * Select
+	/**
+	 * SELECT
+	 * @param idx
+	 * @return
 	 */
 	public BoardVO selectDBoard(int idx) {
 
 		return (BoardVO) select("board.selectDBoard", idx);
 	}
 
-	/*
-	 * Update
+	/**
+	 * UPDATE
+	 * @param boardVO
+	 * @return
 	 */
 	public int updateBoard(BoardVO boardVO) {
 		
 		return update("board.updateBoard", boardVO);
 	}
 
-	/*
-	 * Delete
+	/**
+	 * DELETE
+	 * @param idx
+	 * @return
 	 */
 	public int deleteBoard(int idx) {
 
 		return delete("board.deleteBoard", idx);
 	}
 
-	/*
-	 * Update
+	/**
+	 * UPDATE
+	 * @param boardVO
+	 * @return
 	 */
 	public int updateHits(BoardVO boardVO) {
 
 		return update("board.updateHits", boardVO);
 	}
 
-	/*
-	 * Select
+	/**
+	 * SELECT
+	 * @return
 	 */
 	public int selectBoardCnt() {
 
 		return (int) select("board.selectBoardCnt");
 	}
 
-	/*
-	 * Select
+	/**
+	 * SELECT
+	 * @param param
+	 * @return
 	 */
 	public List<BoardVO> selectSearchKeyword(Map<String, Object> param) {
 
 		return (List<BoardVO>) list("board.selectSearchKeyword", param);
 	}
 
-	/*
-	 * Select
+	/**
+	 * SELECT
+	 * @param list
+	 * @return
 	 */
 	public List<BoardVO> selectBoardPrintList(Map<String, Integer> list) {
 
 		return (List<BoardVO>) list("board.selectBoardPrintList", list);
 	}
 
-	/*
-	 * Select
+	/**
+	 * SELECT
+	 * @param map
+	 * @return
 	 */
 	public int selectSearchKeywordCnt(Map<String, Object> map) {
 		

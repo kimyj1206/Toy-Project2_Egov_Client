@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class BoardVO {
 
+	// 게시글
 	private int idx;
 	private String title;
 	private String content;
@@ -60,5 +61,64 @@ public class BoardVO {
 	}
 	public void setModifyDt(Date modifyDt) {
 		this.modifyDt = modifyDt;
+	}
+	
+	// 파일
+	private int fileNo;
+	private String filePath;
+	private String fileOrigin;
+	private String fileEncry;
+	private String fileSize;
+	private String fileExten;
+	private Date createDt;
+	private int boardIdx;
+	
+	public int getFileNo() {
+		return fileNo;
+	}
+	public void setFileNo(int fileNo) {
+		this.fileNo = fileNo;
+	}
+	public String getFilePath() {
+		return filePath;
+	}
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+	public String getFileOrigin() {
+		return fileOrigin;
+	}
+	public void setFileOrigin(String fileOrigin) {
+		this.fileOrigin = fileOrigin;
+	}
+	public String getFileEncry() {
+		return fileEncry;
+	}
+	public void setFileEncry(String fileEncry) {
+		this.fileEncry = fileEncry;
+	}
+	public String getFileSize() {
+		return fileSize;
+	}
+	public void setFileSize(String fileSize) {
+		this.fileSize = fileSize;
+	}
+	public String getFileExten() {
+		return fileExten;
+	}
+	public void setFileExten(String fileExten) {
+		this.fileExten = fileExten;
+	}
+	public Date getCreateDt() {
+		return createDt;
+	}
+	public void setCreateDt(Date createDt) {
+		this.createDt = createDt;
+	}
+	public int getBoardIdx() {
+		return boardIdx;
+	}
+	public void setBoardIdx(int boardIdx) {
+		this.boardIdx = boardIdx;
 	}
 }

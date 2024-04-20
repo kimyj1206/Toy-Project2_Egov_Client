@@ -6,12 +6,19 @@ import java.util.Map;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import board.service.BoardService;
 import board.service.BoardVO;
@@ -27,6 +34,9 @@ public class BoardApiController {
 	/*@Resource(name = "boardService")*/
 	@Autowired
 	private BoardService boardService;
+	
+	@Autowired
+	private MultipartResolver multipartResolver;
 	
 	
 	/***
@@ -106,24 +116,25 @@ public class BoardApiController {
 	 * 게시글 작성
 	 */
 	@RequestMapping(value = "/create.do", method = RequestMethod.POST)
-	public Map<String, Object> insertBoard(@RequestBody BoardVO boardVO, HttpSession session) {
+	public Map<String, String> insertBoard(@RequestPart(name = "data") BoardVO boardVO,
+										   @RequestPart(name = "fileList", required = false) List<MultipartFile> fileList,
+										   HttpSession session,
+										   BindingResult error) {
+	
+		Map<String, String> resultMap = new HashMap<>();
 		
-		Map<String, Object> resultMap = new HashMap<>();
+		String sessionID = (String) session.getAttribute("sessionID");
 
 		try {
-			String sessionID = (String) session.getAttribute("sessionID");
-			System.out.println(sessionID);
-			System.out.println(boardVO.getId());
 			if(!sessionID.equals("") || !sessionID.equals(null)) {
-				String result = boardService.insertBoard(boardVO);
+				int result = boardService.insertBoard(boardVO, fileList);
 				
-				if(result == null) {
+				if(result == 1) {
 					resultMap.put("success", "게시글 저장 성공했습니다.");
 				} else {
 					resultMap.put("fail", "게시글 저장 실패했습니다.");
 				}
 			}
-			
  		} catch(Exception e) {
 			System.out.println("insertBoard error -> " + e.getMessage());
 			
@@ -136,9 +147,9 @@ public class BoardApiController {
 	 * 게시글 수정
 	 */
 	@RequestMapping(value = "/update.do", method = RequestMethod.POST)
-	public Map<String, Object> updateBoard(@RequestBody BoardVO boardVO) {
+	public Map<String, String> updateBoard(@RequestBody BoardVO boardVO) {
 		
-		Map<String, Object> resultMap = new HashMap<>();
+		Map<String, String> resultMap = new HashMap<>();
 		
 		try {
 			int result = boardService.updateBoard(boardVO);
@@ -160,9 +171,9 @@ public class BoardApiController {
 	 * 게시글 삭제
 	 */
 	@RequestMapping(value = "/delete.do", method = RequestMethod.POST)
-	public Map<String, Object> deleteBoard(@RequestBody BoardVO boardVO) {
+	public Map<String, String> deleteBoard(@RequestBody BoardVO boardVO) {
 		
-		Map<String, Object> resultMap = new HashMap<>();
+		Map<String, String> resultMap = new HashMap<>();
 		
 		try {
 			int result = boardService.deleteBoard(boardVO.getIdx());

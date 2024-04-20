@@ -7,10 +7,8 @@
 	<typeAlias  alias="boardVO" type="board.service.BoardVO"/>
 
 	<insert id="board.insertBoard">
-		INSERT INTO TB_BOARD
-						(idx, title, content, anony, id, hits, rdate)
-					VALUES
-						(SEQ_TB_BOARD.NEXTVAL, #title#, #content#, #anony#, #id#, #hits#, TO_CHAR(sysdate, 'YYYY-MM-DD'))
+		INSERT INTO TB_BOARD (idx, title, content, anony, id, hits, rdate)
+					VALUES (SEQ_TB_BOARD.NEXTVAL, #title#, #content#, #anony#, #id#, #hits#, TO_CHAR(sysdate, 'YYYY-MM-DD'))
 	</insert>
 	
 	<select id="board.selectBoard" resultClass="boardVO">
@@ -231,4 +229,9 @@
 			)
 			WHERE rnum <![CDATA[ >= ]]> ((#pageNum# - 1) * #currentPrintBoardList#) + 1
 	</select>
+	
+	<insert id="board.insertFile">
+		INSERT INTO TB_FILE (file_no, file_path, file_origin, file_encry, file_size, file_exten, create_dt, board_idx)
+		VALUES (SEQ_TB_FILE.NEXTVAL, #filePath#, #fileOrigin#, #fileEncry#, #fileSize#, #fileExten#, TO_CHAR(sysdate, 'YYYY-MM-DD'), idx)
+	</insert>
 </sqlMap>

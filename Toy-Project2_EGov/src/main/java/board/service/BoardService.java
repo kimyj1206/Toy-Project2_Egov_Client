@@ -3,12 +3,14 @@ package board.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public interface BoardService {
 
 	/***
 	 * 게시글 저장
 	 */
-	public String insertBoard(BoardVO boardVO) throws Exception;
+	public int insertBoard(BoardVO boardVO, List<MultipartFile> fileList) throws Exception;
 	
 	/***
 	 * 게시글 조회
@@ -54,4 +56,9 @@ public interface BoardService {
 	 * 검색어 포함 게시물 개수 조회
 	 */
 	public int selectSearchKeywordCnt(Map<String, Object> map) throws Exception;
+	
+	/**
+	 * 첨부파일 저장할 디렉터리 생성
+	 */
+	public String createDirectory(String uuid, MultipartFile file) throws Exception;
 }

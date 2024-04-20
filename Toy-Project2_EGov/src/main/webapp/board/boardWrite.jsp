@@ -25,7 +25,7 @@
 <body>
 	<h1>게시글 작성</h1>
 	
-	<form id="frm">
+	<div>
 		<div class="form-floating">
 		  	<textarea class="form-control" placeholder="제목을 입력해주세요." id="title" name="title" required></textarea>
 		  	<label for="title" class="requiredEle">제목</label>
@@ -43,15 +43,16 @@
 			</select>
 		</div>
 		
-		<div class="files">
-       		<input type="file" name="file">
+		<span class="attachment">첨부파일</span>
+		<div class="files">	
+       		<input type="file" name="uploadFiles" id="fileList1">
        		<button type="button" class="btn btn-warning addFiles">+</button>
        		<button type="button" class="btn btn-danger removeFiles">-</button>
-   		</div>  	
+   		</div>
    		
 		<input type="hidden" id="hits" name="hits" value="0" />
 		<input type="hidden" id="id" name="id" value="<%= sessionId %>" />
-	</form>
+	</div>
 	
 	<div class="btn_group">
 		<button type="button" class="btn btn-primary btnSave" onclick="btnSubmit()">저장하기</button>
