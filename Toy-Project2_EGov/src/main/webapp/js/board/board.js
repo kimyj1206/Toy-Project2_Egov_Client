@@ -52,7 +52,6 @@
 			dataType: 'json',
 			contentType: 'application/json',
 			success: function(resultMap) {
-				console.log(resultMap);
 			    if (resultMap.searchYN) {
 			    	
 			        // 기존 테이블의 행 지움 -> 이걸 안하면 원래의 테이블 밑으로 검색 결과가 추가됨
@@ -121,7 +120,7 @@
 			    }
 			},
 			error: function(xhr, status, error) {
-				console.log("code : " + xhr.status + "\n" + "message : " + xhr.responseText + "\n" + "error : " + error);
+				/*console.log("code : " + xhr.status + "\n" + "message : " + xhr.responseText + "\n" + "error : " + error);*/
 				alert('시스템 에러 발생하였습니다. 관리자에게 연락해주세요.');
 			}
 		});

@@ -21,7 +21,7 @@
 <body>
 	<h1>게시글 조회</h1>
 	
-	<form id="frm">      
+	<div>      
 		<div class="input-group">
 			<span class="input-group-text">작성자</span>
 			
@@ -64,7 +64,7 @@
 
 		<input type="text" name="idx" id="idx" hidden value="${result.idx}" />
 		<input type="text" name="hits" id="hits" hidden value="${result.hits}" />
-	</form>
+	</div>
 	
 	<c:if test="${sessionID == result.id}">
 		<div class="btn_submit">
