@@ -15,13 +15,13 @@
 	
 	<select id="user.selectLogin" resultClass="java.lang.Integer">
 		SELECT COUNT(*) FROM TB_USERS
-								WHERE id = #id#
-								AND password = #password#
+								WHERE id = LOWER(#id#)
+								AND password = LOWER(#password#)
 	</select>
 	
 	<select id="user.duplicatedID" resultClass="java.lang.Integer">
 		SELECT COUNT(*) FROM TB_USERS
-								WHERE id = #id#
+								WHERE id = LOWER(#id#)
 	</select>
 	
 	<select id="user.findIdCheckEmail" resultClass="userVO">
@@ -38,7 +38,7 @@
 	
 	<select id="user.idCheck" resultClass="java.lang.Integer">
 		SELECT COUNT(*) FROM TB_USERS
-								WHERE id = #id#
+								WHERE id = LOWER(#id#)
 	</select>
 	
 	<update id="user.pwReset">
@@ -55,8 +55,8 @@
 	
 	<select id="user.selectPwCheck" resultClass="java.lang.Integer">
 		SELECT COUNT(*) FROM TB_USERS
-								WHERE id = #id#
-								AND password = #password#
+								WHERE id = LOWER(#id#)
+								AND password = LOWER(#password#)
 	</select>
 	
 	<update id="user.updateUserInfo">
@@ -66,13 +66,13 @@
 						email = #email#,
 						gender = #gender#
 					WHERE
-						id = #id#
+						id = LOWER(#id#)
 						
 	</update>
 	
 	<delete id="user.deleteLeaveUser">
 		DELETE FROM TB_USERS
-						WHERE id = #id#
-						AND password = #password#
+						WHERE id = LOWER(#id#)
+						AND password = LOWER(#password#)
 	</delete>
 </sqlMap>
